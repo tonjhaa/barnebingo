@@ -159,23 +159,6 @@ export function usePlayerRoom(code: string) {
     [savedForThisRoom],
   )
 
-  const setActiveBoard = useCallback(
-    async (boardId: string) => {
-      if (!savedForThisRoom) return
-      try {
-        await send(C.playerSetActiveBoard, {
-          roomId: savedForThisRoom.roomId,
-          playerId: savedForThisRoom.playerId,
-          recoveryKey: savedForThisRoom.recoveryKey,
-          boardId,
-        })
-      } catch (cause) {
-        setError(cause instanceof CommandError ? cause.message : 'Klarte ikke å bytte brett.')
-      }
-    },
-    [savedForThisRoom],
-  )
-
   /**
    * Markerer eller fjerner en markering. Returnerer null når serveren godtok,
    * og ellers en tekst kalleren kan vise. Klienten tegner aldri et kryss selv —
@@ -273,7 +256,6 @@ export function usePlayerRoom(code: string) {
   return {
     stage,
     view,
-    setActiveBoard,
     toggleCell,
     claimBingo,
     lagreSelfie,

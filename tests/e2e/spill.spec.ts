@@ -96,7 +96,7 @@ test.describe('lobbyen', () => {
 })
 
 test.describe('75-tallsbingo', () => {
-  test('gir tre brett med B-I-N-G-O og lar spilleren bytte mellom dem', async ({
+  test('viser alle tre brettene under hverandre, med B-I-N-G-O', async ({
     browser,
   }) => {
     const vert = await Hovedskjerm.åpne(browser)
@@ -110,21 +110,15 @@ test.describe('75-tallsbingo', () => {
     await ada.meldKlar()
     await vert.startSpillet()
 
-    await expect(ada.brettFaner()).toHaveCount(3)
+    // Tre brett à 24 tall, alle på siden samtidig — ingen faner å bla i.
+    await expect(ada.ruter()).toHaveCount(72)
+    for (const nummer of [1, 2, 3]) {
+      await expect(ada.page.getByText(`Brett ${nummer}`, { exact: true })).toBeVisible()
+    }
     for (const bokstav of ['B', 'I', 'N', 'G', 'O']) {
       await expect(ada.page.getByText(bokstav, { exact: true }).first()).toBeVisible()
     }
-
-    await ada.byttBrett(2)
-    await expect(ada.page.getByRole('tab', { name: /^Brett 2/ })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    )
-    await ada.byttBrett(1)
-    await expect(ada.page.getByRole('tab', { name: /^Brett 1/ })).toHaveAttribute(
-      'aria-selected',
-      'true',
-    )
+    await expect(ada.page.getByRole('tab')).toHaveCount(0)
   })
 
   test('lar spilleren markere et trukket tall, men ikke et utrukket', async ({

@@ -19,7 +19,6 @@ export function PlayerScreen({ code }: { code: string }) {
     busy,
     claim,
     setReady,
-    setActiveBoard,
     toggleCell,
     claimBingo,
     lagreSelfie,
@@ -48,7 +47,6 @@ export function PlayerScreen({ code }: { code: string }) {
         view={view}
         round={view.round}
         markingMode={view.config.markingMode}
-        onSelectBoard={(boardId) => void setActiveBoard(boardId)}
         onToggleCell={toggleCell}
         onClaimBingo={claimBingo}
       />

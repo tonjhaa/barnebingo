@@ -14,14 +14,12 @@ export function PlayScreen({
   view,
   round,
   markingMode,
-  onSelectBoard,
   onToggleCell,
   onClaimBingo,
 }: {
   view: PlayerView
   round: RoundView
   markingMode: string
-  onSelectBoard: (boardId: string) => void
   onToggleCell: (boardId: string, value: number, marked: boolean) => Promise<string | null>
   onClaimBingo: () => Promise<string | null>
 }) {
@@ -33,28 +31,23 @@ export function PlayScreen({
   if (view.results) return <Resultat view={view} />
   if (round.prize) return <PremieVisning view={view} round={round} />
 
-  const active =
-    view.boards.find((board) => board.id === view.activeBoardId) ?? view.boards[0]
   const flere = view.boards.length > 1
   const kanMarkere = markingMode !== 'auto' && round.status === 'active'
 
   /**
    * Assistert markering (§7): ruta med det trukne tallet lyser til den er
-   * krysset av. Hintet er et eget hjelpemiddel — det markerer ikke for deg.
+   * krysset av. Regnes per brett — samme tall kan stå på flere av dem.
    */
-  const hint =
+  const hintFor = (board: BoardView): number | null =>
     markingMode === 'assisted' &&
     round.status === 'active' &&
     round.currentNumber !== null &&
-    active?.cells
-      .flat()
-      .some((cell) => cell.value === round.currentNumber && !cell.marked)
+    board.cells.flat().some((cell) => cell.value === round.currentNumber && !cell.marked)
       ? round.currentNumber
       : null
 
-  async function toggle(value: number, marked: boolean) {
-    if (!active) return
-    const feil = await onToggleCell(active.id, value, marked)
+  async function toggle(boardId: string, value: number, marked: boolean) {
+    const feil = await onToggleCell(boardId, value, marked)
     if (!feil) return
     // Ingen feilmelding for et tall som ikke er trukket — bare en liten risting,
     // så er det glemt (ARKITEKTUR.md §9 Å3).
@@ -69,8 +62,10 @@ export function PlayScreen({
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-3 px-4 py-4">
-      <header className="flex items-baseline justify-between gap-3">
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-4 pb-4">
+      {/* Premiemålet er bakgrunnsinformasjon og får scrolle vekk. Tallet er
+          det man leter etter, og blir stående. */}
+      <header className="flex items-baseline justify-between gap-3 pt-4 pb-3">
         <p className="text-sm font-bold tracking-widest text-tekst-svak uppercase">
           Vi spiller om
         </p>
@@ -78,66 +73,74 @@ export function PlayScreen({
       </header>
 
       {round.currentNumber !== null && (
-        <div className="flate flex items-center justify-between gap-4 px-5 py-3">
-          <span className="text-base font-bold text-tekst-svak">Nå trukket</span>
-          <span className="flex items-baseline gap-2 leading-none">
-            {round.currentLetter && (
-              <span className="text-3xl font-black text-bringebaer">
-                {round.currentLetter}
+        <div className="sticky top-0 z-10 -mx-4 bg-natt px-4 pb-3">
+          <div className="flate flex items-center justify-between gap-4 px-5 py-3">
+            <span className="text-base font-bold text-tekst-svak">Nå trukket</span>
+            <span className="flex items-baseline gap-2 leading-none">
+              {round.currentLetter && (
+                <span className="text-3xl font-black text-bringebaer">
+                  {round.currentLetter}
+                </span>
+              )}
+              <span className="text-5xl font-black text-sol tabular-nums">
+                {round.currentNumber}
               </span>
-            )}
-            <span className="text-5xl font-black text-sol tabular-nums">
-              {round.currentNumber}
             </span>
-          </span>
-        </div>
-      )}
-
-      {flere && (
-        <div role="tablist" aria-label="Brettene dine" className="flex gap-2">
-          {view.boards.map((board) => (
-            <BoardTab
-              key={board.id}
-              board={board}
-              color={me.color}
-              active={board.id === active?.id}
-              onSelect={() => onSelectBoard(board.id)}
-            />
-          ))}
-        </div>
-      )}
-
-      {active && (
-        <div className="flex flex-1 items-center">
-          <div className="flate w-full p-3">
-            <BoardGrid
-              board={active}
-              color={me.color}
-              columnLabels={view.config.columnLabels}
-              onToggle={kanMarkere ? toggle : undefined}
-              rejected={rejected}
-              hint={hint}
-            />
           </div>
         </div>
       )}
 
-      <p className="text-center text-sm text-tekst-svak tabular-nums">
-        {active
-          ? `${active.markedCount} av ${active.numberCount} · ${active.completedRows.length} hele rader`
-          : ''}
-      </p>
+      {/* Alle brettene under hverandre. Å bla mellom faner betyr å lete etter
+          tallet tre ganger; her ser man dem i én bevegelse. */}
+      <div className="flex flex-1 flex-col justify-center gap-4 py-2">
+        {view.boards.map((board) => (
+          <section key={board.id} className="flate p-3">
+            {flere && (
+              <header className="mb-2 flex items-baseline justify-between px-1">
+                <span className="text-sm font-black" style={{ color: me.color }}>
+                  Brett {board.index}
+                </span>
+                <span className="text-xs text-tekst-svak tabular-nums">
+                  {board.markedCount} av {board.numberCount} ·{' '}
+                  {board.completedRows.length} rader
+                </span>
+              </header>
+            )}
+            <BoardGrid
+              board={board}
+              color={me.color}
+              columnLabels={view.config.columnLabels}
+              onToggle={
+                kanMarkere
+                  ? (value, marked) => toggle(board.id, value, marked)
+                  : undefined
+              }
+              rejected={rejected}
+              hint={hintFor(board)}
+            />
+          </section>
+        ))}
+
+        {!flere && view.boards[0] && (
+          <p className="text-center text-sm text-tekst-svak tabular-nums">
+            {view.boards[0].markedCount} av {view.boards[0].numberCount} ·{' '}
+            {view.boards[0].completedRows.length} hele rader
+          </p>
+        )}
+      </div>
 
       {beskjed && (
         <p
           role="status"
-          className="rounded-2xl bg-flate-2 px-4 py-3 text-center text-lg font-bold"
+          className="mb-2 rounded-2xl bg-flate-2 px-4 py-3 text-center text-lg font-bold"
         >
           {beskjed}
         </p>
       )}
 
-      <Bunn round={round} bingoHint={view.bingoHint} onBingo={bingo} />
+      <div className="sticky bottom-0 -mx-4 bg-natt px-4 pt-2 pb-1">
+        <Bunn round={round} bingoHint={view.bingoHint} onBingo={bingo} />
+      </div>
     </main>
   )
 }
@@ -296,36 +299,3 @@ function vinnernavn(winners: Array<{ name: string }>): string {
   return `${winners.slice(0, -1).map((w) => w.name).join(', ')} og ${winners.at(-1)?.name}`
 }
 
-/**
- * Fanen for et brett viser status også når brettet ikke er åpent — hvor mange
- * kryss og hvor mange hele rader (§5). Da slipper spilleren å bla fram og
- * tilbake for å vite hvilket brett som er nærmest.
- */
-function BoardTab({
-  board,
-  color,
-  active,
-  onSelect,
-}: {
-  board: BoardView
-  color: string
-  active: boolean
-  onSelect: () => void
-}) {
-  return (
-    <button
-      role="tab"
-      aria-selected={active}
-      onClick={onSelect}
-      className={`flex-1 rounded-2xl border-2 px-2 py-2.5 text-center transition-colors ${
-        active ? 'bg-flate-2' : 'border-kant bg-natt'
-      }`}
-      style={active ? { borderColor: color } : undefined}
-    >
-      <span className="block text-base font-black">Brett {board.index}</span>
-      <span className="block text-xs text-tekst-svak tabular-nums">
-        {board.markedCount} kryss · {board.completedRows.length} rader
-      </span>
-    </button>
-  )
-}

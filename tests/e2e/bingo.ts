@@ -266,14 +266,6 @@ export class Telefon {
     await this.page.getByRole('button', { name: 'BINGO!' }).click()
   }
 
-  async byttBrett(nummer: number): Promise<void> {
-    await this.page.getByRole('tab', { name: new RegExp(`^Brett ${nummer}`) }).click()
-  }
-
-  brettFaner() {
-    return this.page.getByRole('tab')
-  }
-
   async lukk(): Promise<void> {
     await this.page.context().close()
   }

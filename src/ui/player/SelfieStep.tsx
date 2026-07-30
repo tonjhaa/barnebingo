@@ -43,6 +43,22 @@ export function SelfieStep({
   // Kameraet skal aldri bli stående på fordi noen navigerte videre.
   useEffect(() => stoppKamera, [stoppKamera])
 
+  /**
+   * Kobler strømmen til videoelementet når det finnes. Dette er en effekt og
+   * ikke et kall rett etter `setSteg`, fordi elementet ikke er tegnet ennå da —
+   * og en strøm som aldri festes gir svart bilde og en «Knips!» som ikke gjør
+   * noe som helst.
+   */
+  useEffect(() => {
+    const video = videoRef.current
+    const strøm = strømRef.current
+    if (steg !== 'kamera' || !video || !strøm) return
+
+    video.srcObject = strøm
+    // iOS starter ikke av seg selv i alle tilfeller, og avviser gjerne løftet.
+    void video.play().catch(() => undefined)
+  }, [steg])
+
   async function startKamera() {
     setFeil(null)
     if (!navigator.mediaDevices?.getUserMedia) {
@@ -58,12 +74,17 @@ export function SelfieStep({
       })
       strømRef.current = strøm
       setSteg('kamera')
-      // Videoelementet finnes først etter at steget er tegnet.
-      requestAnimationFrame(() => {
-        if (videoRef.current) videoRef.current.srcObject = strøm
-      })
-    } catch {
-      setFeil('Vi fikk ikke tilgang til kameraet. Du kan bruke dyret ditt i stedet.')
+    } catch (cause) {
+      // Å si *hvorfor* er forskjellen på å prøve igjen og å gi opp.
+      const navn = cause instanceof DOMException ? cause.name : ''
+      setFeil(
+        navn === 'NotAllowedError'
+          ? 'Telefonen sa nei til kameraet. Sjekk Innstillinger → Safari → Kamera, eller bruk dyret ditt.'
+          : navn === 'NotFoundError'
+            ? 'Fant ikke noe kamera på denne enheten.'
+            : `Kameraet ville ikke starte${navn ? ` (${navn})` : ''}. Du kan bruke dyret ditt i stedet.`,
+      )
+      setSteg('valg')
     }
   }
 
