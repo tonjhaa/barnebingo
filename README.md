@@ -83,6 +83,13 @@ Oppsettet kjører **én maskin som aldri stopper**. Rommene bor i minnet, så en
 maskin som sovner eller en ekstra instans ville betydd at halve familien havnet
 i et rom den andre halvparten ikke ser.
 
+Fly lager likevel en ekstra maskin for høy tilgjengelighet ved første deploy.
+Den må vekk:
+
+```bash
+flyctl scale count 1
+```
+
 `PUBLIC_URL` i `fly.toml` er adressen QR-koden peker på. Uten den ville den
 pekt på containerens interne IP. Bytt den hvis appen får et annet navn.
 

@@ -3,6 +3,11 @@
 # Én maskin, alltid våken. Rommene bor i prosessminnet, så en maskin som
 # stopper eller en ekstra instans ville betydd at halve familien havnet i et
 # rom den andre halvparten ikke ser. Derfor ingen autoskalering her.
+#
+# MERK: min_machines_running holder ikke alene. Fly lager en ekstra maskin for
+# høy tilgjengelighet ved første deploy, og den må fjernes med:
+#
+#     flyctl scale count 1
 
 app = 'barnebingo'
 primary_region = 'arn'
