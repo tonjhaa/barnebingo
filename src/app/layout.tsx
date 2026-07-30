@@ -1,11 +1,23 @@
 import type { Metadata, Viewport } from 'next'
-import { Nunito } from 'next/font/google'
+import { Archivo, Familjen_Grotesk } from 'next/font/google'
 import './globals.css'
 
-const nunito = Nunito({
-  variable: '--font-nunito',
+/**
+ * To skrifter med hver sin jobb. Archivo er stødig og har en ekte svart vekt —
+ * den bærer tallene, som er data og skal leses fra fire meters avstand.
+ * Familjen Grotesk har nordisk særpreg og bærer stemmen: overskrifter,
+ * knapper, alt appen sier.
+ */
+const archivo = Archivo({
+  variable: '--font-archivo',
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '600', '800', '900'],
+  weight: ['500', '700', '800', '900'],
+})
+
+const familjen = Familjen_Grotesk({
+  variable: '--font-familjen',
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -20,12 +32,15 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#0e0a24',
+  themeColor: '#170b29',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nb" className={`${nunito.variable} h-full antialiased`}>
+    <html
+      lang="nb"
+      className={`${archivo.variable} ${familjen.variable} h-full antialiased`}
+    >
       <body className="min-h-full">{children}</body>
     </html>
   )

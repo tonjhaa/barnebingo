@@ -22,6 +22,14 @@ export function columnLabelFor(profile: RuleProfile, value: number): string {
   return index === -1 ? '' : (columnLabels[index] ?? '')
 }
 
+/** Kolonnen tallet hører til, eller null hvis det faller utenfor. */
+export function columnIndexFor(profile: RuleProfile, value: number): number | null {
+  const index = profile.layout.columnRanges.findIndex(
+    (r) => value >= r.min && value <= r.max,
+  )
+  return index === -1 ? null : index
+}
+
 /** Slik tallet skal leses og vises: «B 12» eller «Nummer 68». */
 export function announce(profile: RuleProfile, value: number): string {
   const letter = columnLabelFor(profile, value)

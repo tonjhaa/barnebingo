@@ -1,42 +1,65 @@
 @import "tailwindcss";
 
 /*
-  Fargene er valgt for to svært ulike skjermer samtidig: en TV sett fra fire
-  meters avstand, og en iPhone holdt i en barnehånd. Derfor mørk bunn med høy
-  kontrast og få, mettede aksentfarger — ikke en pastellpalett som forsvinner i
-  ettermiddagssol fra stuevinduet.
+  Bingoens egne materialer, ikke en app-palett.
+
+  En bingokule er en kule: den fanger lys, har skygge under seg og en hvit
+  kappe med tallet på. Et tusjmerke er blekk presset ned i papir, ikke et
+  fylt rektangel. Hele utformingen henger på de to tingene — de er det man
+  ser på og tar på. Resten holder kjeft.
+
+  Bunnfargen er varm auberginelilla framfor kald natt: rommet er en stue om
+  kvelden, ikke et kontrollrom.
 */
 @theme {
-  --color-natt: #0e0a24;
-  --color-flate: #221a52;
-  --color-flate-2: #2d2470;
-  --color-kant: #3d3390;
+  --color-natt: #201038;
+  --color-natt-dyp: #170b29;
+  --color-flate: #2e1a4d;
+  --color-flate-2: #3b2461;
+  --color-kant: #4d3277;
 
-  --color-sol: #ffd23f;
-  --color-bringebaer: #ff4d87;
-  --color-turkis: #2ec4b6;
-  --color-lilla: #a06bff;
+  --color-sol: #ffc94a;
+  --color-bringebaer: #ff5a8a;
+  --color-turkis: #35c9b4;
+  --color-lilla: #a97bff;
 
-  --color-tekst: #f7f5ff;
-  --color-tekst-svak: #a79fd4;
+  --color-tekst: #fdf7ff;
+  --color-tekst-svak: #b3a0d4;
 
-  --font-runde: var(--font-nunito), ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  /*
+    Kulefarger per kolonne. I 75-bingo har B-I-N-G-O allerede hver sin
+    identitet, og i 90-bingo har tierne det — så fargen sier noe sant om
+    tallet i stedet for å pynte.
+  */
+  --color-kule-1: #e8517b;
+  --color-kule-2: #3e8fd9;
+  --color-kule-3: #f2b33d;
+  --color-kule-4: #4caf6e;
+  --color-kule-5: #9b6be8;
+  --color-kule-6: #e8794a;
+  --color-kule-7: #35bfb0;
+  --color-kule-8: #d95fa8;
+  --color-kule-9: #6c8ae8;
 
-  --radius-mild: 1rem;
-  --radius-stor: 1.75rem;
+  /* Tall er data og skal stå stødig. Etiketter har stemme. */
+  --font-tall: var(--font-archivo), system-ui, sans-serif;
+  --font-stemme: var(--font-familjen), system-ui, sans-serif;
+
+  --radius-mild: 0.9rem;
+  --radius-stor: 1.6rem;
 }
 
 html {
-  background: var(--color-natt);
+  background: var(--color-natt-dyp);
   color: var(--color-tekst);
-  font-family: var(--font-runde);
+  font-family: var(--font-stemme);
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, #2d2470 0%, transparent 60%),
-    var(--color-natt);
+    radial-gradient(ellipse 70% 50% at 50% -5%, #4a2a7a 0%, transparent 65%),
+    var(--color-natt-dyp);
   min-height: 100dvh;
 }
 
@@ -57,10 +80,71 @@ button {
   }
 }
 
+/* Løftet flate: lys ovenfra, mørk kant under. */
 @utility flate {
-  background: var(--color-flate);
+  background: linear-gradient(180deg, var(--color-flate-2) 0%, var(--color-flate) 100%);
   border: 1px solid var(--color-kant);
   border-radius: var(--radius-stor);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 2px 12px rgb(0 0 0 / 0.3);
+}
+
+/*
+  Kula. Lyskilden står oppe til venstre, så høylyset, kantskyggen og skyggen
+  på gulvet peker samme vei — det er dét som gjør at den leses som rund.
+*/
+@utility kule {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 26%, rgb(255 255 255 / 0.9), transparent 40%),
+    radial-gradient(circle at 68% 78%, rgb(0 0 0 / 0.45), transparent 58%),
+    var(--kulefarge, var(--color-kule-3));
+  box-shadow:
+    inset -6px -10px 22px rgb(0 0 0 / 0.35),
+    inset 4px 6px 16px rgb(255 255 255 / 0.18),
+    0 18px 34px rgb(0 0 0 / 0.45);
+}
+
+/* Den hvite kappa der tallet står trykt. */
+@utility kule-kappe {
+  position: absolute;
+  inset: 19%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fffdf8 0%, #f0e6d8 100%);
+  box-shadow:
+    inset 0 -3px 8px rgb(0 0 0 / 0.16),
+    inset 0 2px 4px rgb(255 255 255 / 0.9);
+  color: #241435;
+  font-family: var(--font-tall);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.9;
+}
+
+/* Kula faller ned og setter seg, som ut av kassen. */
+@keyframes kule-faller {
+  0% {
+    transform: translateY(-45%) scale(0.86);
+    opacity: 0;
+  }
+  55% {
+    transform: translateY(4%) scale(1.04);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-2%) scale(0.99);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@utility kule-faller {
+  animation: kule-faller 520ms cubic-bezier(0.34, 1.3, 0.64, 1);
 }
 
 /*
@@ -98,10 +182,10 @@ button {
 @keyframes hint {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(46 196 182 / 0.9);
+    box-shadow: 0 0 0 0 rgb(53 201 180 / 0.9);
   }
   50% {
-    box-shadow: 0 0 0 6px rgb(46 196 182 / 0);
+    box-shadow: 0 0 0 6px rgb(53 201 180 / 0);
   }
 }
 
@@ -113,10 +197,10 @@ button {
 @keyframes lyser {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(255 210 63 / 0.7);
+    box-shadow: 0 0 0 0 rgb(255 201 74 / 0.7);
   }
   50% {
-    box-shadow: 0 0 0 14px rgb(255 210 63 / 0);
+    box-shadow: 0 0 0 14px rgb(255 201 74 / 0);
   }
 }
 

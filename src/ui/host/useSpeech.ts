@@ -14,12 +14,25 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 /** Rekkefølgen vi leter etter en stemme i: norsk først, så nabospråk. */
 const SPRÅK = ['nb', 'no', 'nn', 'da', 'sv']
 
+/**
+ * Apple og Microsoft leverer to utgaver av samme stemme: en liten, komprimert
+ * som høres mekanisk ut, og en nedlastbar av langt høyere kvalitet. Standard
+ * er den mekaniske. Vi leter etter den gode først — det er hele forskjellen
+ * mellom en robot og noen som leser opp.
+ */
+const GODE = /enhanced|premium|neural|siri|natural/i
+
 function velgStemme(): SpeechSynthesisVoice | null {
   const stemmer = window.speechSynthesis.getVoices()
+
   for (const språk of SPRÅK) {
-    const treff = stemmer.find((stemme) => stemme.lang.toLowerCase().startsWith(språk))
-    if (treff) return treff
+    const kandidater = stemmer.filter((stemme) =>
+      stemme.lang.toLowerCase().startsWith(språk),
+    )
+    if (kandidater.length === 0) continue
+    return kandidater.find((stemme) => GODE.test(stemme.name)) ?? kandidater[0]
   }
+
   // Ingen skandinavisk stemme: la nettleseren velge selv. Tallene blir uttalt
   // på feil språk, men stumt er verre enn rart.
   return null

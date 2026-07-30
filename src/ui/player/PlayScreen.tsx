@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { BoardView, PlayerView, RoundView } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
+import { BingoBall } from '@/ui/shared/BingoBall'
 import { BoardGrid } from '@/ui/shared/BoardGrid'
 
 /**
@@ -75,17 +76,14 @@ export function PlayScreen({
       {round.currentNumber !== null && (
         <div className="sticky top-0 z-10 -mx-4 bg-natt px-4 pb-3">
           <div className="flate flex items-center justify-between gap-4 px-5 py-3">
-            <span className="text-base font-bold text-tekst-svak">Nå trukket</span>
-            <span className="flex items-baseline gap-2 leading-none">
-              {round.currentLetter && (
-                <span className="text-3xl font-black text-bringebaer">
-                  {round.currentLetter}
-                </span>
-              )}
-              <span className="text-5xl font-black text-sol tabular-nums">
-                {round.currentNumber}
-              </span>
-            </span>
+            <span className="text-base font-semibold text-tekst-svak">Nå trukket</span>
+            <BingoBall
+              number={round.currentNumber}
+              letter={round.currentLetter}
+              column={round.currentColumn}
+              size="liten"
+              dropKey={round.drawnCount}
+            />
           </div>
         </div>
       )}

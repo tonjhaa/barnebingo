@@ -102,19 +102,27 @@ function Cell({
   }
 
   const style = {
-    background: cell.marked ? color : '#2d2470',
-    color: cell.marked ? '#0e0a24' : '#f7f5ff',
+    background: '#3b2461',
+    color: cell.marked ? '#fffdf8' : '#e8dcf5',
     fontSize: compact ? (tett ? '0.6rem' : '0.85rem') : tett ? '0.95rem' : '1.6rem',
+    boxShadow: 'inset 0 1px 0 rgb(255 255 255 / .06)',
   }
-  const className = `grid aspect-square place-items-center rounded-lg font-black tabular-nums transition-colors ${
+  const className = `relative grid aspect-square place-items-center rounded-lg font-[family-name:var(--font-tall)] font-extrabold tabular-nums ${
     rister ? 'rister' : hinter ? 'hinter' : ''
   }`
+
+  const innhold = (
+    <>
+      <Blekk vises={cell.marked} color={color} seed={cell.value ?? 0} />
+      <span className="relative">{cell.isFree ? '★' : cell.value}</span>
+    </>
+  )
 
   // Den frie ruta er alltid markert og skal ikke kunne trykkes bort.
   if (!onToggle || cell.isFree || cell.value === null) {
     return (
       <div className={className} style={style}>
-        {cell.isFree ? '★' : cell.value}
+        {innhold}
       </div>
     )
   }
@@ -128,7 +136,43 @@ function Cell({
       className={`${className} active:scale-95`}
       style={style}
     >
-      {value}
+      {innhold}
     </button>
+  )
+}
+
+/**
+ * Tusjmerket. En bingotusj legger igjen en litt ujevn blekkflekk, ikke et
+ * fylt rektangel — og ingen to flekker er like. Formen og vinkelen utledes
+ * av tallet i ruta, så brettet ser håndmerket ut uten at noe er tilfeldig.
+ */
+function Blekk({
+  vises,
+  color,
+  seed,
+}: {
+  vises: boolean
+  color: string
+  seed: number
+}) {
+  const vinkel = (seed * 37) % 360
+  const form = [
+    '48% 52% 55% 45% / 52% 48% 52% 48%',
+    '54% 46% 47% 53% / 46% 55% 45% 54%',
+    '45% 55% 52% 48% / 55% 45% 55% 45%',
+  ][seed % 3]
+
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-[7%] transition-[opacity,transform] duration-150"
+      style={{
+        background: color,
+        borderRadius: form,
+        transform: `rotate(${vinkel}deg) scale(${vises ? 1 : 0.4})`,
+        opacity: vises ? 0.92 : 0,
+        boxShadow: `0 0 6px ${color}66`,
+      }}
+    />
   )
 }

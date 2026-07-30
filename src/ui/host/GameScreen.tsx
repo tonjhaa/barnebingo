@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import type { HostView, PrizeResultView, RosterEntry, RoundView } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
+import { BingoBall } from '@/ui/shared/BingoBall'
 import { Button } from '@/ui/shared/Button'
 import { useRoundSpeech } from './useSpeech'
 
@@ -46,25 +47,19 @@ export function GameScreen({
       <section className="flex flex-col items-center justify-center gap-8 text-center">
         <StageBanner round={round} />
 
-        <div
-          className="flate grid w-full place-items-center px-8 py-12"
-          style={{ minHeight: '38vh' }}
-        >
+        {/* Kula er kveldens midtpunkt og får stå alene, uten kasse rundt. */}
+        <div className="grid w-full place-items-center" style={{ minHeight: '46vh' }}>
           {round.currentNumber === null ? (
-            <p className="text-4xl font-bold text-tekst-svak">
+            <p className="font-[family-name:var(--font-stemme)] text-4xl font-semibold text-tekst-svak">
               {finished ? 'Alle tallene er trukket' : 'Klar for første tall'}
             </p>
           ) : (
-            <div>
-              {round.currentLetter && (
-                <p className="text-[clamp(3rem,7vw,6rem)] leading-none font-black text-bringebaer">
-                  {round.currentLetter}
-                </p>
-              )}
-              <p className="text-[clamp(7rem,20vw,16rem)] leading-none font-black text-sol tabular-nums">
-                {round.currentNumber}
-              </p>
-            </div>
+            <BingoBall
+              number={round.currentNumber}
+              letter={round.currentLetter}
+              column={round.currentColumn}
+              dropKey={round.drawnCount}
+            />
           )}
         </div>
 
@@ -79,7 +74,8 @@ export function GameScreen({
               {round.previousNumbers.map((n) => (
                 <li
                   key={n}
-                  className="rounded-xl bg-flate-2 px-4 py-2 text-2xl font-black tabular-nums text-tekst-svak"
+                  className="grid h-11 w-11 place-items-center rounded-full bg-flate font-[family-name:var(--font-tall)] text-lg font-extrabold tabular-nums text-tekst-svak"
+                  style={{ boxShadow: 'inset -2px -3px 6px rgb(0 0 0 / .3)' }}
                 >
                   {n}
                 </li>

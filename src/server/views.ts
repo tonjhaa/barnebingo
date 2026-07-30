@@ -1,5 +1,5 @@
 import { computeProgress, validMarks, type Board } from '@/domain/board/board'
-import { announce, columnLabelFor } from '@/domain/engine/draw'
+import { announce, columnIndexFor, columnLabelFor } from '@/domain/engine/draw'
 import { getFormat } from '@/domain/formats/registry'
 import { DIFFICULTY_PRESETS } from '@/domain/formats/presets'
 import { validateProfile } from '@/domain/formats/validate'
@@ -185,6 +185,10 @@ function buildRoundView(
     currentLetter:
       options.showNumbers && round.currentNumber !== null
         ? columnLabelFor(round.profile, round.currentNumber) || null
+        : null,
+    currentColumn:
+      options.showNumbers && round.currentNumber !== null
+        ? columnIndexFor(round.profile, round.currentNumber)
         : null,
     previousNumbers: options.showHistory ? history : [],
     drawnCount: round.drawnCount,

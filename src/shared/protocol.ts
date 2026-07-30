@@ -194,6 +194,9 @@ export interface RoundView {
   /** Bokstaven alene, eller null i formater uten kolonneoverskrifter. Skjermene
    *  skal aldri måtte plukke den ut av `currentLabel` selv. */
   currentLetter: string | null
+  /** Hvilken kolonne tallet hører til. Gir kula fargen sin — B-I-N-G-O i
+   *  75-formatet, tierne i 90. */
+  currentColumn: number | null
   previousNumbers: number[]
   drawnCount: number
   totalNumbers: number
