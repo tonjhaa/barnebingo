@@ -36,27 +36,27 @@ test.describe('lobbyen', () => {
   test('bildesteget kommer mellom navnet og klar-knappen', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    const klara = await Telefon.velgNavn(browser, kode, 'Klara')
+    const ada = await Telefon.velgNavn(browser, kode, 'Ada')
 
-    await expect(klara.page.getByText('Hei, Klara!')).toBeVisible()
-    await expect(klara.page.getByRole('button', { name: 'Jeg er klar!' })).toHaveCount(0)
+    await expect(ada.page.getByText('Hei, Ada!')).toBeVisible()
+    await expect(ada.page.getByRole('button', { name: 'Jeg er klar!' })).toHaveCount(0)
 
     // Kameraet finnes ikke i en hodeløs nettleser. Appen skal si det vennlig og
     // la spilleren gå videre med dyret sitt (§14).
-    await klara.page.getByRole('button', { name: /^Ta bilde/ }).click()
-    await expect(klara.page.getByRole('alert')).toBeVisible()
+    await ada.page.getByRole('button', { name: /^Ta bilde/ }).click()
+    await expect(ada.page.getByRole('alert')).toBeVisible()
 
-    await klara.velgAvatar()
-    await expect(klara.page.getByRole('button', { name: 'Jeg er klar!' })).toBeVisible()
+    await ada.velgAvatar()
+    await expect(ada.page.getByRole('button', { name: 'Jeg er klar!' })).toBeVisible()
   })
 
   test('valget huskes gjennom en reconnect', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
 
-    const context = klara.page.context()
-    await klara.page.close()
+    const context = ada.page.context()
+    await ada.page.close()
     const nySide = await context.newPage()
     await nySide.goto(`/bli-med/${kode}`)
 
@@ -65,20 +65,33 @@ test.describe('lobbyen', () => {
     await expect(nySide.getByRole('button', { name: /^Ta bilde/ })).toHaveCount(0)
   })
 
-  test('en opptatt plass krever at verten sier ja', async ({ browser }) => {
+  test('et navn som er i bruk krever at verten sier ja', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    await Telefon.bliMed(browser, kode, 'Klara')
+    await Telefon.bliMed(browser, kode, 'Ada')
 
     const andre = await browser.newContext()
     const side = await andre.newPage()
     await side.goto(`/bli-med/${kode}`)
-    await expect(side.getByText('Opptatt — trykk om det er deg')).toBeVisible()
+    await expect(side.getByText('Med fra før: Ada')).toBeVisible()
 
-    // Et trykk gir ikke plassen — det spør verten (§23).
-    await side.getByRole('button', { name: /^Klara/ }).click()
-    await expect(side.getByText('Venter på verten…')).toBeVisible()
+    // Skriver du et navn som allerede er i bruk, får du ikke plassen — du
+    // spør verten (§23).
+    await side.getByRole('textbox', { name: 'Navnet ditt' }).fill('Ada')
+    await expect(side.getByText('Ada er allerede med.')).toBeVisible()
+    await side.getByRole('button', { name: 'Det er meg — spør verten' }).click()
+    await expect(side.getByText('Spør verten…')).toBeVisible()
     await expect(side.getByRole('button', { name: 'Jeg er klar!' })).toHaveCount(0)
+  })
+
+  test('lar spilleren skrive sitt eget navn', async ({ browser }) => {
+    const vert = await Hovedskjerm.åpne(browser)
+    const kode = await vert.lagRom({ format: 'Barnebingo' })
+    const bjørn = await Telefon.bliMed(browser, kode, 'Bjørn-Ove')
+    await bjørn.meldKlar()
+
+    // Navnet finnes ingen steder i koden — det kom fra telefonen.
+    await expect(vert.page.getByText('Bjørn-Ove', { exact: true })).toBeVisible()
   })
 })
 
@@ -93,22 +106,22 @@ test.describe('75-tallsbingo', () => {
       brett: 3,
       markering: 'Selv',
     })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
-    await expect(klara.brettFaner()).toHaveCount(3)
+    await expect(ada.brettFaner()).toHaveCount(3)
     for (const bokstav of ['B', 'I', 'N', 'G', 'O']) {
-      await expect(klara.page.getByText(bokstav, { exact: true }).first()).toBeVisible()
+      await expect(ada.page.getByText(bokstav, { exact: true }).first()).toBeVisible()
     }
 
-    await klara.byttBrett(2)
-    await expect(klara.page.getByRole('tab', { name: /^Brett 2/ })).toHaveAttribute(
+    await ada.byttBrett(2)
+    await expect(ada.page.getByRole('tab', { name: /^Brett 2/ })).toHaveAttribute(
       'aria-selected',
       'true',
     )
-    await klara.byttBrett(1)
-    await expect(klara.page.getByRole('tab', { name: /^Brett 1/ })).toHaveAttribute(
+    await ada.byttBrett(1)
+    await expect(ada.page.getByRole('tab', { name: /^Brett 1/ })).toHaveAttribute(
       'aria-selected',
       'true',
     )
@@ -123,15 +136,15 @@ test.describe('75-tallsbingo', () => {
       nivå: 'Normal',
       markering: 'Selv',
     })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
     // Trekk til et tall på brettet dukker opp.
     let trukket = 0
     await trekkTil(vert, async () => {
-      const tall = await klara.trukketTall()
-      if (tall && (await klara.harTall(tall))) {
+      const tall = await ada.trukketTall()
+      if (tall && (await ada.harTall(tall))) {
         trukket = tall
         return true
       }
@@ -139,18 +152,18 @@ test.describe('75-tallsbingo', () => {
     })
     expect(trukket).toBeGreaterThan(0)
 
-    await klara.rute(trukket).click()
-    await expect(klara.rute(trukket)).toHaveAttribute('aria-pressed', 'true')
-    expect(await klara.kryss()).toBe(1)
+    await ada.rute(trukket).click()
+    await expect(ada.rute(trukket)).toHaveAttribute('aria-pressed', 'true')
+    expect(await ada.kryss()).toBe(1)
 
     // Trekkingen stoppet ved det første tallet som sto på brettet, så alle de
     // andre tallene på brettet er garantert utrukne. De skal ikke feste seg.
-    const utrukket = (await klara.brettTall()).find((n) => n !== trukket)!
+    const utrukket = (await ada.brettTall()).find((n) => n !== trukket)!
     expect(utrukket).toBeGreaterThan(0)
 
-    await klara.rute(utrukket).click()
-    await expect(klara.rute(utrukket)).toHaveAttribute('aria-pressed', 'false')
-    expect(await klara.kryss()).toBe(1)
+    await ada.rute(utrukket).click()
+    await expect(ada.rute(utrukket)).toHaveAttribute('aria-pressed', 'false')
+    expect(await ada.kryss()).toBe(1)
   })
 })
 
@@ -162,13 +175,13 @@ test.describe('90-tallsbingo', () => {
       nivå: 'Normal',
       markering: 'Selv',
     })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
     // Femten tall betyr femten trykkbare ruter; resten er hull i mønsteret.
-    await expect(klara.ruter()).toHaveCount(15)
-    expect(await klara.kryss()).toBe(0)
+    await expect(ada.ruter()).toHaveCount(15)
+    expect(await ada.kryss()).toBe(0)
 
     // Formatet har ikke kolonneoverskrifter, og heller ikke tre-rader-premien.
     await expect(vert.page.getByText('Premie 1 av 3')).toBeVisible()
@@ -232,23 +245,23 @@ test.describe('en hel runde', () => {
       markering: 'Automatisk',
       bingo: 'Selv',
     })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    const edvin = await Telefon.bliMed(browser, kode, 'Edvin')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    const edvin = await Telefon.bliMed(browser, kode, 'Bo')
+    await ada.meldKlar()
     await edvin.meldKlar()
     await vert.startSpillet()
 
     await trekkTil(
       vert,
-      async () => (await klara.heleRader()) >= 1 && (await edvin.heleRader()) >= 1,
+      async () => (await ada.heleRader()) >= 1 && (await edvin.heleRader()) >= 1,
     )
 
     // Bingo-vinduet skal fange begge, selv om den ene er et halvsekund treg.
-    await Promise.all([klara.ropBingo(), edvin.ropBingo()])
+    await Promise.all([ada.ropBingo(), edvin.ropBingo()])
 
     await expect(vert.premie()).toBeVisible()
-    await expect(vert.page.getByText('Klara', { exact: true })).toBeVisible()
-    await expect(vert.page.getByText('Edvin', { exact: true })).toBeVisible()
+    await expect(vert.page.getByText('Ada', { exact: true })).toBeVisible()
+    await expect(vert.page.getByText('Bo', { exact: true })).toBeVisible()
   })
 
   test('roper bingo selv når verten har valgt automatisk vinner', async ({
@@ -256,33 +269,34 @@ test.describe('en hel runde', () => {
   }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo', nivå: 'Nybegynner' })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
     // Ingen trykker BINGO her — serveren kårer vinneren selv.
     await trekkTil(vert, async () => vert.premie().isVisible())
 
     await expect(vert.premie()).toBeVisible()
-    await expect(klara.page.getByText('Du vant!')).toBeVisible()
+    await expect(ada.page.getByText('Du vant!')).toBeVisible()
   })
 })
 
 test.describe('overtakelse av en plass', () => {
-  test('verten kan slippe inn en ny telefon på Klaras plass', async ({ browser }) => {
+  test('verten kan slippe inn en ny telefon på Adas plass', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
 
     // Telefonen er borte for godt: ny kontekst, ingen nøkkel i localStorage.
-    await klara.lukk()
+    await ada.lukk()
     const nyKontekst = await browser.newContext()
     const nySide = await nyKontekst.newPage()
     await nySide.goto(`/bli-med/${kode}`)
 
-    await nySide.getByRole('button', { name: /^Klara/ }).click()
-    await expect(nySide.getByText('Venter på verten…')).toBeVisible()
+    await nySide.getByRole('textbox', { name: 'Navnet ditt' }).fill('Ada')
+    await nySide.getByRole('button', { name: 'Det er meg — spør verten' }).click()
+    await expect(nySide.getByText('Spør verten…')).toBeVisible()
 
     await expect(vert.page.getByText('En telefon vil overta plassen til')).toBeVisible()
     await vert.page.getByRole('button', { name: 'Slipp inn' }).click()
@@ -295,17 +309,18 @@ test.describe('overtakelse av en plass', () => {
   test('verten kan si nei', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    await Telefon.bliMed(browser, kode, 'Klara')
+    await Telefon.bliMed(browser, kode, 'Ada')
 
     const fremmed = await browser.newContext()
     const side = await fremmed.newPage()
     await side.goto(`/bli-med/${kode}`)
-    await side.getByRole('button', { name: /^Klara/ }).click()
+    await side.getByRole('textbox', { name: 'Navnet ditt' }).fill('Ada')
+    await side.getByRole('button', { name: 'Det er meg — spør verten' }).click()
 
     await expect(vert.page.getByText('En telefon vil overta plassen til')).toBeVisible()
     await vert.page.getByRole('button', { name: 'Nei' }).click()
 
-    await expect(side.getByText('Venter på verten…')).toHaveCount(0)
+    await expect(side.getByText('Spør verten…')).toHaveCount(0)
     await expect(vert.page.getByText('En telefon vil overta plassen til')).toHaveCount(0)
   })
 })
@@ -320,25 +335,25 @@ test.describe('nettverk og feilbruk', () => {
       nivå: 'Enkel',
       markering: 'Automatisk',
     })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
     await vert.trekk()
     await vert.ventPåTrekk(1)
-    const førKryss = await klara.kryss()
+    const førKryss = await ada.kryss()
 
     // Telefonen låser seg og appen lastes på nytt. Nøkkelen ligger i
     // localStorage, så spilleren skal rett tilbake i spillet.
-    const context = klara.page.context()
-    await klara.page.close()
+    const context = ada.page.context()
+    await ada.page.close()
     await expect(
       vert.page.getByText('Frakoblet', { exact: true }).first(),
     ).toBeVisible()
 
     const nySide = await context.newPage()
     await nySide.goto(`/bli-med/${kode}`)
-    const tilbake = new Telefon(nySide, 'Klara')
+    const tilbake = new Telefon(nySide, 'Ada')
 
     await expect(nySide.getByText('Vi spiller om')).toBeVisible()
     expect(await tilbake.kryss()).toBe(førKryss)
@@ -350,8 +365,8 @@ test.describe('nettverk og feilbruk', () => {
   }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo', nivå: 'Enkel' })
-    const klara = await Telefon.bliMed(browser, kode, 'Klara')
-    await klara.meldKlar()
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
     await vert.startSpillet()
 
     for (let i = 0; i < 5; i++) await vert.trekk()
@@ -370,7 +385,7 @@ test.describe('nettverk og feilbruk', () => {
   }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({ format: 'Barnebingo' })
-    await Telefon.bliMed(browser, kode, 'Klara')
+    await Telefon.bliMed(browser, kode, 'Ada')
 
     // Uten vertsnøkkel i localStorage er vertssiden stengt.
     const fremmed = await browser.newContext()

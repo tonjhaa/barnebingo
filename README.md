@@ -1,8 +1,8 @@
 # Barnebingo
 
 Bingo for hele familien. Hovedskjermen står på TV-en og trekker tallene; hver
-spiller har sitt eget brett på telefonen. Fire faste plasser: Klara, Edvin,
-Reodor og Pernilla.
+spiller har sitt eget brett på telefonen. Hver spiller skriver navnet sitt
+selv, og det er plass til seks.
 
 Arkitektur, regelavklaringer og faseplan: **[ARKITEKTUR.md](./ARKITEKTUR.md)**
 
@@ -34,8 +34,8 @@ Sertifikattillit**. Én gang per telefon.
    ikke røres — nivåene er ferdig satt opp.
 3. **Lobbyen** viser en QR-kode og en firetegns romkode. Telefonene skanner
    eller skriver koden.
-4. **Hver spiller** velger navnet sitt, tar en selfie eller beholder dyret sitt,
-   og trykker *Jeg er klar*.
+4. **Hver spiller** skriver navnet sitt, tar en selfie eller beholder dyret
+   appen ga hen, og trykker *Jeg er klar*.
 5. **Verten** starter, og trekker tall — eller lar appen gjøre det.
 6. **Premiene** deles ut ett stadium om gangen. Spillet står stille på
    premieskjermen til verten trykker videre, så det er tid til å hente premien.
@@ -74,7 +74,8 @@ Appen er laget for barn, og lagrer så lite som mulig:
 - Selfier ligger i prosessminnet, aldri på disk, og slettes når rommet dør.
   Serveren sender dem med `Cache-Control: no-store`.
 - Ingen ansiktsgjenkjenning eller bildeanalyse. Bildet er et bilde.
-- Spillernavn er fire faste fornavn. Fritekst finnes ikke.
+- Spillernavn skrives av spillerne selv og lever bare så lenge rommet gjør.
+  Maks tolv tegn, bokstaver og tall — nok til et fornavn, ikke til en historie.
 - Vertsnøkkel og gjenopprettingsnøkler havner aldri i en URL, bare i
   telefonens `localStorage`.
 

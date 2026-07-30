@@ -175,7 +175,7 @@ function Lobby({
   onEdit: () => void
   onStart: () => void
 }) {
-  const joined = view.roster.filter((slot) => slot.claimed).length
+  const joined = view.roster.length
 
   return (
     <div className="grid flex-1 gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
@@ -189,10 +189,21 @@ function Lobby({
                 : `${joined} med — venter på at alle blir klare`}
           </h2>
 
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {view.roster.map((slot) => (
               <SpillerKort key={slot.name} slot={slot} />
             ))}
+            {/* Én tom plass som invitasjon, ikke seks som mangelliste. */}
+            {view.freeSlots > 0 && (
+              <div className="flate grid place-items-center p-6 text-center text-lg text-tekst-svak">
+                <span>
+                  {joined === 0 ? 'Skann koden for å bli med' : 'Plass til flere'}
+                  <span className="mt-1 block text-base">
+                    {view.freeSlots === 1 ? 'én plass igjen' : `${view.freeSlots} plasser igjen`}
+                  </span>
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -237,7 +248,6 @@ function Lobby({
 }
 
 function SpillerKort({ slot }: { slot: RosterEntry }) {
-  const venter = !slot.claimed
   return (
     <div
       className="flate flex flex-col items-center gap-4 p-6 text-center transition-colors"
@@ -253,20 +263,14 @@ function SpillerKort({ slot }: { slot: RosterEntry }) {
         avatarId={slot.avatarId}
         selfieUrl={slot.selfieUrl}
         size={104}
-        dimmed={venter}
+        dimmed={!slot.connected}
       />
       <p className="text-3xl font-black">{slot.name}</p>
       <p
         className="text-lg font-bold"
         style={{ color: slot.ready ? slot.color : undefined }}
       >
-        {venter
-          ? 'Ledig plass'
-          : !slot.connected
-            ? 'Frakoblet'
-            : slot.ready
-              ? 'Klar!'
-              : 'Gjør seg klar…'}
+        {!slot.connected ? 'Frakoblet' : slot.ready ? 'Klar!' : 'Gjør seg klar…'}
       </p>
     </div>
   )

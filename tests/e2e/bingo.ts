@@ -30,8 +30,9 @@ export async function lukkAlleKontekster(): Promise<void> {
  * enheter, ikke fire faner som deler nøkler.
  */
 
-export const SPILLERE = ['Klara', 'Edvin', 'Reodor', 'Pernilla'] as const
-export type Spillernavn = (typeof SPILLERE)[number]
+/** Testdata, ikke lenger noe appen kjenner til. */
+export const SPILLERE = ['Ada', 'Bo', 'Cleo', 'Dina'] as const
+export type Spillernavn = string
 
 export interface Innstillinger {
   format?: 'Barnebingo' | '75-tallsbingo' | '90-tallsbingo'
@@ -207,7 +208,8 @@ export class Telefon {
     const context = husk(await browser.newContext({ ...devices['iPhone 13'] }))
     const page = await context.newPage()
     await page.goto(`/bli-med/${kode}`)
-    await page.getByRole('button', { name: new RegExp(`^${navn}`) }).click()
+    await page.getByRole('textbox', { name: 'Navnet ditt' }).fill(navn)
+    await page.getByRole('button', { name: 'Bli med' }).click()
     await expect(page.getByRole('button', { name: /^Ta bilde/ })).toBeVisible()
     return new Telefon(page, navn)
   }

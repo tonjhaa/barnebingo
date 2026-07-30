@@ -22,8 +22,8 @@ async function spillFerdig(lobby: Awaited<ReturnType<typeof h.createLobby>>) {
 describe('resultatskjermen', () => {
   it('kommer fram når kula er tom, ikke bare når siste premie er vunnet', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
     await spillFerdig(lobby)
 
     const view = await lobby.state.until((v) => v.results !== null)
@@ -41,8 +41,8 @@ describe('resultatskjermen', () => {
       winMode: 'autoWin',
       enabledStageIds: ['row1', 'full'],
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     for (let i = 1; i <= 60; i++) {
       const prize = lobby.state.latest?.round?.prize
@@ -62,28 +62,28 @@ describe('resultatskjermen', () => {
       'Én rad',
       'Fullt brett',
     ])
-    expect(view.results?.stages[0].winners[0].name).toBe('Klara')
-    expect(view.results?.standings.find((s) => s.name === 'Klara')?.prizes).toBe(2)
+    expect(view.results?.stages[0].winners[0].name).toBe('Ada')
+    expect(view.results?.standings.find((s) => s.name === 'Ada')?.prizes).toBe(2)
   }, 30000)
 
   it('sender sluttbildet til telefonene også', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const telefon = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const telefon = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
     await spillFerdig(lobby)
 
     const view = await telefon.until((v) => v.results !== null)
-    expect(view.results?.standings.map((s) => s.name)).toContain('Klara')
+    expect(view.results?.standings.map((s) => s.name)).toContain('Ada')
   })
 })
 
 describe('ny runde', () => {
   it('gir nye brett til de samme spillerne', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const telefon = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const telefon = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
     const førsteBrett = (await telefon.until((v) => v.boards.length > 0)).boards[0].id
     await spillFerdig(lobby)
     await lobby.state.until((v) => v.results !== null)
@@ -92,14 +92,14 @@ describe('ny runde', () => {
 
     // Tilbake i lobbyen: plassen er i behold, men klar-status er nullstilt.
     const iLobby = await lobby.state.until((v) => v.status === 'lobby')
-    expect(iLobby.roster.find((s) => s.name === 'Klara')?.claimed).toBe(true)
-    expect(iLobby.roster.find((s) => s.name === 'Klara')?.ready).toBe(false)
+    expect(iLobby.roster.map((s) => s.name)).toEqual(['Ada'])
+    expect(iLobby.roster.find((s) => s.name === 'Ada')?.ready).toBe(false)
     expect(iLobby.results).toBeNull()
     expect(iLobby.round).toBeNull()
 
     // Brettene ble delt ut på nytt, så vi venter på et brett som ikke er det
     // gamle — ikke bare på «et brett», som ville truffet forrige runde.
-    await startRound(h, lobby, [klara])
+    await startRound(h, lobby, [ada])
     const nyttBrett = (
       await telefon.until((v) => v.boards.length > 0 && v.boards[0].id !== førsteBrett)
     ).boards[0]
@@ -114,14 +114,14 @@ describe('ny runde', () => {
       winMode: 'autoWin',
       enabledStageIds: ['row1'],
     })
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
     for (const runde of [1, 2]) {
       if (runde === 2) {
         await h.expectOk(lobby.host, C.hostNewRound, lobby.next())
         await lobby.state.until((v) => v.status === 'lobby')
       }
-      await startRound(h, lobby, [klara])
+      await startRound(h, lobby, [ada])
       for (let i = 1; i <= 45; i++) {
         if (lobby.state.latest?.results) break
         const result = await h.ask(lobby.host, C.hostDrawNext, lobby.next())
@@ -133,13 +133,13 @@ describe('ny runde', () => {
 
     const view = lobby.state.latest!
     expect(view.results?.roundsPlayed).toBe(2)
-    expect(view.results?.standings.find((s) => s.name === 'Klara')?.prizes).toBe(2)
+    expect(view.results?.standings.find((s) => s.name === 'Ada')?.prizes).toBe(2)
   }, 40000)
 
   it('avviser ny runde mens spillet pågår', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const svar = await h.ask(lobby.host, C.hostNewRound, lobby.next())
     expect(svar.ok).toBe(false)
@@ -150,11 +150,11 @@ describe('ny runde', () => {
 describe('vertsgodkjent overtakelse', () => {
   it('slipper en ny telefon inn på en opptatt plass', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await h.expectOk(klara.socket, C.playerUseAvatar, klara.auth)
+    const ada = await h.joinAs(lobby, 'Ada')
+    await h.expectOk(ada.socket, C.playerUseAvatar, ada.auth)
 
     // Telefonen er borte for godt — nøkkelen finnes ikke lenger noe sted.
-    klara.socket.disconnect()
+    ada.socket.disconnect()
 
     const nyTelefon = await h.newClient()
     await h.expectOk(nyTelefon, C.playerLookupRoom, { code: lobby.code })
@@ -164,52 +164,52 @@ describe('vertsgodkjent overtakelse', () => {
     )
     await h.expectOk(nyTelefon, C.playerRequestTakeover, {
       roomId: lobby.roomId,
-      name: 'Klara',
+      name: 'Ada',
     })
 
     const medForespørsel = await lobby.state.until(
       (v) => v.takeoverRequests.length === 1,
     )
-    expect(medForespørsel.takeoverRequests[0].name).toBe('Klara')
+    expect(medForespørsel.takeoverRequests[0].name).toBe('Ada')
 
     await h.expectOk(lobby.host, C.hostApproveTakeover, {
       ...lobby.next(),
-      name: 'Klara',
+      name: 'Ada',
     })
 
     const nøkler = await godkjent
-    expect(nøkler.playerId).toBe(klara.playerId)
+    expect(nøkler.playerId).toBe(ada.playerId)
     // Ny nøkkel: den gamle telefonen kommer ikke inn igjen.
-    expect(nøkler.recoveryKey).not.toBe(klara.recoveryKey)
+    expect(nøkler.recoveryKey).not.toBe(ada.recoveryKey)
 
     const etter = await lobby.state.until((v) => v.takeoverRequests.length === 0)
-    expect(etter.roster.find((s) => s.name === 'Klara')?.connected).toBe(true)
+    expect(etter.roster.find((s) => s.name === 'Ada')?.connected).toBe(true)
   })
 
   it('stenger den gamle nøkkelen ute etter overtakelsen', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    klara.socket.disconnect()
+    const ada = await h.joinAs(lobby, 'Ada')
+    ada.socket.disconnect()
 
     const nyTelefon = await h.newClient()
     await h.expectOk(nyTelefon, C.playerRequestTakeover, {
       roomId: lobby.roomId,
-      name: 'Klara',
+      name: 'Ada',
     })
     await h.expectOk(lobby.host, C.hostApproveTakeover, {
       ...lobby.next(),
-      name: 'Klara',
+      name: 'Ada',
     })
 
     const gammel = await h.newClient()
-    const svar = await h.ask(gammel, C.playerResume, klara.auth)
+    const svar = await h.ask(gammel, C.playerResume, ada.auth)
     expect(svar.ok).toBe(false)
     if (!svar.ok) expect(svar.code).toBe('auth/player')
   })
 
   it('lar verten si nei', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
     const nyTelefon = await h.newClient()
     const avvist = new Promise<{ name: string }>((resolve) =>
@@ -217,18 +217,18 @@ describe('vertsgodkjent overtakelse', () => {
     )
     await h.expectOk(nyTelefon, C.playerRequestTakeover, {
       roomId: lobby.roomId,
-      name: 'Klara',
+      name: 'Ada',
     })
     await lobby.state.until((v) => v.takeoverRequests.length === 1)
 
-    await h.expectOk(lobby.host, C.hostDenyTakeover, { ...lobby.next(), name: 'Klara' })
+    await h.expectOk(lobby.host, C.hostDenyTakeover, { ...lobby.next(), name: 'Ada' })
 
-    expect((await avvist).name).toBe('Klara')
+    expect((await avvist).name).toBe('Ada')
     const etter = await lobby.state.until((v) => v.takeoverRequests.length === 0)
     expect(etter.takeoverRequests).toEqual([])
-    // Klaras opprinnelige nøkkel gjelder fortsatt.
+    // Adas opprinnelige nøkkel gjelder fortsatt.
     expect(
-      (await h.ask(klara.socket, C.playerSetReady, { ...klara.auth, ready: true })).ok,
+      (await h.ask(ada.socket, C.playerSetReady, { ...ada.auth, ready: true })).ok,
     ).toBe(true)
     void etter
   })
@@ -239,7 +239,7 @@ describe('vertsgodkjent overtakelse', () => {
 
     const svar = await h.ask(socket, C.playerRequestTakeover, {
       roomId: lobby.roomId,
-      name: 'Klara',
+      name: 'Ada',
     })
     expect(svar.ok).toBe(false)
     if (!svar.ok) expect(svar.code).toBe('takeover/free')
@@ -247,18 +247,18 @@ describe('vertsgodkjent overtakelse', () => {
 
   it('lar ingen andre enn verten godkjenne', async () => {
     const lobby = await h.createLobby(KIDS)
-    await h.joinAs(lobby, 'Klara')
+    await h.joinAs(lobby, 'Ada')
     const nyTelefon = await h.newClient()
     await h.expectOk(nyTelefon, C.playerRequestTakeover, {
       roomId: lobby.roomId,
-      name: 'Klara',
+      name: 'Ada',
     })
 
     const svar = await h.ask(nyTelefon, C.hostApproveTakeover, {
       roomId: lobby.roomId,
       hostKey: 'x'.repeat(43),
       seq: 999,
-      name: 'Klara',
+      name: 'Ada',
     })
     expect(svar.ok).toBe(false)
     if (!svar.ok) expect(svar.code).toBe('auth/host')

@@ -9,7 +9,7 @@ import { isPlayable } from './formats/validate'
 import { generateId, generateSecret } from './ids'
 import { err, ok, type Result } from './result'
 import { seededRng } from './rng'
-import { rosterSlot, type PlayerName } from './roster'
+import { MAX_PLAYERS, paletteFor, sameName, validateName } from './players'
 import {
   abandonBingoWindow,
   addBingoClaim,
@@ -51,7 +51,7 @@ export interface PrizeWin {
 
 export interface Player {
   id: string
-  name: PlayerName
+  name: string
   color: string
   avatarId: string
   /** Referanse til selfie i SelfieStore. null = bruker avatar. */
@@ -122,8 +122,8 @@ export function findPlayer(room: Room, playerId: string): Player | undefined {
   return room.players.find((p) => p.id === playerId)
 }
 
-export function findPlayerByName(room: Room, name: PlayerName): Player | undefined {
-  return room.players.find((p) => p.name === name)
+export function findPlayerByName(room: Room, name: string): Player | undefined {
+  return room.players.find((p) => sameName(p.name, name))
 }
 
 // --- Konfigurasjon ---------------------------------------------------------
@@ -158,26 +158,37 @@ export function openLobby(room: Room): Result<Room> {
 
 // --- Spillere --------------------------------------------------------------
 
-export function claimPlayer(
-  room: Room,
-  name: PlayerName,
-  now: number,
-): Result<Player> {
+/**
+ * En spiller skriver navnet sitt og blir med. Navnet valideres her, ikke i
+ * grensesnittet — en telefon kan sende hva som helst.
+ */
+export function claimPlayer(room: Room, rawName: string, now: number): Result<Player> {
   if (room.status !== 'lobby' && room.status !== 'ready') {
     return err('claim/closed', 'Lobbyen er ikke åpen akkurat nå.')
   }
+
+  const validated = validateName(rawName)
+  if (!validated.ok) return validated
+  const name = validated.value
+
+  if (room.players.length >= MAX_PLAYERS) {
+    return err('claim/full', `Det er plass til ${MAX_PLAYERS} spillere, og rommet er fullt.`)
+  }
+
   const existing = findPlayerByName(room, name)
   if (existing) {
-    // Én aktiv telefon per navn (§28). En frakoblet spiller kan komme tilbake
-    // med gjenopprettingsnøkkelen sin, ikke ved å ta plassen på nytt.
+    // Ett navn per telefon (§28). En frakoblet spiller kommer tilbake med
+    // gjenopprettingsnøkkelen sin, eller ved at verten slipper hen inn (§23).
     return err(
       'claim/taken',
       existing.connected
-        ? `${name} spiller allerede fra en annen telefon.`
-        : `${name} er allerede med, men er frakoblet. Bruk samme telefon for å komme tilbake.`,
+        ? `Noen spiller allerede som ${name}.`
+        : `${name} er allerede med, men frakoblet. Bruk samme telefon, eller spør verten.`,
     )
   }
-  const slot = rosterSlot(name)
+
+  // Farge og dyr følger rekkefølgen man ble med i, så to spillere aldri ser like ut.
+  const slot = paletteFor(room.players.length)
   const player: Player = {
     id: generateId('player'),
     name,
@@ -236,7 +247,7 @@ export function selectAvatar(room: Room, playerId: string): Result<{ forrige: st
  */
 export function approveTakeover(
   room: Room,
-  name: PlayerName,
+  name: string,
   now: number,
 ): Result<{ playerId: string; recoveryKey: string }> {
   const player = findPlayerByName(room, name)

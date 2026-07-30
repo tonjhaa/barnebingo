@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { DIFFICULTIES, FORMAT_IDS } from '@/domain/formats/types'
-import { ROSTER_NAMES } from '@/domain/roster'
+import { MAX_NAME_LENGTH } from '@/domain/players'
 
 /**
  * Én sannhet for alt som går over ledningen. Skjemaene brukes til runtime-
@@ -16,7 +16,12 @@ export const RoomCodeSchema = z
   .toUpperCase()
   .regex(/^[A-HJ-NP-Z2-9]{4}$/, 'Romkoden er fire tegn.')
 
-export const PlayerNameSchema = z.enum(ROSTER_NAMES)
+/**
+ * Konvolutten sjekker bare at det er en rimelig streng. Selve navneregelen
+ * — tegnsett, tomt navn, doble navn — bor i domenet, som er det eneste stedet
+ * som kjenner de andre spillerne i rommet.
+ */
+export const PlayerNameSchema = z.string().trim().min(1).max(MAX_NAME_LENGTH)
 
 export const ConfigInputSchema = z.object({
   format: z.enum(FORMAT_IDS),
@@ -275,7 +280,6 @@ export interface RosterEntry {
   name: string
   color: string
   avatarId: string
-  claimed: boolean
   connected: boolean
   ready: boolean
   hasSelfie: boolean
@@ -292,6 +296,8 @@ export interface HostView {
   configInput: z.infer<typeof ConfigInputSchema>
   issues: Array<{ code: string; message: string; severity: 'error' | 'warning' }>
   roster: RosterEntry[]
+  /** Hvor mange flere som får plass. Lobbyen sier fra når rommet er fullt. */
+  freeSlots: number
   canStart: boolean
   hostSeq: number
   round: RoundView | null

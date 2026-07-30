@@ -93,11 +93,9 @@ export function GameScreen({
           ellers stående med et stort tomrom midt på TV-skjermen. */}
       <aside className="flex flex-col justify-center gap-6">
         <div className="grid gap-4 sm:grid-cols-2">
-          {view.roster
-            .filter((slot) => slot.claimed)
-            .map((slot) => (
-              <SpillerStatus key={slot.name} slot={slot} />
-            ))}
+          {view.roster.map((slot) => (
+            <SpillerStatus key={slot.name} slot={slot} />
+          ))}
         </div>
 
         <div className="flate flex flex-col gap-4 p-6">

@@ -18,9 +18,9 @@ describe('hovedskjermen forsvinner', () => {
       drawIntervalMs: 3000,
       markingMode: 'auto',
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const telefon = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const telefon = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     await lobby.state.until((v) => (v.round?.drawnCount ?? 0) >= 1, 6000)
     const førAntall = h.game.store.get(lobby.roomId)!.round!.drawnCount
@@ -40,9 +40,9 @@ describe('hovedskjermen forsvinner', () => {
       drawIntervalMs: 3000,
       markingMode: 'auto',
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const telefon = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const telefon = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
     await lobby.state.until((v) => (v.round?.drawnCount ?? 0) >= 1, 6000)
 
     lobby.host.disconnect()
@@ -64,8 +64,8 @@ describe('hovedskjermen forsvinner', () => {
 
   it('lar manuell trekking være helt upåvirket', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     // Manuell trekking krever uansett at verten trykker, så det finnes ingen
     // timer å stoppe. Verten skal kunne trekke rett etter en reconnect.
@@ -92,8 +92,8 @@ describe('samtidige hendelser', () => {
     await h.expectOk(b, C.playerLookupRoom, { code: lobby.code })
 
     const svar = await Promise.all([
-      h.ask(a, C.playerClaim, { roomId: lobby.roomId, name: 'Klara' }),
-      h.ask(b, C.playerClaim, { roomId: lobby.roomId, name: 'Klara' }),
+      h.ask(a, C.playerClaim, { roomId: lobby.roomId, name: 'Ada' }),
+      h.ask(b, C.playerClaim, { roomId: lobby.roomId, name: 'Ada' }),
     ])
 
     expect(svar.filter((s) => s.ok)).toHaveLength(1)
@@ -103,8 +103,8 @@ describe('samtidige hendelser', () => {
 
   it('teller fem raske trekk som fem tall, ikke flere og ikke færre', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const svar = await Promise.all(
       Array.from({ length: 5 }, () => h.ask(lobby.host, C.hostDrawNext, lobby.next())),
@@ -118,8 +118,8 @@ describe('samtidige hendelser', () => {
 
   it('avviser en gjenbrukt sekvens selv om kommandoen kommer to ganger', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const kommando = lobby.next()
     const [første, gjentatt] = await Promise.all([
@@ -137,9 +137,9 @@ describe('samtidige hendelser', () => {
       markingMode: 'auto',
       bingoWindowMs: 1500,
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     for (let i = 1; i <= 40; i++) {
       if ((state.latest?.boards[0]?.completedRows.length ?? 0) >= 1) break
@@ -148,11 +148,11 @@ describe('samtidige hendelser', () => {
       await lobby.state.until((v) => (v.round?.drawnCount ?? 0) >= i)
     }
 
-    await h.expectOk(klara.socket, C.playerClaimBingo, klara.auth)
+    await h.expectOk(ada.socket, C.playerClaimBingo, ada.auth)
     const brett = state.latest!.boards[0]
 
-    const svar = await h.ask(klara.socket, C.playerMark, {
-      ...klara.auth,
+    const svar = await h.ask(ada.socket, C.playerMark, {
+      ...ada.auth,
       boardId: brett.id,
       value: 1,
     })
@@ -164,11 +164,11 @@ describe('samtidige hendelser', () => {
 describe('rate limiting over ledningen', () => {
   it('bremser en telefon som hamrer på BINGO', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const svar = await Promise.all(
-      Array.from({ length: 12 }, () => h.ask(klara.socket, C.playerClaimBingo, klara.auth)),
+      Array.from({ length: 12 }, () => h.ask(ada.socket, C.playerClaimBingo, ada.auth)),
     )
     const bremset = svar.filter((s) => !s.ok && s.code === 'rate/limited')
     expect(bremset.length).toBeGreaterThan(0)
@@ -185,7 +185,7 @@ describe('rate limiting over ledningen', () => {
 
     const svar = await Promise.all(
       Array.from({ length: 10 }, () =>
-        h.ask(socket, C.playerClaim, { roomId: lobby.roomId, name: 'Klara' }),
+        h.ask(socket, C.playerClaim, { roomId: lobby.roomId, name: 'Ada' }),
       ),
     )
     expect(svar.some((s) => !s.ok && s.code === 'rate/limited')).toBe(true)
@@ -195,10 +195,10 @@ describe('rate limiting over ledningen', () => {
 describe('opprydding', () => {
   it('etterlater ingen bindinger når alle kobler fra', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
 
-    klara.socket.disconnect()
+    ada.socket.disconnect()
     edvin.socket.disconnect()
     lobby.host.disconnect()
 
@@ -213,8 +213,8 @@ describe('opprydding', () => {
       drawIntervalMs: 3000,
       markingMode: 'auto',
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const rom = h.game.store.get(lobby.roomId)!
     rom.lastActivityAt = Date.now() - 60 * 60 * 1000

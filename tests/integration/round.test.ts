@@ -14,14 +14,14 @@ const B75 = { format: 'bingo75', difficulty: 'normal' }
 describe('start av runden', () => {
   it('deler ut brett til alle spillerne', async () => {
     const lobby = await h.createLobby(B75)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
-    const klaraState = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
+    const adaState = watch<PlayerView>(ada.socket, E.playerState)
     const edvinState = watch<PlayerView>(edvin.socket, E.playerState)
 
-    await startRound(h, lobby, [klara, edvin])
+    await startRound(h, lobby, [ada, edvin])
 
-    const k = await klaraState.until((view) => view.boards.length > 0)
+    const k = await adaState.until((view) => view.boards.length > 0)
     const e = await edvinState.until((view) => view.boards.length > 0)
 
     expect(k.boards).toHaveLength(1)
@@ -40,10 +40,10 @@ describe('start av runden', () => {
 
   it('gir hver spiller tre brett når verten har valgt det', async () => {
     const lobby = await h.createLobby({ ...B75, boardsPerPlayer: 3 })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
 
-    await startRound(h, lobby, [klara])
+    await startRound(h, lobby, [ada])
 
     const view = await state.until((v) => v.boards.length === 3)
     expect(view.boards.map((b) => b.index)).toEqual([1, 2, 3])
@@ -52,11 +52,11 @@ describe('start av runden', () => {
 
   it('sender aldri en spiller et annet barns brett', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
 
-    await startRound(h, lobby, [klara, edvin])
+    await startRound(h, lobby, [ada, edvin])
 
     const view = await state.until((v) => v.boards.length > 0)
     expect(view.boards).toHaveLength(1)
@@ -67,10 +67,10 @@ describe('start av runden', () => {
 
   it('starter ikke før alle er klare', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await h.joinAs(lobby, 'Edvin')
+    const ada = await h.joinAs(lobby, 'Ada')
+    await h.joinAs(lobby, 'Bo')
 
-    await h.expectOk(klara.socket, C.playerSetReady, { ...klara.auth, ready: true })
+    await h.expectOk(ada.socket, C.playerSetReady, { ...ada.auth, ready: true })
 
     const response = await h.ask(lobby.host, C.hostStartGame, lobby.next())
     expect(response.ok).toBe(false)
@@ -79,8 +79,8 @@ describe('start av runden', () => {
 
   it('starter ikke en runde to ganger', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const response = await h.ask(lobby.host, C.hostStartGame, lobby.next())
     expect(response.ok).toBe(false)
@@ -91,12 +91,12 @@ describe('start av runden', () => {
 describe('trekking', () => {
   it('gir alle klientene det samme tallet', async () => {
     const lobby = await h.createLobby(B75)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
-    const k = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
+    const k = watch<PlayerView>(ada.socket, E.playerState)
     const e = watch<PlayerView>(edvin.socket, E.playerState)
 
-    await startRound(h, lobby, [klara, edvin])
+    await startRound(h, lobby, [ada, edvin])
     const trukket = await h.expectOk<{ number: number }>(
       lobby.host,
       C.hostDrawNext,
@@ -115,8 +115,8 @@ describe('trekking', () => {
 
   it('trekker aldri det samme tallet to ganger gjennom en hel runde', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const trukket: number[] = []
     for (let i = 0; i < 40; i++) {
@@ -144,9 +144,9 @@ describe('trekking', () => {
 
   it('markerer ingenting av seg selv i manuell modus', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     for (let i = 0; i < 10; i++) {
       await h.expectOk(lobby.host, C.hostDrawNext, lobby.next())
@@ -159,8 +159,8 @@ describe('trekking', () => {
 
   it('viser tidligere tall på hovedskjermen, nyeste først', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const trukket: number[] = []
     for (let i = 0; i < 4; i++) {
@@ -179,10 +179,10 @@ describe('trekking', () => {
 
   it('avviser trekk fra noen som ikke er vert', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
-    const response = await h.ask(klara.socket, C.hostDrawNext, {
+    const response = await h.ask(ada.socket, C.hostDrawNext, {
       roomId: lobby.roomId,
       hostKey: 'z'.repeat(43),
       seq: 999,
@@ -195,8 +195,8 @@ describe('trekking', () => {
 describe('pause', () => {
   it('stopper trekkingen og slipper den løs igjen', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     await h.expectOk(lobby.host, C.hostPause, lobby.next())
     await lobby.state.until((v) => v.round?.status === 'paused')
@@ -219,8 +219,8 @@ describe('automatisk trekking', () => {
       drawIntervalMs: 3000,
       markingMode: 'auto',
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     // Ingen manuelle trekk her — timeren gjør jobben.
     const etterFørste = await lobby.state.until((v) => (v.round?.drawnCount ?? 0) >= 1, 6000)
@@ -238,15 +238,15 @@ describe('automatisk trekking', () => {
 describe('flere brett', () => {
   it('lar spilleren bytte aktivt brett', async () => {
     const lobby = await h.createLobby({ ...B75, boardsPerPlayer: 3 })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     const start = await state.until((v) => v.boards.length === 3)
     const andre = start.boards[1].id
 
-    await h.expectOk(klara.socket, C.playerSetActiveBoard, {
-      ...klara.auth,
+    await h.expectOk(ada.socket, C.playerSetActiveBoard, {
+      ...ada.auth,
       boardId: andre,
     })
     const etter = await state.until((v) => v.activeBoardId === andre)
@@ -255,15 +255,15 @@ describe('flere brett', () => {
 
   it('lar ingen gjøre et fremmed brett til sitt aktive', async () => {
     const lobby = await h.createLobby({ ...B75, boardsPerPlayer: 2 })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
     const edvinState = watch<PlayerView>(edvin.socket, E.playerState)
-    await startRound(h, lobby, [klara, edvin])
+    await startRound(h, lobby, [ada, edvin])
 
     const edvinsBrett = (await edvinState.until((v) => v.boards.length === 2)).boards[0].id
 
-    const response = await h.ask(klara.socket, C.playerSetActiveBoard, {
-      ...klara.auth,
+    const response = await h.ask(ada.socket, C.playerSetActiveBoard, {
+      ...ada.auth,
       boardId: edvinsBrett,
     })
     expect(response.ok).toBe(false)
@@ -278,9 +278,9 @@ describe('hjelpemidler på telefonen', () => {
       showCurrentNumberOnPhone: false,
       showDrawHistoryOnPhone: false,
     })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     for (let i = 0; i < 3; i++) {
       await h.expectOk(lobby.host, C.hostDrawNext, lobby.next())
@@ -300,17 +300,17 @@ describe('hjelpemidler på telefonen', () => {
 describe('reconnect midt i runden', () => {
   it('gir spilleren brettene sine tilbake', async () => {
     const lobby = await h.createLobby({ ...B75, boardsPerPlayer: 2 })
-    const klara = await h.joinAs(lobby, 'Klara')
-    const first = watch<PlayerView>(klara.socket, E.playerState)
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    const first = watch<PlayerView>(ada.socket, E.playerState)
+    await startRound(h, lobby, [ada])
 
     const før = await first.until((v) => v.boards.length === 2)
     await h.expectOk(lobby.host, C.hostDrawNext, lobby.next())
-    klara.socket.disconnect()
+    ada.socket.disconnect()
 
     const nyTelefon = await h.newClient()
     const etterState = watch<PlayerView>(nyTelefon, E.playerState)
-    await h.expectOk(nyTelefon, C.playerResume, klara.auth)
+    await h.expectOk(nyTelefon, C.playerResume, ada.auth)
 
     const etter = await etterState.until((v) => v.boards.length === 2)
     expect(etter.boards.map((b) => b.id)).toEqual(før.boards.map((b) => b.id))
@@ -321,17 +321,18 @@ describe('reconnect midt i runden', () => {
 describe('hovedskjermens spillerstatus', () => {
   it('viser hvor mange kryss og rader hver spiller har', async () => {
     const lobby = await h.createLobby(KIDS)
-    const klara = await h.joinAs(lobby, 'Klara')
-    await startRound(h, lobby, [klara])
+    const ada = await h.joinAs(lobby, 'Ada')
+    await startRound(h, lobby, [ada])
 
     const view: HostView = await lobby.state.until((v) => v.round !== null)
-    const slot = view.roster.find((s) => s.name === 'Klara')
+    const slot = view.roster.find((s) => s.name === 'Ada')
     expect(slot?.progress).toEqual({
       boards: 1,
       bestCompletedRows: 0,
       markedCount: 0,
       prizes: 0,
     })
-    expect(view.roster.find((s) => s.name === 'Edvin')?.progress).toBeNull()
+    // Bare de som faktisk er med står i lista.
+    expect(view.roster.map((s) => s.name)).toEqual(['Ada'])
   })
 })

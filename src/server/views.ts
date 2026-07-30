@@ -5,7 +5,7 @@ import { DIFFICULTY_PRESETS } from '@/domain/formats/presets'
 import { validateProfile } from '@/domain/formats/validate'
 import type { RuleProfile } from '@/domain/formats/types'
 import { canStart, playerHasBingo, standings, type Player, type Room } from '@/domain/room'
-import { ROSTER } from '@/domain/roster'
+import { MAX_PLAYERS } from '@/domain/players'
 import { currentStage, drawnNumbers, drawnSet, type Round } from '@/domain/round'
 import type {
   BoardView,
@@ -202,26 +202,23 @@ function buildRoundView(
 }
 
 /**
- * Alle fire plassene vises alltid, også de ledige — lobbyen skal svare på
- * «hvem mangler?», ikke bare «hvem er her?».
+ * Bare spillerne som faktisk har blitt med. Rommet har ingen liste over navn
+ * på forhånd, så det finnes ingen tomme plasser å vise — lobbyen sier i stedet
+ * hvor mange flere det er plass til.
  */
 export function buildRoster(room: Room): RosterEntry[] {
   const drawn = room.round ? drawnSet(room.round) : new Set<number>()
 
-  return ROSTER.map((slot) => {
-    const player = room.players.find((p) => p.name === slot.name)
-    return {
-      name: slot.name,
-      color: slot.color,
-      avatarId: player?.avatarId ?? slot.avatarId,
-      claimed: Boolean(player),
-      connected: player?.connected ?? false,
-      ready: player?.ready ?? false,
-      hasSelfie: Boolean(player?.selfieRef),
-      selfieUrl: player ? selfieUrl(room, player) : null,
-      progress: player ? buildProgress(player, drawn) : null,
-    }
-  })
+  return room.players.map((player) => ({
+    name: player.name,
+    color: player.color,
+    avatarId: player.avatarId,
+    connected: player.connected,
+    ready: player.ready,
+    hasSelfie: Boolean(player.selfieRef),
+    selfieUrl: selfieUrl(room, player),
+    progress: buildProgress(player, drawn),
+  }))
 }
 
 export function buildHostView(
@@ -239,6 +236,7 @@ export function buildHostView(
     configInput: room.configInput,
     issues: validateProfile(room.profile),
     roster: buildRoster(room),
+    freeSlots: Math.max(0, MAX_PLAYERS - room.players.length),
     canStart: canStart(room),
     hostSeq: room.hostSeq,
     // Hovedskjermen er trekkeren og ser alltid alt.
@@ -251,8 +249,10 @@ export function buildHostView(
       : null,
     results: buildResults(room),
     takeoverRequests: takeoverRequests.flatMap((name) => {
-      const slot = ROSTER.find((s) => s.name === name)
-      return slot ? [{ name: slot.name, color: slot.color, avatarId: slot.avatarId }] : []
+      const player = room.players.find((p) => p.name === name)
+      return player
+        ? [{ name: player.name, color: player.color, avatarId: player.avatarId }]
+        : []
     }),
   }
 }

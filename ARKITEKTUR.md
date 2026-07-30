@@ -281,8 +281,23 @@ spiller kan vinne gjeldende stadium, oppheves sperren automatisk for det stadiet
 hovedskjermen sier fra. Standard er uansett `allowRepeatWinners: true`.
 
 **K7 — «velge navn» vs. fire faste spillere.** §1 sier velge navn, §16 sier velge
-ledig spiller. Løsning: fast roster på fire navn (Klara, Edvin, Reodor, Pernilla);
-spilleren velger en ledig plass. Én aktiv telefon per navn, håndhevet av serveren.
+ledig spiller. Løst først med en fast liste på fire navn, men **omgjort etter
+ønske fra eieren**: hver spiller skriver navnet sitt selv på telefonen.
+
+Det gjør appen brukbar for hvem som helst, men flytter tre problemer fra
+spesifikasjonen til koden, og alle tre håndheves i `domain/players.ts`:
+
+* **Lengde.** Maks 12 tegn, ellers får navnet ikke plass på en TV-skjerm.
+* **Tegnsett.** Bokstaver, tall, mellomrom, bindestrek og apostrof. Emoji
+  sprenger linjehøyden der navnet skal leses fra fire meters avstand.
+  Linjeskift avvises ikke, men gjøres om til mellomrom — innlimt rot er ikke
+  et angrep.
+* **Doble navn.** Sammenlignes uten hensyn til store bokstaver, så «ada» og
+  «Ada» er samme spiller. To like navn ville gjort premievisningen uleselig.
+
+Farge og dyr deles ut etter tur fra en palett, så to spillere aldri ser like ut.
+Lobbyen kan ikke lenger svare på «hvem mangler?», og viser i stedet hvor mange
+plasser det er igjen. Rommet tar seks spillere.
 
 **K8 — retroaktiv BINGO ved stadieskifte.** Når stadiet går fra én til to rader, har
 noen kanskje allerede to rader. Løsning: krav vurderes alltid mot *gjeldende* stadium

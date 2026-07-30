@@ -17,35 +17,35 @@ function jpeg(størrelse = 128): Buffer {
 describe('opplasting', () => {
   it('lagrer bildet og viser det i alle visninger', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
     const svar = await h.expectOk<{ selfieUrl: string }>(
-      klara.socket,
+      ada.socket,
       C.playerUploadSelfie,
-      { ...klara.auth, contentType: 'image/jpeg', data: jpeg() },
+      { ...ada.auth, contentType: 'image/jpeg', data: jpeg() },
     )
     expect(svar.selfieUrl).toMatch(/^\/api\/selfie\/room_[\w-]+\/[\w-]+$/)
 
     const vert = await lobby.state.until((v) =>
-      Boolean(v.roster.find((s) => s.name === 'Klara')?.hasSelfie),
+      Boolean(v.roster.find((s) => s.name === 'Ada')?.hasSelfie),
     )
-    const plass = vert.roster.find((s) => s.name === 'Klara')
+    const plass = vert.roster.find((s) => s.name === 'Ada')
     expect(plass?.selfieUrl).toBe(svar.selfieUrl)
     expect(h.game.selfieStore.size).toBe(1)
   })
 
   it('markerer profilen som ferdig, så en reconnect ikke spør igjen', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
 
     // Leses fra lageret: øyeblikksbildet fra selve innmeldingen rakk å bli sendt
     // før overvåkeren festet seg, og det er ikke noe å vente på her.
     const rom = h.game.store.get(lobby.roomId)!
     expect(rom.players[0].profileReady).toBe(false)
 
-    await h.expectOk(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    await h.expectOk(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/jpeg',
       data: jpeg(),
     })
@@ -54,10 +54,10 @@ describe('opplasting', () => {
 
   it('lar spilleren velge dyret sitt i stedet', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
-    const state = watch<PlayerView>(klara.socket, E.playerState)
+    const ada = await h.joinAs(lobby, 'Ada')
+    const state = watch<PlayerView>(ada.socket, E.playerState)
 
-    await h.expectOk(klara.socket, C.playerUseAvatar, klara.auth)
+    await h.expectOk(ada.socket, C.playerUseAvatar, ada.auth)
 
     const view = await state.until((v) => Boolean(v.me?.profileReady))
     expect(view.me?.hasSelfie).toBe(false)
@@ -66,17 +66,17 @@ describe('opplasting', () => {
 
   it('rydder bort det forrige bildet når spilleren tar et nytt', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
     const første = await h.expectOk<{ selfieUrl: string }>(
-      klara.socket,
+      ada.socket,
       C.playerUploadSelfie,
-      { ...klara.auth, contentType: 'image/jpeg', data: jpeg() },
+      { ...ada.auth, contentType: 'image/jpeg', data: jpeg() },
     )
     const andre = await h.expectOk<{ selfieUrl: string }>(
-      klara.socket,
+      ada.socket,
       C.playerUploadSelfie,
-      { ...klara.auth, contentType: 'image/jpeg', data: jpeg(200) },
+      { ...ada.auth, contentType: 'image/jpeg', data: jpeg(200) },
     )
 
     expect(andre.selfieUrl).not.toBe(første.selfieUrl)
@@ -86,15 +86,15 @@ describe('opplasting', () => {
 
   it('sletter bildet når spilleren bytter til avatar', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
-    await h.expectOk(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const ada = await h.joinAs(lobby, 'Ada')
+    await h.expectOk(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/jpeg',
       data: jpeg(),
     })
     expect(h.game.selfieStore.size).toBe(1)
 
-    await h.expectOk(klara.socket, C.playerUseAvatar, klara.auth)
+    await h.expectOk(ada.socket, C.playerUseAvatar, ada.auth)
     expect(h.game.selfieStore.size).toBe(0)
   })
 })
@@ -102,10 +102,10 @@ describe('opplasting', () => {
 describe('avvisning', () => {
   it('avviser noe som ikke er et bilde', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
-    const svar = await h.ask(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const svar = await h.ask(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/jpeg',
       data: Buffer.from('dette er ikke et bilde i det hele tatt'),
     })
@@ -116,10 +116,10 @@ describe('avvisning', () => {
 
   it('avviser et bilde som er for stort', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
-    const svar = await h.ask(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const svar = await h.ask(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/jpeg',
       data: jpeg(400 * 1024),
     })
@@ -129,10 +129,10 @@ describe('avvisning', () => {
 
   it('avviser en filtype vi ikke støtter', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
-    const svar = await h.ask(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const svar = await h.ask(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/gif',
       data: jpeg(),
     })
@@ -142,10 +142,10 @@ describe('avvisning', () => {
 
   it('avviser en opplasting uten gyldig gjenopprettingsnøkkel', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
+    const ada = await h.joinAs(lobby, 'Ada')
 
-    const svar = await h.ask(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const svar = await h.ask(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       recoveryKey: 'x'.repeat(43),
       contentType: 'image/jpeg',
       data: jpeg(),
@@ -159,10 +159,10 @@ describe('avvisning', () => {
 describe('sletting', () => {
   it('sletter alle bildene når verten avslutter rommet', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
-    const edvin = await h.joinAs(lobby, 'Edvin')
+    const ada = await h.joinAs(lobby, 'Ada')
+    const edvin = await h.joinAs(lobby, 'Bo')
 
-    for (const spiller of [klara, edvin]) {
+    for (const spiller of [ada, edvin]) {
       await h.expectOk(spiller.socket, C.playerUploadSelfie, {
         ...spiller.auth,
         contentType: 'image/jpeg',
@@ -177,9 +177,9 @@ describe('sletting', () => {
 
   it('sletter bildene når rommet går ut på tid', async () => {
     const lobby = await h.createLobby()
-    const klara = await h.joinAs(lobby, 'Klara')
-    await h.expectOk(klara.socket, C.playerUploadSelfie, {
-      ...klara.auth,
+    const ada = await h.joinAs(lobby, 'Ada')
+    await h.expectOk(ada.socket, C.playerUploadSelfie, {
+      ...ada.auth,
       contentType: 'image/jpeg',
       data: jpeg(),
     })

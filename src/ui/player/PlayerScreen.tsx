@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import type { RosterEntry } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
@@ -71,36 +72,15 @@ export function PlayerScreen({ code }: { code: string }) {
 
   if (stage === 'velgNavn') {
     return (
-      <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 py-8">
-        <h1 className="text-center text-4xl font-black">Hvem er du?</h1>
-        <p className="mt-2 mb-8 text-center text-lg text-tekst-svak">
-          Trykk på navnet ditt for å bli med i rom {code}
-        </p>
-
-        <div className="flex flex-col gap-3">
-          {roster.map((slot) => (
-            <NavneValg
-              key={slot.name}
-              slot={slot}
-              disabled={busy}
-              venter={venterPåVert === slot.name}
-              onClick={() => (slot.claimed ? bePlassen(slot.name) : claim(slot.name))}
-            />
-          ))}
-        </div>
-
-        {venterPåVert && (
-          <p role="status" className="mt-6 text-center text-lg font-bold text-sol">
-            Spør verten om å slippe deg inn…
-          </p>
-        )}
-
-        {error && (
-          <p role="alert" className="mt-6 text-center text-lg font-bold text-bringebaer">
-            {error}
-          </p>
-        )}
-      </main>
+      <SkrivNavn
+        code={code}
+        roster={roster}
+        busy={busy}
+        error={error}
+        venterPåVert={venterPåVert}
+        onJoin={claim}
+        onAskHost={bePlassen}
+      />
     )
   }
 
@@ -184,51 +164,112 @@ export function PlayerScreen({ code }: { code: string }) {
 }
 
 /**
- * En opptatt plass er ikke låst — den krever bare at verten sier ja (§23). Det
- * er veien tilbake for telefonen som døde for godt eller ble tømt.
+ * Spilleren skriver navnet sitt selv. Er navnet allerede i bruk, er det som
+ * regel fordi det er samme barn på en ny telefon — da tilbys veien om verten
+ * (§23) i stedet for en blindvei.
  */
-function NavneValg({
-  slot,
-  disabled,
-  venter,
-  onClick,
+function SkrivNavn({
+  code,
+  roster,
+  busy,
+  error,
+  venterPåVert,
+  onJoin,
+  onAskHost,
 }: {
-  slot: RosterEntry
-  disabled: boolean
-  venter: boolean
-  onClick: () => void
+  code: string
+  roster: RosterEntry[]
+  busy: boolean
+  error: string | null
+  venterPåVert: string | null
+  onJoin: (name: string) => void
+  onAskHost: (name: string) => void
 }) {
+  const [navn, setNavn] = useState('')
+  const skrevet = navn.trim()
+  const opptatt = roster.some(
+    (slot) => slot.name.toLowerCase() === skrevet.toLowerCase(),
+  )
+
+  if (venterPåVert) {
+    return (
+      <main className="grid min-h-dvh place-items-center px-6 text-center">
+        <div>
+          <h1 className="text-3xl font-black">Spør verten…</h1>
+          <p className="mt-3 text-lg text-tekst-svak">
+            {venterPåVert} er allerede med. Verten må slippe deg inn fra denne
+            telefonen.
+          </p>
+        </div>
+      </main>
+    )
+  }
+
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled || venter}
-      className="flate flex items-center gap-4 p-4 text-left transition-[transform,border-color] active:scale-[0.98] disabled:active:scale-100"
-      style={{ borderColor: venter ? '#ffd23f' : slot.claimed ? undefined : slot.color }}
-    >
-      <Avatar
-        name={slot.name}
-        color={slot.color}
-        avatarId={slot.avatarId}
-        selfieUrl={slot.selfieUrl}
-        size={64}
-        dimmed={slot.claimed && !venter}
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col px-5 py-10 text-center">
+      <h1 className="text-4xl font-black">Hva heter du?</h1>
+      <p className="mt-2 mb-8 text-lg text-tekst-svak">
+        Skriv navnet ditt for å bli med i rom {code}
+      </p>
+
+      <input
+        value={navn}
+        onChange={(event) => setNavn(event.target.value.slice(0, 12))}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && skrevet && !opptatt) onJoin(skrevet)
+        }}
+        autoFocus
+        autoCapitalize="words"
+        autoCorrect="off"
+        spellCheck={false}
+        aria-label="Navnet ditt"
+        placeholder="Navnet ditt"
+        className="flate w-full py-5 text-center text-4xl font-black text-sol placeholder:text-kant focus:border-lilla focus:outline-none"
       />
-      <span className="flex-1">
-        <span className="block text-3xl font-black">{slot.name}</span>
-        <span className="block text-base text-tekst-svak">
-          {venter
-            ? 'Venter på verten…'
-            : slot.claimed
-              ? 'Opptatt — trykk om det er deg'
-              : 'Ledig'}
-        </span>
-      </span>
-    </button>
+
+      {roster.length > 0 && (
+        <p className="mt-4 text-base text-tekst-svak">
+          Med fra før: {roster.map((slot) => slot.name).join(', ')}
+        </p>
+      )}
+
+      {opptatt ? (
+        <>
+          <p className="mt-8 text-lg font-bold text-sol">
+            {skrevet} er allerede med.
+          </p>
+          <Button
+            size="stor"
+            className="mt-3 w-full"
+            disabled={busy}
+            onClick={() => onAskHost(skrevet)}
+          >
+            Det er meg — spør verten
+          </Button>
+        </>
+      ) : (
+        <Button
+          size="stor"
+          tone="turkis"
+          className="mt-8 w-full"
+          disabled={busy || skrevet.length === 0}
+          onClick={() => onJoin(skrevet)}
+        >
+          Bli med
+        </Button>
+      )}
+
+      {error && (
+        <p role="alert" className="mt-6 text-lg font-bold text-bringebaer">
+          {error}
+        </p>
+      )}
+    </main>
   )
 }
 
 function allReady(roster: RosterEntry[]): boolean {
-  const joined = roster.filter((slot) => slot.claimed && slot.connected)
+  const joined = roster.filter((slot) => slot.connected)
   return joined.length > 0 && joined.every((slot) => slot.ready)
 }
 

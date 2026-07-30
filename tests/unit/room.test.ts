@@ -78,32 +78,32 @@ describe('lobby', () => {
   })
 
   it('lar fire spillere ta hver sin plass', () => {
-    for (const navn of ['Klara', 'Edvin', 'Reodor', 'Pernilla'] as const) {
+    for (const navn of ['Ada', 'Bo', 'Cleo', 'Dina'] as const) {
       expect(claimPlayer(room, navn, NOW).ok).toBe(true)
     }
     expect(room.players).toHaveLength(4)
   })
 
   it('gir hver spiller sin egen gjenopprettingsnøkkel', () => {
-    claimPlayer(room, 'Klara', NOW)
-    claimPlayer(room, 'Edvin', NOW)
+    claimPlayer(room, 'Ada', NOW)
+    claimPlayer(room, 'Bo', NOW)
     const [a, b] = room.players
     expect(a.recoveryKey).not.toBe(b.recoveryKey)
     expect(a.recoveryKey.length).toBeGreaterThan(20)
   })
 
   it('lar bare én telefon ta hvert navn', () => {
-    expect(claimPlayer(room, 'Klara', NOW).ok).toBe(true)
-    const igjen = claimPlayer(room, 'Klara', NOW)
+    expect(claimPlayer(room, 'Ada', NOW).ok).toBe(true)
+    const igjen = claimPlayer(room, 'Ada', NOW)
     expect(igjen.ok).toBe(false)
     if (!igjen.ok) expect(igjen.code).toBe('claim/taken')
   })
 
   it('gir ikke bort plassen til en frakoblet spiller', () => {
-    const claimed = claimPlayer(room, 'Klara', NOW)
+    const claimed = claimPlayer(room, 'Ada', NOW)
     if (!claimed.ok) throw new Error('kunne ikke bli med')
     setConnected(room, claimed.value.id, false, NOW)
-    expect(claimPlayer(room, 'Klara', NOW).ok).toBe(false)
+    expect(claimPlayer(room, 'Ada', NOW).ok).toBe(false)
   })
 
   it('nekter å slippe inn spillere før lobbyen er åpen', () => {
@@ -112,7 +112,7 @@ describe('lobby', () => {
       configInput: defaultConfigInput(),
       now: NOW,
     })
-    const result = claimPlayer(stengt, 'Klara', NOW)
+    const result = claimPlayer(stengt, 'Ada', NOW)
     expect(result.ok).toBe(false)
     if (!result.ok) expect(result.code).toBe('claim/closed')
   })
@@ -130,11 +130,11 @@ describe('klar-status', () => {
   })
 
   it('kan starte når alle tilkoblede er klare', () => {
-    const klara = claimPlayer(room, 'Klara', NOW)
-    const edvin = claimPlayer(room, 'Edvin', NOW)
-    if (!klara.ok || !edvin.ok) throw new Error('kunne ikke bli med')
+    const ada = claimPlayer(room, 'Ada', NOW)
+    const edvin = claimPlayer(room, 'Bo', NOW)
+    if (!ada.ok || !edvin.ok) throw new Error('kunne ikke bli med')
 
-    setReady(room, klara.value.id, true)
+    setReady(room, ada.value.id, true)
     expect(canStart(room)).toBe(false)
 
     setReady(room, edvin.value.id, true)
@@ -143,28 +143,28 @@ describe('klar-status', () => {
   })
 
   it('venter ikke på en spiller som er frakoblet', () => {
-    const klara = claimPlayer(room, 'Klara', NOW)
-    const edvin = claimPlayer(room, 'Edvin', NOW)
-    if (!klara.ok || !edvin.ok) throw new Error('kunne ikke bli med')
+    const ada = claimPlayer(room, 'Ada', NOW)
+    const edvin = claimPlayer(room, 'Bo', NOW)
+    if (!ada.ok || !edvin.ok) throw new Error('kunne ikke bli med')
 
-    setReady(room, klara.value.id, true)
+    setReady(room, ada.value.id, true)
     setConnected(room, edvin.value.id, false, NOW)
     expect(canStart(room)).toBe(true)
   })
 
   it('faller tilbake til lobby når noen ombestemmer seg', () => {
-    const klara = claimPlayer(room, 'Klara', NOW)
-    if (!klara.ok) throw new Error('kunne ikke bli med')
-    setReady(room, klara.value.id, true)
+    const ada = claimPlayer(room, 'Ada', NOW)
+    if (!ada.ok) throw new Error('kunne ikke bli med')
+    setReady(room, ada.value.id, true)
     expect(room.status).toBe('ready')
-    setReady(room, klara.value.id, false)
+    setReady(room, ada.value.id, false)
     expect(room.status).toBe('lobby')
   })
 
   it('nullstiller klar-status når reglene endres', () => {
-    const klara = claimPlayer(room, 'Klara', NOW)
-    if (!klara.ok) throw new Error('kunne ikke bli med')
-    setReady(room, klara.value.id, true)
+    const ada = claimPlayer(room, 'Ada', NOW)
+    if (!ada.ok) throw new Error('kunne ikke bli med')
+    setReady(room, ada.value.id, true)
 
     updateConfig(room, { format: 'bingo75', difficulty: 'normal' })
     expect(room.players[0].ready).toBe(false)

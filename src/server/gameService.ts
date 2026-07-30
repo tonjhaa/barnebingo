@@ -32,7 +32,6 @@ import { drawNext, pauseRound, resumeRound } from '@/domain/round'
 import { randomSeed } from '@/domain/rng'
 import { err, ok, type Result } from '@/domain/result'
 import { secretsMatch } from '@/domain/ids'
-import type { PlayerName } from '@/domain/roster'
 import { expiredRooms, type RoomStore } from '@/infra/store/roomStore'
 import { SelfieStore, validateSelfie } from '@/infra/store/selfieStore'
 import { log } from '@/infra/logger'
@@ -78,7 +77,7 @@ export class GameService {
   private drawTimers = new Map<string, NodeJS.Timeout>()
   private bingoTimers = new Map<string, NodeJS.Timeout>()
   /** Telefoner som venter på at verten skal slippe dem inn (§23). */
-  private takeovers = new Map<string, { socketId: string; roomId: string; name: PlayerName }>()
+  private takeovers = new Map<string, { socketId: string; roomId: string; name: string }>()
 
   constructor(
     private readonly io: Server,
@@ -551,7 +550,7 @@ export class GameService {
     return ok(room)
   }
 
-  claim(input: { roomId: string; name: PlayerName }): Result<ClaimResult & { room: Room }> {
+  claim(input: { roomId: string; name: string }): Result<ClaimResult & { room: Room }> {
     const found = this.requireRoom(input.roomId)
     if (!found.ok) return found
     const room = found.value
@@ -574,7 +573,7 @@ export class GameService {
    */
   requestTakeover(
     socketId: string,
-    input: { roomId: string; name: PlayerName },
+    input: { roomId: string; name: string },
   ): Result<null> {
     const found = this.requireRoom(input.roomId)
     if (!found.ok) return found
@@ -598,7 +597,7 @@ export class GameService {
     roomId: string
     hostKey: string
     seq: number
-    name: PlayerName
+    name: string
   }): Result<Room> {
     const auth = this.requireHost(input)
     if (!auth.ok) return auth
@@ -639,7 +638,7 @@ export class GameService {
     roomId: string
     hostKey: string
     seq: number
-    name: PlayerName
+    name: string
   }): Result<Room> {
     const auth = this.requireHost(input)
     if (!auth.ok) return auth
@@ -654,7 +653,7 @@ export class GameService {
     return ok(room)
   }
 
-  pendingTakeovers(roomId: string): PlayerName[] {
+  pendingTakeovers(roomId: string): string[] {
     return [...this.takeovers.values()]
       .filter((venter) => venter.roomId === roomId)
       .map((venter) => venter.name)
