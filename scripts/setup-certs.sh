@@ -20,9 +20,27 @@ if [ -z "$LAN_IP" ]; then
 fi
 
 mkdir -p certs
-mkcert -install
+
+# Å legge CA-en i systemets nøkkelring krever passordet ditt. Går det ikke,
+# skal vi likevel lage sertifikatet: telefonene trenger det uansett, og
+# hovedskjermen viser bare en advarsel man kan klikke seg forbi.
+if mkcert -install 2>/dev/null; then
+  TILLIT="ja"
+else
+  TILLIT="nei"
+fi
+
 mkcert -cert-file certs/cert.pem -key-file certs/key.pem \
   "$LAN_IP" localhost 127.0.0.1 ::1
+
+if [ "$TILLIT" = "nei" ]; then
+  echo ""
+  echo "MERK: CA-en ble ikke lagt i systemets nøkkelring — det krever passord."
+  echo "Kjør denne selv én gang, så slipper du advarsel i nettleseren her:"
+  echo ""
+  echo "    mkcert -install"
+  echo ""
+fi
 
 echo ""
 echo "Sertifikat laget for $LAN_IP."
