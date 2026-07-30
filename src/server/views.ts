@@ -225,12 +225,14 @@ export function buildHostView(
   room: Room,
   baseUrl: string,
   takeoverRequests: string[] = [],
+  certHelpUrl: string | null = null,
 ): HostView {
   // Hovedskjermen ser åpenbart seg selv.
   return {
     roomId: room.id,
     code: room.code,
     joinUrl: `${baseUrl}/bli-med/${room.code}`,
+    certHelpUrl,
     status: room.status,
     config: buildConfigSummary(room.profile),
     configInput: room.configInput,

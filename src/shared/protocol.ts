@@ -291,6 +291,8 @@ export interface HostView {
   roomId: string
   code: string
   joinUrl: string
+  /** Hjelpesiden for sertifikatet. null når appen kjører uten HTTPS. */
+  certHelpUrl: string | null
   status: string
   config: ConfigSummary
   configInput: z.infer<typeof ConfigInputSchema>

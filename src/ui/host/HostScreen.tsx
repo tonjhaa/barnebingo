@@ -233,6 +233,18 @@ function Lobby({
             {view.code}
           </p>
         </div>
+
+        {/* Kameraet krever at telefonen stoler på sertifikatet. Den lenken er
+            det eneste stedet man kan hente det, så den må stå der man ser den. */}
+        {view.certHelpUrl && (
+          <p className="max-w-[340px] text-center text-base text-tekst-svak">
+            Virker ikke kameraet? Åpne{' '}
+            <span className="font-bold text-tekst">
+              {hostname(view.certHelpUrl)}
+            </span>{' '}
+            på telefonen først — én gang per telefon.
+          </p>
+        )}
         <Button
           size="stor"
           tone="turkis"

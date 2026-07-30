@@ -9,6 +9,7 @@ import { InMemoryRoomStore } from '@/infra/store/roomStore'
 import { SelfieStore } from '@/infra/store/selfieStore'
 import { GameService } from '@/server/gameService'
 import { buildBaseUrl, lanAddress } from '@/infra/network'
+import { startCertServer } from '@/infra/certServer'
 import { log } from '@/infra/logger'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -106,7 +107,22 @@ async function main() {
   const host = lanAddress()
   const baseUrl = buildBaseUrl(protocol, host, port)
 
-  const game = new GameService(io, new InMemoryRoomStore(), new SelfieStore(), () => baseUrl)
+  // Kameraet krever at telefonen stoler på sertifikatet vårt, og sertifikatet
+  // kan ikke hentes over en tilkobling telefonen ikke stoler på. Derfor en egen
+  // HTTP-port som bare deler ut CA-en.
+  const certPort = port + 1
+  const certServer = useHttps
+    ? startCertServer({ port: certPort, spillUrl: baseUrl })
+    : null
+  const certHelpUrl = certServer ? buildBaseUrl('http', host, certPort) : null
+
+  const game = new GameService(
+    io,
+    new InMemoryRoomStore(),
+    new SelfieStore(),
+    () => baseUrl,
+    () => certHelpUrl,
+  )
   attachSocketHandlers(io, game)
 
   // Rydder bort utløpte rom og selfiene deres (§24).
@@ -124,6 +140,7 @@ async function main() {
     log.info('stenger ned', { signal })
     clearInterval(sweeper)
     game.dispose()
+    certServer?.close()
     io.close(() => {
       server.close(() => process.exit(0))
     })
@@ -137,7 +154,9 @@ async function main() {
     log.info('Barnebingo kjører', { protocol, port })
     console.log(`\n  Hovedskjerm:  ${buildBaseUrl(protocol, 'localhost', port)}`)
     console.log(`  Telefoner:    ${baseUrl}`)
-    if (!useHttps) {
+    if (certHelpUrl) {
+      console.log(`  Sertifikat:   ${certHelpUrl}   (åpne denne på telefonen først)`)
+    } else if (!useHttps) {
       console.log('\n  Uten HTTPS: selfie er deaktivert i Safari. Kjør `npm run certs`.')
     }
     console.log('')

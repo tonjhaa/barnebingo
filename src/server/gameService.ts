@@ -84,6 +84,8 @@ export class GameService {
     private readonly rooms: RoomStore,
     private readonly selfies: SelfieStore,
     private readonly baseUrl: () => string,
+    /** Adressen til sertifikathjelpen, eller null når appen kjører uten HTTPS. */
+    private readonly certHelpUrl: () => string | null = () => null,
     private readonly clock: () => number = () => Date.now(),
   ) {}
 
@@ -146,7 +148,7 @@ export class GameService {
     const borte = !this.hostPresent(room.id)
     this.io
       .to(hostChannel(room.id))
-      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id)))
+      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl()))
     for (const [socketId, binding] of this.bindings) {
       if (binding.roomId !== room.id || binding.role !== 'player') continue
       this.io
@@ -164,7 +166,7 @@ export class GameService {
   sendHostState(socketId: string, room: Room): void {
     this.io
       .to(socketId)
-      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id)))
+      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl()))
   }
 
   // --- Bindinger -----------------------------------------------------------

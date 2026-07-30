@@ -23,9 +23,15 @@ utilgjengelig i Safari og spillerne bruker avatarer i stedet.
 ### Sertifikat på iPhone
 
 `npm run certs` krever `mkcert`, som installeres med `brew install mkcert nss`.
-Skriptet forklarer resten: send `rootCA.pem` fra `mkcert -CAROOT` til telefonen,
-godta profilen, og slå på full tillit under **Innstillinger → Generelt → Om →
-Sertifikattillit**. Én gang per telefon.
+
+Når appen kjører på HTTPS, starter den også en liten hjelpeserver på porten
+over — adressen skrives ut ved oppstart og står på hovedskjermen i lobbyen.
+Åpne den på telefonen, trykk **Last ned sertifikatet**, og følg de tre stegene
+der. Én gang per telefon.
+
+Hjelpeserveren går bevisst på ren HTTP: telefonen kan ikke hente sertifikatet
+over en tilkobling den ikke stoler på ennå. Den deler bare ut den offentlige
+CA-filen, aldri den private nøkkelen, og kjenner verken romkoder eller spillere.
 
 ## Slik spiller dere
 
