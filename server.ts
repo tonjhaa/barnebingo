@@ -23,7 +23,15 @@ const keyPath = resolve(certDir, 'key.pem')
  * uten sertifikat finnes ingen selfie. Vi faller tilbake til HTTP så appen
  * fortsatt kan kjøres med avatarer.
  */
-const useHttps = existsSync(certPath) && existsSync(keyPath) && process.env.FORCE_HTTP !== '1'
+/**
+ * Bak en plattform som Fly terminerer TLS i kanten, og appen snakker vanlig
+ * HTTP internt. Da er PUBLIC_URL adressen telefonene faktisk skal treffe —
+ * uten den ville QR-koden pekt på containerens interne IP.
+ */
+const publicUrl = process.env.PUBLIC_URL?.replace(/\/$/, '') ?? null
+
+const useHttps =
+  !publicUrl && existsSync(certPath) && existsSync(keyPath) && process.env.FORCE_HTTP !== '1'
 const protocol = useHttps ? 'https' : 'http'
 
 const app = next({ dev })
@@ -105,7 +113,7 @@ async function main() {
   })
 
   const host = lanAddress()
-  const baseUrl = buildBaseUrl(protocol, host, port)
+  const baseUrl = publicUrl ?? buildBaseUrl(protocol, host, port)
 
   // Kameraet krever at telefonen stoler på sertifikatet vårt, og sertifikatet
   // kan ikke hentes over en tilkobling telefonen ikke stoler på. Derfor en egen
@@ -152,11 +160,17 @@ async function main() {
 
   server.listen(port, '0.0.0.0', () => {
     log.info('Barnebingo kjører', { protocol, port })
-    console.log(`\n  Hovedskjerm:  ${buildBaseUrl(protocol, 'localhost', port)}`)
-    console.log(`  Telefoner:    ${baseUrl}`)
+    if (publicUrl) {
+      console.log(`\n  Spillet ligger på ${publicUrl}`)
+    } else {
+      console.log(`\n  Hovedskjerm:  ${buildBaseUrl(protocol, 'localhost', port)}`)
+      console.log(`  Telefoner:    ${baseUrl}`)
+    }
     if (certHelpUrl) {
       console.log(`  Sertifikat:   ${certHelpUrl}   (åpne denne på telefonen først)`)
-    } else if (!useHttps) {
+    } else if (!useHttps && !publicUrl) {
+      // Bak en plattform som terminerer TLS i kanten ser nettleseren HTTPS,
+      // og kameraet virker — selv om vi selv snakker vanlig HTTP internt.
       console.log('\n  Uten HTTPS: selfie er deaktivert i Safari. Kjør `npm run certs`.')
     }
     console.log('')

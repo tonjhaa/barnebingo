@@ -1,0 +1,40 @@
+# Barnebingo på Fly.io
+#
+# Én maskin, alltid våken. Rommene bor i prosessminnet, så en maskin som
+# stopper eller en ekstra instans ville betydd at halve familien havnet i et
+# rom den andre halvparten ikke ser. Derfor ingen autoskalering her.
+
+app = 'barnebingo'
+primary_region = 'arn'
+
+[build]
+
+[env]
+  PORT = '8080'
+  # Adressen QR-koden skal peke på. Uten denne ville den pekt på containerens
+  # interne IP, som ingen telefon kan nå.
+  PUBLIC_URL = 'https://barnebingo.fly.dev'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'connections'
+    hard_limit = 200
+    soft_limit = 100
+
+[[http_service.checks]]
+  grace_period = '20s'
+  interval = '30s'
+  method = 'GET'
+  timeout = '5s'
+  path = '/api/health'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '512mb'

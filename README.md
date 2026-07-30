@@ -69,6 +69,26 @@ Socket.IO trenger en varm, langlevd prosess. Serverless-plattformer som skalerer
 til null er derfor feil verktøy her — Fly.io, Render eller en maskin i stua er
 riktig.
 
+### På Fly.io
+
+`Dockerfile` og `fly.toml` ligger klare:
+
+```bash
+flyctl auth login
+flyctl launch --copy-config --no-deploy   # første gang
+flyctl deploy
+```
+
+Oppsettet kjører **én maskin som aldri stopper**. Rommene bor i minnet, så en
+maskin som sovner eller en ekstra instans ville betydd at halve familien havnet
+i et rom den andre halvparten ikke ser.
+
+`PUBLIC_URL` i `fly.toml` er adressen QR-koden peker på. Uten den ville den
+pekt på containerens interne IP. Bytt den hvis appen får et annet navn.
+
+Med ekte HTTPS i kanten virker kameraet uten videre — ingen mkcert, ingen
+profil på telefonene. Sertifikathjelperen starter ikke da, fordi den ikke trengs.
+
 `GET /api/health` svarer med status, antall aktive rom og oppetid. Den sier
 ingenting om hvem som spiller.
 
