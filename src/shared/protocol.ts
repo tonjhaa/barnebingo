@@ -160,6 +160,10 @@ export const PlayerRequestTakeoverSchema = z.object({
 
 // --- Serverhendelser --------------------------------------------------------
 
+import type { GameEvent } from '@/domain/audio/events'
+
+export type { GameEvent, GameEventData, Priority } from '@/domain/audio/events'
+
 export const E = {
   hostState: 'state:host',
   playerState: 'state:player',
@@ -318,6 +322,16 @@ export interface HostView {
   results: ResultsView | null
   /** Telefoner som venter på å få slippe inn på en opptatt plass. */
   takeoverRequests: Array<{ name: string; color: string; avatarId: string }>
+  /**
+   * Hva som har skjedd siden sist, for lydsystemet. Tilstanden over sier hvordan
+   * det står til nå; denne sier hva som skjedde underveis — og det er forskjellen
+   * mellom å vise tallet og å lese det opp.
+   *
+   * Sendes bare til hovedskjermen. Telefonene er stille (§13).
+   */
+  events: GameEvent[]
+  /** Høyeste sekvensnummer rommet har delt ut. */
+  eventSeq: number
 }
 
 export interface PlayerView {

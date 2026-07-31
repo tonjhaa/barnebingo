@@ -5,7 +5,8 @@ import type { HostView, PrizeResultView, RosterEntry, RoundView } from '@/shared
 import { Avatar } from '@/ui/shared/Avatar'
 import { BingoBall } from '@/ui/shared/BingoBall'
 import { Button } from '@/ui/shared/Button'
-import { useRoundSpeech } from './useSpeech'
+import { STANDARD_TALE } from '@/domain/audio/speech'
+import { useLyd } from '@/ui/audio/useLyd'
 
 /**
  * Hovedskjermen under spill. Alt er skalert for en TV sett fra sofaen: det
@@ -30,7 +31,9 @@ export function GameScreen({
   const finished = round.status === 'finished'
   const ready = useAutoDrawCountdown(round)
   const [lyd, setLyd] = useState(view.config.speech)
-  const { låsOpp, støttes } = useRoundSpeech(lyd, round)
+  const { undertekst, låsOpp } = useLyd(STANDARD_TALE, view.events, view.eventSeq, {
+    på: lyd,
+  })
 
   /** Alle vertsknapper låser opp stemmen — nettleseren krever et brukertrykk. */
   const medLyd = (handling: () => void) => () => {
@@ -39,7 +42,12 @@ export function GameScreen({
   }
 
   if (round.prize) {
-    return <PremieVisning prize={round.prize} onNext={medLyd(onAdvancePrize)} />
+    return (
+      <>
+        <PremieVisning prize={round.prize} onNext={medLyd(onAdvancePrize)} />
+        <Undertekst tekst={undertekst} />
+      </>
+    )
   }
 
   return (
@@ -99,8 +107,7 @@ export function GameScreen({
             <p className="text-xl font-bold text-tekst-svak tabular-nums">
               {round.drawnCount} av {round.totalNumbers} trukket
             </p>
-            {støttes && (
-              <button
+            <button
                 onClick={() => {
                   låsOpp()
                   setLyd((på) => !på)
@@ -111,8 +118,7 @@ export function GameScreen({
                 style={{ opacity: lyd ? 1 : 0.4 }}
               >
                 {lyd ? '🔊' : '🔇'}
-              </button>
-            )}
+            </button>
           </div>
 
           {!finished && (
@@ -143,7 +149,28 @@ export function GameScreen({
           )}
         </div>
       </aside>
+
+      <Undertekst tekst={undertekst} />
     </div>
+  )
+}
+
+/**
+ * Det programlederen sier, skrevet ut.
+ *
+ * Lyd er et hjelpemiddel, aldri eneste informasjonskilde (§13). Teksten gjør
+ * også utviklingsarbeid mulig før lydfilene er generert, og den hjelper den
+ * som hører dårlig eller sitter i et rom med annen lyd på.
+ */
+function Undertekst({ tekst }: { tekst: string | null }) {
+  if (!tekst) return null
+  return (
+    <p
+      aria-live="polite"
+      className="pointer-events-none fixed inset-x-0 bottom-6 z-20 mx-auto max-w-4xl px-6 text-center text-2xl font-semibold text-tekst-svak"
+    >
+      {tekst}
+    </p>
   )
 }
 

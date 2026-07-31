@@ -24,9 +24,10 @@ export interface DifficultyPreset {
  * likevel satt lavt-og-langsomt, så automatisk trekking blir riktig hvis verten
  * bytter underveis.
  *
- * Opplesning er avslått i alle gradene. Hovedskjermen står ofte i samme rom som
- * spillerne, og en stemme som roper hvert tall blir fort mer støy enn hjelp.
- * Verten slår den på i oppsettet, eller med høyttalerknappen under spill.
+ * Opplesning er på i alle gradene. Med en ekte programlederstemme er det ikke
+ * lenger støy, men selve rammen rundt spillet — og for et barn som ennå leser
+ * tall langsomt er opplesningen forskjellen på å henge med og å gi opp. Verten
+ * kan slå den av i oppsettet eller med høyttalerknappen under spill.
  */
 export const DIFFICULTY_PRESETS: Record<Difficulty, DifficultyPreset> = {
   nybegynner: {
@@ -38,7 +39,7 @@ export const DIFFICULTY_PRESETS: Record<Difficulty, DifficultyPreset> = {
     drawMode: 'manual',
     drawIntervalMs: 15000,
     bingoWindowMs: 2500,
-    speech: false,
+    speech: true,
     showCurrentNumberOnPhone: true,
     showDrawHistoryOnPhone: true,
   },
@@ -51,7 +52,7 @@ export const DIFFICULTY_PRESETS: Record<Difficulty, DifficultyPreset> = {
     drawMode: 'manual',
     drawIntervalMs: 12000,
     bingoWindowMs: 2500,
-    speech: false,
+    speech: true,
     showCurrentNumberOnPhone: true,
     showDrawHistoryOnPhone: true,
   },
@@ -64,7 +65,7 @@ export const DIFFICULTY_PRESETS: Record<Difficulty, DifficultyPreset> = {
     drawMode: 'auto',
     drawIntervalMs: 8000,
     bingoWindowMs: 1500,
-    speech: false,
+    speech: true,
     showCurrentNumberOnPhone: true,
     showDrawHistoryOnPhone: true,
   },
@@ -77,7 +78,7 @@ export const DIFFICULTY_PRESETS: Record<Difficulty, DifficultyPreset> = {
     drawMode: 'auto',
     drawIntervalMs: 5000,
     bingoWindowMs: 1500,
-    speech: false,
+    speech: true,
     showCurrentNumberOnPhone: false,
     showDrawHistoryOnPhone: false,
   },

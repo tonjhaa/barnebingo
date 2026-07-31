@@ -1,5 +1,8 @@
 import type { Board } from './board/board'
+import { appendEvent, createEventLog, type EventLog } from './audio/log'
+import type { GameEventData } from './audio/events'
 import { generateBoards } from './board/generate'
+import { columnLabelFor } from './engine/draw'
 import { findWinningBoard, hasBingo } from './engine/bingo'
 import { applyMark, applyUnmark, autoMark } from './engine/marking'
 import { selectWinners } from './engine/prize'
@@ -82,8 +85,18 @@ export interface Room {
   /** Monoton sekvens for vertskommandoer. Dreper dobbelttrykk på trekk-knappen
    *  uavhengig av nettverket (ARKITEKTUR.md §6). */
   hostSeq: number
+  /** Hva som har skjedd, for lydsystemet. Rommet vet ikke hva det brukes til. */
+  events: EventLog
   createdAt: number
   lastActivityAt: number
+}
+
+/**
+ * Noterer at noe skjedde. Kalles fra domenet der handlingen faktisk lykkes, så
+ * en avvist kommando aldri kan få programlederen til å kommentere den.
+ */
+export function noteEvent(room: Room, data: GameEventData, now: number): void {
+  appendEvent(room.events, data, now)
 }
 
 export function createRoom(params: {
@@ -102,6 +115,7 @@ export function createRoom(params: {
     round: null,
     history: [],
     hostSeq: 0,
+    events: createEventLog(),
     createdAt: params.now,
     lastActivityAt: params.now,
   }
@@ -415,12 +429,27 @@ export function autoMarkDrawn(room: Room, value: number): void {
  * Returnerer true når noen vant automatisk og vinduet må avgjøres.
  */
 export function afterDraw(room: Room, value: number, now: number): boolean {
+  // Tallet noteres før markeringen. Ellers kunne en automatisk vinner blitt
+  // ropt ut før programlederen hadde rukket å si hvilket tall som utløste det.
+  const round = room.round
+  noteEvent(
+    room,
+    {
+      kind: 'numberDrawn',
+      value,
+      letter: columnLabelFor(room.profile, value) || null,
+      drawnCount: round?.drawnCount ?? 0,
+      remaining: round ? round.drawOrder.length - round.drawnCount : 0,
+    },
+    now,
+  )
   autoMarkDrawn(room, value)
   return collectAutoWinners(room, now)
 }
 
 /** Kalles når et trekk ble avvist fordi kula var tom. */
 export function closeExhaustedRound(room: Room, now: number): void {
+  noteEvent(room, { kind: 'drawExhausted' }, now)
   noteRoundFinished(room, now)
 }
 
@@ -463,12 +492,16 @@ export function claimBingo(
 
   const winning = findWinningBoard(player.boards, drawnSet(round), stage)
   if (!winning) {
+    // Et bomtrykk er ikke en feil, men det er noe som skjedde i stua — og
+    // programlederen skal svare vennlig på det (§9).
+    noteEvent(room, { kind: 'bingoRejected', name: player.name }, now)
     return err(
       'bingo/invalid',
       `Ikke helt ennå! Du mangler noe på ${stage.label.toLowerCase()}.`,
     )
   }
 
+  noteEvent(room, { kind: 'bingoClaimed', name: player.name }, now)
   if (round.status === 'active') openBingoWindow(round, now)
   addBingoClaim(round, {
     playerId,
@@ -542,6 +575,20 @@ export function resolveBingo(room: Room, now: number): PrizeResult | null {
     })
   }
 
+  noteEvent(
+    room,
+    {
+      kind: 'bingoApproved',
+      names: result.winners.flatMap((winner) => {
+        const player = findPlayer(room, winner.playerId)
+        return player ? [player.name] : []
+      }),
+      stageLabel: result.stageLabel,
+      isFinalStage: result.isFinalStage,
+    },
+    now,
+  )
+
   noteRoundFinished(room, now)
   return result
 }
@@ -563,6 +610,7 @@ export function noteRoundFinished(room: Room, now: number): void {
     stageWinners: round.stageWinners,
     endedAt: now,
   })
+  noteEvent(room, { kind: 'roundFinished', roundsPlayed: room.history.length }, now)
 }
 
 /**

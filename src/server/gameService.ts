@@ -15,6 +15,7 @@ import {
   markOnBoard,
   newRound,
   nextStage,
+  noteEvent,
   openLobby,
   requireActiveRound,
   resolveBingo,
@@ -28,7 +29,8 @@ import {
   selectAvatar,
   type Room,
 } from '@/domain/room'
-import { drawNext, pauseRound, resumeRound } from '@/domain/round'
+import type { GameEventData } from '@/domain/audio/events'
+import { currentStage, drawNext, pauseRound, resumeRound } from '@/domain/round'
 import { randomSeed } from '@/domain/rng'
 import { err, ok, type Result } from '@/domain/result'
 import { secretsMatch } from '@/domain/ids'
@@ -135,6 +137,15 @@ export class GameService {
       return err('auth/player', 'Vi kjente deg ikke igjen. Bli med på nytt.')
     }
     return ok({ room, playerId: player.id })
+  }
+
+  /**
+   * Noterer en hendelse for lydsystemet. Kalles bare etter at kommandoen
+   * faktisk lyktes — en avvist kommando skal ikke få programlederen til å
+   * kommentere noe som ikke skjedde.
+   */
+  private note(room: Room, data: GameEventData): void {
+    noteEvent(room, data, this.clock())
   }
 
   // --- Utsending -----------------------------------------------------------
@@ -247,6 +258,7 @@ export class GameService {
     const room = auth.value
     const opened = openLobby(room)
     if (!opened.ok) return opened
+    this.note(room, { kind: 'roomOpened' })
     touch(room, this.clock())
     this.broadcast(room)
     log.info('lobby åpnet', { code: room.code })
@@ -267,6 +279,7 @@ export class GameService {
     const auth = this.requireHost(input)
     if (!auth.ok) return auth
     const room = auth.value
+    this.note(room, { kind: 'gameEnded' })
     closeRoom(room)
     this.io.to(hostChannel(room.id)).emit(E.roomClosed, { reason: 'host' })
     for (const [socketId, binding] of this.bindings) {
@@ -289,6 +302,12 @@ export class GameService {
     const started = startGame(room, randomSeed(), this.clock())
     if (!started.ok) return started
 
+    this.note(room, {
+      kind: 'roundStarted',
+      names: room.players.map((player) => player.name),
+      stageLabel: currentStage(started.value)?.label ?? '',
+      roundNumber: room.history.length + 1,
+    })
     touch(room, this.clock())
     this.broadcast(room)
     this.scheduleAutoDraw(room)
@@ -317,6 +336,8 @@ export class GameService {
     const paused = pauseRound(active.value)
     if (!paused.ok) return paused
 
+    this.note(room, { kind: 'paused' })
+
     // Timeren stoppes her, ikke i grensesnittet. Ellers ville et tall blitt
     // trukket mens spillet «står stille» (ARKITEKTUR.md §9 K10).
     this.clearAutoDraw(room.id)
@@ -335,6 +356,7 @@ export class GameService {
     const resumed = resumeRound(active.value)
     if (!resumed.ok) return resumed
 
+    this.note(room, { kind: 'resumed' })
     touch(room, this.clock())
     this.broadcast(room)
     this.scheduleAutoDraw(room)
@@ -459,7 +481,13 @@ export class GameService {
     const { room } = auth.value
 
     const result = claimBingo(room, input.playerId, this.clock())
-    if (!result.ok) return result
+    if (!result.ok) {
+      // Et bomtrykk noterte en hendelse, og hovedskjermen skal svare på det.
+      // Uten denne utsendingen ville programlederen tidd om et barn som
+      // nettopp trykket BINGO og tok feil.
+      this.broadcast(room)
+      return result
+    }
 
     this.clearAutoDraw(room.id)
     touch(room, this.clock())
@@ -476,6 +504,8 @@ export class GameService {
 
     const started = newRound(room, this.clock())
     if (!started.ok) return started
+
+    this.note(room, { kind: 'newRoundStarted', roundNumber: room.history.length + 1 })
 
     this.clearAutoDraw(room.id)
     this.clearBingoTimer(room.id)
@@ -496,6 +526,17 @@ export class GameService {
     const advanced = nextStage(room, this.clock())
     if (!advanced.ok) return advanced
 
+    const stage = currentStage(advanced.value)
+    if (stage) {
+      this.note(room, {
+        kind: 'stageAnnounced',
+        stageLabel: stage.label,
+        stageIndex: advanced.value.currentStageIndex,
+        isFinalStage:
+          advanced.value.currentStageIndex ===
+          room.profile.prizeStages.length - 1,
+      })
+    }
     touch(room, this.clock())
     this.broadcast(room)
     this.scheduleAutoDraw(room)
@@ -558,6 +599,7 @@ export class GameService {
     const room = found.value
     const claimed = claimPlayer(room, input.name, this.clock())
     if (!claimed.ok) return claimed
+    this.note(room, { kind: 'playerJoined', name: claimed.value.name })
     touch(room, this.clock())
     log.info('spiller ble med', { code: room.code, name: input.name })
     return ok({
@@ -751,6 +793,20 @@ export class GameService {
     const { room } = auth.value
     const result = setReady(room, input.playerId, input.ready)
     if (!result.ok) return result
+    if (input.ready) {
+      const klare = room.players.filter((player) => player.ready).length
+      this.note(room, {
+        kind: 'playerReady',
+        name: result.value.name,
+        readyCount: klare,
+        playerCount: room.players.length,
+      })
+      // «Alle er klare» sies bare når det faktisk er sant, altså når serveren
+      // har regnet ut at runden kan starte — ikke ved å telle selv.
+      if (room.status === 'ready') {
+        this.note(room, { kind: 'allReady', playerCount: room.players.length })
+      }
+    }
     touch(room, this.clock())
     this.broadcast(room)
     return ok(room)
@@ -768,6 +824,12 @@ export class GameService {
     const auth = this.requirePlayer(input)
     if (!auth.ok) return auth
     const { room, playerId } = auth.value
+    const player = findPlayer(room, playerId)
+    // Bare et faktisk gjensyn er verdt å si fra om. En telefon som bytter
+    // socket ved reload var aldri borte.
+    if (player && !player.connected) {
+      this.note(room, { kind: 'playerReconnected', name: player.name })
+    }
     setConnected(room, playerId, true, this.clock())
     touch(room, this.clock())
     return ok({ room, playerId })
@@ -793,7 +855,10 @@ export class GameService {
     // En telefon som bare byttet socket (reload) skal ikke markeres frakoblet.
     if (this.hasOtherSocketFor(binding.playerId, socketId)) return
     const player = setConnected(room, binding.playerId, false, this.clock())
-    if (player) log.info('spiller frakoblet', { code: room.code, name: player.name })
+    if (player) {
+      this.note(room, { kind: 'playerDisconnected', name: player.name })
+      log.info('spiller frakoblet', { code: room.code, name: player.name })
+    }
     this.broadcast(room)
   }
 

@@ -255,6 +255,8 @@ export function buildHostView(
         })
       : null,
     results: buildResults(room),
+    events: room.events.events,
+    eventSeq: room.events.seq,
     takeoverRequests: takeoverRequests.flatMap((name) => {
       const player = room.players.find((p) => p.name === name)
       return player
