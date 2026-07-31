@@ -13,7 +13,9 @@ export const bingo90: FormatDefinition = {
   name: '90-tallsbingo',
   numberRange: { min: 1, max: 90 },
   supportsFreeCenter: false,
-  maxBoardsPerPlayer: 3,
+  maxBoardsPerPlayer: 6,
+  // Et helt bingoark: seks brett som deler alle 90 tallene mellom seg.
+  stripSize: 6,
 
   buildLayout() {
     return {

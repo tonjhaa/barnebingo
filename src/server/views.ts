@@ -55,6 +55,7 @@ export function buildConfigSummary(profile: RuleProfile): ConfigSummary {
     stageLabels: profile.prizeStages.map((stage) => stage.label),
     speech: profile.speech,
     columnLabels: [...profile.layout.columnLabels],
+    stripSize: getFormat(profile.format).stripSize ?? null,
   }
 }
 

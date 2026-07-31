@@ -34,6 +34,9 @@ export function PlayScreen({
 
   const flere = view.boards.length > 1
   const kanMarkere = markingMode !== 'auto' && round.status === 'active'
+  // Brett fra en strimmel hører sammen og tegnes som ett ark, med rissene
+  // imellom slik man river dem fra hverandre på papir.
+  const strimmel = Boolean(view.config.stripSize) && flere
 
   /**
    * Assistert markering (§7): ruta med det trukne tallet lyser til den er
@@ -90,39 +93,56 @@ export function PlayScreen({
 
       {/* Alle brettene under hverandre. Å bla mellom faner betyr å lete etter
           tallet tre ganger; her ser man dem i én bevegelse. */}
-      <div className="flex flex-1 flex-col justify-center gap-4 py-2">
-        {view.boards.map((board) => (
-          <section key={board.id} className="flate p-3">
-            {flere && (
-              <header className="mb-2 flex items-baseline justify-between px-1">
-                <span className="text-sm font-black" style={{ color: me.color }}>
-                  Brett {board.index}
-                </span>
-                <span className="text-xs text-tekst-svak tabular-nums">
-                  {board.markedCount} av {board.numberCount} ·{' '}
-                  {board.completedRows.length} rader
-                </span>
-              </header>
-            )}
-            <BoardGrid
-              board={board}
-              color={me.color}
-              columnLabels={view.config.columnLabels}
-              onToggle={
-                kanMarkere
-                  ? (value, marked) => toggle(board.id, value, marked)
-                  : undefined
-              }
-              rejected={rejected}
-              hint={hintFor(board)}
-            />
-          </section>
-        ))}
+      <div className="flex flex-1 flex-col justify-center py-2">
+        <div className={strimmel ? 'flate overflow-hidden p-0' : 'flex flex-col gap-4'}>
+          {view.boards.map((board, i) => (
+            <section
+              key={board.id}
+              className={strimmel ? 'px-3 pt-2 pb-3' : 'flate p-3'}
+              style={strimmel && i > 0 ? { borderTop: '2px dashed rgb(255 255 255 / .14)' } : undefined}
+            >
+              {flere && (
+                <header className="mb-2 flex items-baseline justify-between px-1">
+                  <span className="text-sm font-black" style={{ color: me.color }}>
+                    Brett {board.index}
+                    {strimmel && view.config.stripSize
+                      ? ` av ${view.config.stripSize}`
+                      : ''}
+                  </span>
+                  <span className="text-xs text-tekst-svak tabular-nums">
+                    {board.markedCount} av {board.numberCount} ·{' '}
+                    {board.completedRows.length} rader
+                  </span>
+                </header>
+              )}
+              <BoardGrid
+                board={board}
+                color={me.color}
+                columnLabels={view.config.columnLabels}
+                onToggle={
+                  kanMarkere
+                    ? (value, marked) => toggle(board.id, value, marked)
+                    : undefined
+                }
+                rejected={rejected}
+                hint={hintFor(board)}
+              />
+            </section>
+          ))}
+        </div>
 
         {!flere && view.boards[0] && (
-          <p className="text-center text-sm text-tekst-svak tabular-nums">
+          <p className="mt-2 text-center text-sm text-tekst-svak tabular-nums">
             {view.boards[0].markedCount} av {view.boards[0].numberCount} ·{' '}
             {view.boards[0].completedRows.length} hele rader
+          </p>
+        )}
+
+        {/* Med hele arket står hvert tall ett sted. Det er verdt å si, for det
+            er nettopp den beskjeden som får en til å lete videre nedover. */}
+        {strimmel && view.boards.length === view.config.stripSize && (
+          <p className="mt-3 text-center text-xs text-tekst-svak">
+            Du har hele arket — hvert tall står ett sted.
           </p>
         )}
       </div>

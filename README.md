@@ -200,6 +200,13 @@ til` gir nye brett til de samme spillerne; premiene teller videre.
 **Assistert markering** — «Med hint» lyser opp ruta med det trukne tallet til
 den er krysset av. Den markerer ikke selv; barnet skal fortsatt trykke.
 
+**Strimmel i 90-formatet** — brettene lages som et ekte bingoark: seks brett som
+deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Verten velger
+1–6 brett per spiller, og med alle seks står hvert trukket tall et sted på arket.
+Telefonen tegner dem som ett sammenhengende ark med riss imellom, og man scroller
+nedover i stedet for å bla mellom faner. De to andre formatene lager fortsatt
+hvert brett for seg — strimmelen er en egenskap ved formatet, ikke ved motoren.
+
 **Vertsgodkjent overtakelse** — en telefon som er borte for godt kommer tilbake
 ved at spilleren trykker på sitt eget navn og verten sier ja. Gjenopprettings-
 nøkkelen byttes ut, så den gamle telefonen mister tilgangen.

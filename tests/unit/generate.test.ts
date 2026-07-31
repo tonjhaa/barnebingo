@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { boardNumbers, type Board } from '@/domain/board/board'
-import { boardFingerprint, generateBoard, generateBoards } from '@/domain/board/generate'
+import {
+  boardFingerprint,
+  generateBoard,
+  generateBoards,
+  generateStrip,
+} from '@/domain/board/generate'
 import { buildProfile } from '@/domain/formats/registry'
 import { FORMAT_IDS, type FormatId, type RuleProfile } from '@/domain/formats/types'
 import { seededRng } from '@/domain/rng'
@@ -188,6 +193,76 @@ describe('90-tallsbrett', () => {
           .filter((v): v is number => v !== null)
         expect(column).toEqual([...column].sort((a, b) => a - b))
       }
+    }
+  })
+})
+
+describe('90-talls strimmel', () => {
+  const profile = profileFor('bingo90')
+
+  function strimmel(seed: number) {
+    return generateStrip(profile, 'p1', seededRng(seed))
+  }
+
+  it('består av seks brett, slik et ekte bingoark gjør', () => {
+    expect(strimmel(1)).toHaveLength(6)
+  })
+
+  it('har hvert tall fra 1 til 90 nøyaktig én gang', () => {
+    for (let seed = 1; seed <= 40; seed++) {
+      const alle = strimmel(seed).flatMap(boardNumbers)
+      expect(alle).toHaveLength(90)
+      expect([...alle].sort((a, b) => a - b)).toEqual(
+        Array.from({ length: 90 }, (_, i) => i + 1),
+      )
+    }
+  })
+
+  it('gir hvert brett i strimmelen samme form som et enkeltbrett', () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      for (const board of strimmel(seed)) expectValidBoard(board, profile)
+    }
+  })
+
+  it('sprer tallene i en kolonne mellom brettene', () => {
+    // Uten spredning ville brett 1 alltid fått de laveste tallene i hver
+    // kolonne og brett 6 de høyeste, og arket sett sortert ut i stedet for
+    // tilfeldig. Det første brettet skal derfor ikke alltid ha kolonnens
+    // laveste tall.
+    const førstetall = Array.from({ length: 20 }, (_, i) =>
+      Math.min(...boardNumbers(strimmel(i + 1)[0])),
+    )
+    expect(new Set(førstetall).size).toBeGreaterThan(1)
+  })
+
+  it('lager ulike strimler for ulike seed', () => {
+    const a = strimmel(1).map(boardFingerprint)
+    const b = strimmel(2).map(boardFingerprint)
+    expect(a).not.toEqual(b)
+  })
+
+  it('gir spilleren de første brettene når verten velger færre enn seks', () => {
+    for (const antall of [1, 2, 3, 4, 5, 6] as const)
+      expect(
+        generateBoards(
+          buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: antall }),
+          'p1',
+          seededRng(5),
+          new Set(),
+        ),
+      ).toHaveLength(antall)
+  })
+
+  it('gir aldri samme tall to ganger hos én spiller', () => {
+    const p = buildProfile({
+      format: 'bingo90',
+      difficulty: 'normal',
+      boardsPerPlayer: 4,
+    })
+    const rng = seededRng(17)
+    for (let i = 0; i < 30; i++) {
+      const tall = generateBoards(p, 'p1', rng, new Set()).flatMap(boardNumbers)
+      expect(new Set(tall).size).toBe(tall.length)
     }
   })
 })

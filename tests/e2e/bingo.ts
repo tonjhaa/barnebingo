@@ -37,7 +37,7 @@ export type Spillernavn = string
 export interface Innstillinger {
   format?: 'Barnebingo' | '75-tallsbingo' | '90-tallsbingo'
   nivå?: 'Nybegynner' | 'Enkel' | 'Normal' | 'Vanskelig'
-  brett?: 1 | 2 | 3
+  brett?: 1 | 2 | 3 | 4 | 5 | 6
   markering?: 'Selv' | 'Med hint' | 'Automatisk'
   bingo?: 'Selv' | 'Knappen lyser' | 'Automatisk'
   stadier?: string[]

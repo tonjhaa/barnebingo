@@ -8,6 +8,7 @@ import { validateProfile } from '@/domain/formats/validate'
 import {
   DIFFICULTIES,
   FORMAT_IDS,
+  type BoardCount,
   type ConfigInput,
   type Difficulty,
   type DrawMode,
@@ -51,10 +52,13 @@ const INTERVALS: ReadonlyArray<Choice<number>> = [
   { value: 15000, label: '15 sek' },
 ]
 
-const BOARDS: ReadonlyArray<Choice<1 | 2 | 3>> = [
+const BOARDS: ReadonlyArray<Choice<BoardCount>> = [
   { value: 1, label: '1' },
   { value: 2, label: '2' },
   { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
 ]
 
 /**
@@ -150,7 +154,14 @@ export function ConfigPanel({
 
         <div className="flex flex-col gap-6">
           <Group title="Brettene">
-            <Field label="Brett per spiller" hint="Alle brett vurderes hver for seg.">
+            <Field
+              label="Brett per spiller"
+              hint={
+                format.stripSize
+                  ? `Brettene henger sammen som på et ekte ark. Med alle ${format.stripSize} står hvert tall ett sted.`
+                  : 'Alle brett vurderes hver for seg.'
+              }
+            >
               <Segmented
                 ariaLabel="Brett per spiller"
                 value={profile.boardsPerPlayer}

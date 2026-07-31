@@ -1,4 +1,4 @@
-import type { BoardLayout, FormatId, PrizeStageDef } from './types'
+import type { BoardCount, BoardLayout, FormatId, PrizeStageDef } from './types'
 
 /**
  * Alt et nytt bingoformat må oppgi. Å legge til et fjerde format skal kreve
@@ -10,7 +10,14 @@ export interface FormatDefinition {
   numberRange: { min: number; max: number }
   /** Kan verten slå på fri midtrute for dette formatet? */
   supportsFreeCenter: boolean
-  maxBoardsPerPlayer: 1 | 2 | 3
+  maxBoardsPerPlayer: BoardCount
+  /**
+   * Brettene henger sammen i en strimmel på så mange brett, der hvert tall i
+   * området står nøyaktig én gang. Slik selges 90-talls bingoark: seks brett
+   * per ark, 90 tall til sammen. Utelates for formater der hvert brett er
+   * uavhengig av de andre.
+   */
+  stripSize?: number
   buildLayout(options: { freeCenter: boolean }): BoardLayout
   /** Alle lovlige stadier i riktig rekkefølge. Verten kan slå av enkelte,
    *  men aldri legge til noe som ikke står her. Det er slik 90-formatet

@@ -26,7 +26,10 @@ export const PlayerNameSchema = z.string().trim().min(1).max(MAX_NAME_LENGTH)
 export const ConfigInputSchema = z.object({
   format: z.enum(FORMAT_IDS),
   difficulty: z.enum(DIFFICULTIES),
-  boardsPerPlayer: z.union([z.literal(1), z.literal(2), z.literal(3)]).optional(),
+  // Opptil seks: en hel 90-talls strimmel.
+  boardsPerPlayer: z
+    .union([1, 2, 3, 4, 5, 6].map((n) => z.literal(n)) as [z.ZodLiteral<1>, z.ZodLiteral<2>, z.ZodLiteral<3>, z.ZodLiteral<4>, z.ZodLiteral<5>, z.ZodLiteral<6>])
+    .optional(),
   freeCenter: z.boolean().optional(),
   enabledStageIds: z.array(z.string().max(32)).max(8).optional(),
   markingMode: z.enum(['manual', 'auto', 'assisted']).optional(),
@@ -184,6 +187,12 @@ export interface ConfigSummary {
   speech: boolean
   /** B I N G O, eller tom liste for formater uten overskrifter. */
   columnLabels: string[]
+  /**
+   * Antall brett på et helt ark, for formater som selges i strimler. Null for
+   * formater der hvert brett står for seg. Telefonen tegner strimmelen som ett
+   * sammenhengende ark når dette er satt.
+   */
+  stripSize: number | null
 }
 
 export interface RoundView {

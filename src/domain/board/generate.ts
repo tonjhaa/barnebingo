@@ -1,3 +1,4 @@
+import { getFormat } from '../formats/registry'
 import type { BoardLayout, RuleProfile } from '../formats/types'
 import { generateId } from '../ids'
 import { range, sample, shuffle, type Rng } from '../rng'
@@ -150,6 +151,141 @@ export function generateBoard(
   }
 }
 
+/**
+ * En strimmel: brettene som selges sammen på ett ark.
+ *
+ * Slik ser et ekte 90-talls bingoark ut. Seks brett deler alle 90 tallene
+ * mellom seg, hvert tall nøyaktig én gang — og har man hele arket, står hvert
+ * eneste trukne tall et sted. Det er hele poenget med en strimmel, og grunnen
+ * til at brettene ikke kan lages hver for seg.
+ *
+ * Kolonnene fylles etter tiere: kolonne 0 har 1-9 (ni tall), kolonne 8 har
+ * 80-90 (elleve), resten ti hver. Til sammen 90.
+ */
+export function generateStrip(profile: RuleProfile, playerId: string, rng: Rng): Board[] {
+  const { layout } = profile
+  const antall = getStripSize(profile)
+  const kolonneStørrelser = layout.columnRanges.map((r) => r.max - r.min + 1)
+
+  const fordeling = fordelKolonnerPåBrett(antall, layout, kolonneStørrelser, rng)
+  const tall = delUtTall(antall, layout, fordeling, rng)
+
+  return range(0, antall - 1).map((brett) => {
+    const counts = fordeling[brett]
+    const grid = describeGrid(layout)
+
+    let placement: number[][] | null = null
+    for (let attempt = 0; attempt < MAX_ATTEMPTS && !placement; attempt++) {
+      placement = assignRows(layout, grid, counts, rng)
+    }
+    if (!placement) {
+      throw new Error('Klarte ikke å fordele tallene på et brett i strimmelen')
+    }
+
+    const cells: Cell[][] = range(0, layout.rows - 1).map(() =>
+      range(0, layout.cols - 1).map(() => ({ value: null, isFree: false })),
+    )
+
+    for (let col = 0; col < layout.cols; col++) {
+      placement[col].forEach((row, index) => {
+        cells[row][col].value = tall[brett][col][index]
+      })
+    }
+
+    return { id: generateId('board'), playerId, cells, marks: new Set<number>() }
+  })
+}
+
+/**
+ * Hvilke tall hvert brett får, per kolonne.
+ *
+ * Tallene i en kolonne deles ut tilfeldig mellom brettene, ikke i rekkefølge —
+ * ellers ville brett 1 alltid fått de laveste tallene og brett 6 de høyeste, og
+ * arket sett sortert ut i stedet for tilfeldig. Fordi tallene deles ut stigende,
+ * står hver kolonne likevel sortert på det enkelte brettet.
+ */
+function delUtTall(
+  antall: number,
+  layout: BoardLayout,
+  fordeling: number[][],
+  rng: Rng,
+): number[][][] {
+  const tall: number[][][] = range(0, antall - 1).map(() =>
+    range(0, layout.cols - 1).map(() => []),
+  )
+
+  for (let col = 0; col < layout.cols; col++) {
+    const plasser = shuffle(
+      fordeling.flatMap((counts, brett) => new Array<number>(counts[col]).fill(brett)),
+      rng,
+    )
+    const { min, max } = layout.columnRanges[col]
+    range(min, max).forEach((verdi, i) => tall[plasser[i]][col].push(verdi))
+  }
+
+  return tall
+}
+
+export function getStripSize(profile: RuleProfile): number {
+  return getFormat(profile.format).stripSize ?? 0
+}
+
+/**
+ * Hvor mange tall hvert brett får fra hver kolonne.
+ *
+ * Kravene som må gå opp samtidig: hvert brett har 15 tall, hver kolonne deles
+ * ut i sin helhet, og ingen kolonne på ett brett har mer enn tre tall eller
+ * mindre enn ett. Fordelingen starter derfor med ett tall i hver rute og
+ * deler ut resten til de brettene som har mest plass igjen.
+ */
+function fordelKolonnerPåBrett(
+  antall: number,
+  layout: BoardLayout,
+  kolonneStørrelser: number[],
+  rng: Rng,
+): number[][] {
+  const perBrett = layout.rows * layout.cellsPerRow
+  const maksPerKolonne = layout.rows
+
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const fordeling = range(0, antall - 1).map(() =>
+      new Array<number>(layout.cols).fill(1),
+    )
+    const restPerBrett = new Array<number>(antall).fill(perBrett - layout.cols)
+    const restPerKolonne = kolonneStørrelser.map((n) => n - antall)
+
+    let ok = true
+    for (const col of shuffle(range(0, layout.cols - 1), rng)) {
+      let igjen = restPerKolonne[col]
+      const mottakere = shuffle(range(0, antall - 1), rng).sort(
+        (a, b) => restPerBrett[b] - restPerBrett[a],
+      )
+
+      for (const brett of mottakere) {
+        if (igjen === 0) break
+        const plass = Math.min(
+          maksPerKolonne - fordeling[brett][col],
+          restPerBrett[brett],
+          igjen,
+        )
+        if (plass <= 0) continue
+        fordeling[brett][col] += plass
+        restPerBrett[brett] -= plass
+        igjen -= plass
+      }
+
+      if (igjen > 0) {
+        ok = false
+        break
+      }
+    }
+
+    if (ok && restPerBrett.every((n) => n === 0)) return fordeling
+  }
+
+  throw new Error('Klarte ikke å sette sammen en strimmel')
+}
+
 /** Brettets tall som en stabil nøkkel, brukt til å hindre to like brett. */
 export function boardFingerprint(board: Board): string {
   return boardNumbers(board)
@@ -169,6 +305,16 @@ export function generateBoards(
   rng: Rng,
   taken: Set<string>,
 ): Board[] {
+  // Formater som selges i strimler lages under ett: brettene henger sammen,
+  // og å lage dem hver for seg ville brutt løftet om at hvert tall står ett
+  // sted. Verten kan spille med færre enn hele arket, og får da de første.
+  if (getStripSize(profile) > 0) {
+    const strimmel = generateStrip(profile, playerId, rng)
+    const valgte = strimmel.slice(0, profile.boardsPerPlayer)
+    for (const board of valgte) taken.add(boardFingerprint(board))
+    return valgte
+  }
+
   const boards: Board[] = []
 
   for (let i = 0; i < profile.boardsPerPlayer; i++) {

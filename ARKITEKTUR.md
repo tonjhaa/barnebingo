@@ -313,6 +313,15 @@ avvises kombinasjonen med en forklaring til verten.
 `validatingBingo` og gjenopptas først etter premievisning, ellers trekkes tall mens
 en vinner kåres. Håndhevet i tilstandsmaskinen, ikke i UI-et.
 
+**K11 — 90-bingo selges i strimler.** Ekte 90-talls bingoark består av seks brett
+som deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Å lage brettene
+uavhengig av hverandre ville gitt duplikater innad hos én spiller og brutt det som
+gjør formatet gjenkjennelig. Løsning: `FormatDefinition.stripSize` sier hvor mange
+brett et helt ark har, og `generateStrip` lager alle seks under ett. Verten velger
+1–6 brett per spiller; velges alle seks, står hvert tall fra 1 til 90 ett sted.
+Motoren er uendret — strimmelen er en egenskap ved formatet, ikke ved regelverket,
+og formater uten `stripSize` genereres brett for brett som før.
+
 **Å1 — barnebingo-formatet. Avklart:** 4×4-rutenett, 16 tall, område 1–40, ingen fri
 rute. Kolonnene deles i fire like områder (1–10, 11–20, 21–30, 31–40) slik at brettet
 er visuelt sortert og lett å lese for barn. Premiestadier: én rad → to rader → fullt brett.
@@ -331,8 +340,9 @@ feltet beholdes i `RuleProfile` fordi motoren allerede skiller `marks` fra `vali
 ## 10. Teststrategi
 
 * **Enhet (Vitest):** brettgenerering per format med fast seed (kolonneområder i 75,
-  fem tall per rad og stigende kolonner i 90), trekk uten duplikat, radberegning,
-  fri rute, `validMarks`, BINGO-validering over 1–3 brett, premiesekvens,
+  fem tall per rad og stigende kolonner i 90), strimmelen i 90-formatet (seks brett
+  som til sammen dekker 1–90 nøyaktig én gang), trekk uten duplikat, radberegning,
+  fri rute, `validMarks`, BINGO-validering over 1–6 brett, premiesekvens,
   `validate.ts` mot alle konfliktreglene K1/K4/K9.
 * **Integrasjon:** hele flyten mot en in-process socketserver — rom, fire spillere,
   reserverte navn, klar, start, trekk, markering, BINGO, stadieskifte, ny runde, sletting.

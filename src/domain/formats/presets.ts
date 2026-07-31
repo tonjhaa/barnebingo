@@ -1,9 +1,9 @@
-import type { Difficulty, DrawMode, MarkingMode, WinMode } from './types'
+import type { BoardCount, Difficulty, DrawMode, MarkingMode, WinMode } from './types'
 
 export interface DifficultyPreset {
   label: string
   description: string
-  boardsPerPlayer: 1 | 2 | 3
+  boardsPerPlayer: BoardCount
   markingMode: MarkingMode
   winMode: WinMode
   drawMode: DrawMode

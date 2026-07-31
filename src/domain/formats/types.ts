@@ -10,6 +10,9 @@ export type FormatId = (typeof FORMAT_IDS)[number]
 export const DIFFICULTIES = ['nybegynner', 'enkel', 'normal', 'vanskelig'] as const
 export type Difficulty = (typeof DIFFICULTIES)[number]
 
+/** Antall brett en spiller kan få. Seks er en hel 90-talls strimmel. */
+export type BoardCount = 1 | 2 | 3 | 4 | 5 | 6
+
 export type MarkingMode = 'manual' | 'auto' | 'assisted'
 export type WinMode = 'manual' | 'assisted' | 'autoWin'
 export type DrawMode = 'manual' | 'auto' | 'autoConfirm'
@@ -52,7 +55,7 @@ export interface RuleProfile {
   numberRange: { min: number; max: number }
   /** Antall tall på ett brett. Utledet av layout, men lagret for enkel validering. */
   numbersPerBoard: number
-  boardsPerPlayer: 1 | 2 | 3
+  boardsPerPlayer: BoardCount
 
   markingMode: MarkingMode
   /** Permanent false i v1 (se ARKITEKTUR.md §9 Å3). Motoren skiller uansett
@@ -87,7 +90,7 @@ export interface RuleProfile {
 export interface ConfigInput {
   format: FormatId
   difficulty: Difficulty
-  boardsPerPlayer?: 1 | 2 | 3
+  boardsPerPlayer?: BoardCount
   freeCenter?: boolean
   enabledStageIds?: string[]
   markingMode?: MarkingMode
