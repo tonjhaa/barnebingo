@@ -198,12 +198,19 @@ describe('vanskelighetsgrader og overstyring', () => {
     expect(validateProfile(i90).filter((i) => i.severity === 'error')).toEqual([])
   })
 
-  it('har opplesning avslått i alle vanskelighetsgrader', () => {
-    // Hovedskjermen står ofte i samme rom som spillerne. En stemme som roper
-    // hvert eneste tall blir fort mer støy enn hjelp, så verten må be om den.
+  it('har opplesning påslått i alle vanskelighetsgrader', () => {
+    // Programlederen er ikke lenger en stemme som roper tall, men rammen rundt
+    // spillet — og for et barn som ennå leser tall langsomt er opplesningen
+    // forskjellen på å henge med og å gi opp. Verten kan slå den av.
     for (const difficulty of DIFFICULTIES) {
-      expect(buildProfile({ format: 'kids', difficulty }).speech).toBe(false)
+      expect(buildProfile({ format: 'kids', difficulty }).speech).toBe(true)
     }
+  })
+
+  it('lar verten slå opplesningen av', () => {
+    expect(buildProfile({ format: 'kids', difficulty: 'enkel', speech: false }).speech).toBe(
+      false,
+    )
   })
 
   it('lar verten slå opplesningen på når hen vil ha den', () => {

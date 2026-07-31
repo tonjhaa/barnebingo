@@ -102,6 +102,7 @@ export function useHostRoom(roomId: string) {
   const resumeGame = useCallback(() => command(C.hostResumeGame), [command])
   const advancePrize = useCallback(() => command(C.hostAdvancePrize), [command])
   const newRound = useCallback(() => command(C.hostNewRound), [command])
+  const generateNames = useCallback(() => command(C.hostGenerateNames), [command])
   const approveTakeover = useCallback(
     (name: string) => command(C.hostApproveTakeover, { name }),
     [command],
@@ -130,6 +131,7 @@ export function useHostRoom(roomId: string) {
     resumeGame,
     advancePrize,
     newRound,
+    generateNames,
     approveTakeover,
     denyTakeover,
     closeRoom,

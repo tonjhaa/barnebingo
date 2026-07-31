@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { HostView, PrizeResultView, RosterEntry, RoundView } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
 import { BingoBall } from '@/ui/shared/BingoBall'
@@ -31,8 +31,15 @@ export function GameScreen({
   const finished = round.status === 'finished'
   const ready = useAutoDrawCountdown(round)
   const [lyd, setLyd] = useState(view.config.speech)
+  // Serveren vet hvilke navn som har lydklipp. Programlederen sier bare navn
+  // den faktisk kan uttale, og formulerer seg navnefritt ellers.
+  const harNavn = useCallback(
+    (navn: string) => !view.namesWithoutVoice.includes(navn),
+    [view.namesWithoutVoice],
+  )
   const { undertekst, låsOpp } = useLyd(STANDARD_TALE, view.events, view.eventSeq, {
     på: lyd,
+    harNavn,
   })
 
   /** Alle vertsknapper låser opp stemmen — nettleseren krever et brukertrykk. */

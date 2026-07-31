@@ -231,6 +231,11 @@ export function buildHostView(
   baseUrl: string,
   takeoverRequests: string[] = [],
   certHelpUrl: string | null = null,
+  /** Hvem som kan leses opp ved navn. Se `Navnelyd`. */
+  navnelyd: { kanGenerere: boolean; utenKlipp: (navn: string[]) => string[] } = {
+    kanGenerere: false,
+    utenKlipp: (navn) => navn,
+  },
 ): HostView {
   // Hovedskjermen ser åpenbart seg selv.
   return {
@@ -257,6 +262,8 @@ export function buildHostView(
     results: buildResults(room),
     events: room.events.events,
     eventSeq: room.events.seq,
+    canGenerateNames: navnelyd.kanGenerere,
+    namesWithoutVoice: navnelyd.utenKlipp(room.players.map((player) => player.name)),
     takeoverRequests: takeoverRequests.flatMap((name) => {
       const player = room.players.find((p) => p.name === name)
       return player

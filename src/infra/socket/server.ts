@@ -10,6 +10,7 @@ import {
   HostCloseRoomSchema,
   HostCreateRoomSchema,
   HostDrawNextSchema,
+  HostGenerateNamesSchema,
   HostNewRoundSchema,
   HostOpenLobbySchema,
   HostPauseSchema,
@@ -152,6 +153,15 @@ export function attachSocketHandlers(io: Server, game: GameService): void {
       (input, respond) => {
         const result = game.newRound(input)
         respond(result.ok ? { ok: true, data: null } : result)
+      })
+
+    command(socket, limiter, C.hostGenerateNames, HostGenerateNamesSchema, 'hostCommand',
+      (input, respond) => {
+        // Kallet ut til stemmeleverandøren tar tid. Svaret venter på det, så
+        // verten ser når navnene faktisk er klare i stedet for å gjette.
+        void game.generateNames(input).then((result) => {
+          respond(result.ok ? { ok: true, data: result.value } : result)
+        })
       })
 
     command(socket, limiter, C.hostApproveTakeover, HostTakeoverSchema, 'hostCommand',

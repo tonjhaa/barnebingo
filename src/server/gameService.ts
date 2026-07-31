@@ -38,6 +38,7 @@ import { expiredRooms, type RoomStore } from '@/infra/store/roomStore'
 import { SelfieStore, validateSelfie } from '@/infra/store/selfieStore'
 import { log } from '@/infra/logger'
 import { E, type ClaimResult, type CreateRoomResult } from '@/shared/protocol'
+import { Navnelyd } from './tts/navnelyd'
 import { buildHostView, buildPlayerView } from './views'
 
 export type SocketRole = 'host' | 'player'
@@ -80,6 +81,8 @@ export class GameService {
   private bingoTimers = new Map<string, NodeJS.Timeout>()
   /** Telefoner som venter på at verten skal slippe dem inn (§23). */
   private takeovers = new Map<string, { socketId: string; roomId: string; name: string }>()
+  /** Hvilke spillernavn programlederen kan si. Se `Navnelyd`. */
+  private readonly navnelyd = new Navnelyd()
 
   constructor(
     private readonly io: Server,
@@ -159,7 +162,7 @@ export class GameService {
     const borte = !this.hostPresent(room.id)
     this.io
       .to(hostChannel(room.id))
-      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl()))
+      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl(), this.navnelyd))
     for (const [socketId, binding] of this.bindings) {
       if (binding.roomId !== room.id || binding.role !== 'player') continue
       this.io
@@ -177,7 +180,7 @@ export class GameService {
   sendHostState(socketId: string, room: Room): void {
     this.io
       .to(socketId)
-      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl()))
+      .emit(E.hostState, buildHostView(room, this.baseUrl(), this.pendingTakeovers(room.id), this.certHelpUrl(), this.navnelyd))
   }
 
   // --- Bindinger -----------------------------------------------------------
@@ -512,6 +515,30 @@ export class GameService {
     this.broadcast(room)
     log.info('ny runde', { code: room.code, runder: room.history.length })
     return ok(room)
+  }
+
+  /**
+   * Lager opplesning for spillernes navn (§11, §21). Kalles fra lobbyen, aldri
+   * under en runde: et API-kall midt i spillet ville blitt hørbart som en
+   * pause akkurat der tallet skulle komme.
+   */
+  async generateNames(input: {
+    roomId: string
+    hostKey: string
+    seq: number
+  }): Promise<Result<{ names: string[] }>> {
+    const auth = this.requireHost(input)
+    if (!auth.ok) return auth
+    const room = auth.value
+
+    if (room.status === 'playing') {
+      return err('names/inGame', 'Navnene lages i lobbyen, ikke mens spillet går.')
+    }
+
+    const laget = await this.navnelyd.lag(room.players.map((player) => player.name))
+    if (laget.length > 0) log.info('navnelyd laget', { code: room.code, antall: laget.length })
+    this.broadcast(room)
+    return ok({ names: laget })
   }
 
   advancePrize(input: {

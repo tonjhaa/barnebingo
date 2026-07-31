@@ -25,6 +25,7 @@ export function HostScreen({ roomId }: { roomId: string }) {
     resumeGame,
     advancePrize,
     newRound,
+    generateNames,
     approveTakeover,
     denyTakeover,
     closeRoom,
@@ -151,6 +152,7 @@ export function HostScreen({ roomId }: { roomId: string }) {
         </div>
       ) : (
         <Lobby
+          onGenerateNames={generateNames}
           view={view}
           onEdit={() => setEditing(true)}
           onStart={() => void startGame()}
@@ -166,14 +168,63 @@ export function HostScreen({ roomId }: { roomId: string }) {
   )
 }
 
+/**
+ * Navnene som lyd.
+ *
+ * Spillerne skriver navnene sine selv, så de finnes ikke som ferdige klipp.
+ * Verten kan be om dem her — og bare her, i lobbyen, før spillet går. Da er
+ * det et valg noen tar, ikke noe som skjer stille: barnets fornavn sendes til
+ * stemmeleverandøren for å bli lest inn (§21).
+ *
+ * Sier verten nei, formulerer programlederen seg uten navn. Ingenting går tapt
+ * ut over litt personlighet.
+ */
+function Navnestemme({
+  view,
+  onGenerate,
+}: {
+  view: HostView
+  onGenerate: () => Promise<unknown>
+}) {
+  const [jobber, setJobber] = useState(false)
+  const mangler = view.namesWithoutVoice
+
+  if (!view.canGenerateNames || mangler.length === 0) return null
+
+  return (
+    <div className="flate flex flex-wrap items-center justify-between gap-4 p-6">
+      <div className="min-w-0">
+        <p className="text-lg font-bold">Skal programlederen si navnene?</p>
+        <p className="text-base text-tekst-svak">
+          {mangler.join(', ')} leses inn av stemmetjenesten. Bare fornavnet sendes.
+          Uten dette sier programlederen «én spiller til er klar».
+        </p>
+      </div>
+      <Button
+        tone="stille"
+        onClick={async () => {
+          setJobber(true)
+          await onGenerate()
+          setJobber(false)
+        }}
+        disabled={jobber}
+      >
+        {jobber ? 'Leser inn…' : 'Les inn navnene'}
+      </Button>
+    </div>
+  )
+}
+
 function Lobby({
   view,
   onEdit,
   onStart,
+  onGenerateNames,
 }: {
   view: HostView
   onEdit: () => void
   onStart: () => void
+  onGenerateNames: () => Promise<unknown>
 }) {
   const joined = view.roster.length
 
@@ -206,6 +257,8 @@ function Lobby({
             )}
           </div>
         </div>
+
+        <Navnestemme view={view} onGenerate={onGenerateNames} />
 
         <div className="flate mt-auto p-8">
           <div className="mb-5 flex items-baseline justify-between gap-4">

@@ -75,6 +75,7 @@ export const C = {
   hostResumeGame: 'host:resumeGame',
   hostAdvancePrize: 'host:advancePrize',
   hostNewRound: 'host:newRound',
+  hostGenerateNames: 'host:generateNames',
   hostApproveTakeover: 'host:approveTakeover',
   hostDenyTakeover: 'host:denyTakeover',
   playerLookupRoom: 'player:lookupRoom',
@@ -108,6 +109,7 @@ export const HostPauseSchema = z.object({ ...HostAuth })
 export const HostResumeGameSchema = z.object({ ...HostAuth })
 export const HostAdvancePrizeSchema = z.object({ ...HostAuth })
 export const HostNewRoundSchema = z.object({ ...HostAuth })
+export const HostGenerateNamesSchema = z.object({ ...HostAuth })
 export const HostTakeoverSchema = z.object({ ...HostAuth, name: PlayerNameSchema })
 
 // --- Spillerkommandoer ------------------------------------------------------
@@ -332,6 +334,14 @@ export interface HostView {
   events: GameEvent[]
   /** Høyeste sekvensnummer rommet har delt ut. */
   eventSeq: number
+  /**
+   * Kan navnene i lobbyen få egen opplesning? Sant bare når en stemmenøkkel er
+   * satt opp på serveren. Uten den formulerer programlederen seg navnefritt,
+   * og verten skal ikke tilbys en knapp som ikke gjør noe.
+   */
+  canGenerateNames: boolean
+  /** Navn som mangler lydklipp. Tom liste betyr at alle er klare. */
+  namesWithoutVoice: string[]
 }
 
 export interface PlayerView {
