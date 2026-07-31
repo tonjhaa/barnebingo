@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "lyd": "tsx scripts/lag-lyd.ts",
-    "effekter": "tsx scripts/lag-effekter.ts"
+    "effekter": "tsx scripts/lag-effekter.ts",
+    "assets": "tsx scripts/lag-assetdok.ts"
   },
   "dependencies": {
     "next": "16.2.12",

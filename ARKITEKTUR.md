@@ -322,6 +322,15 @@ brett et helt ark har, og `generateStrip` lager alle seks under ett. Verten velg
 Motoren er uendret — strimmelen er en egenskap ved formatet, ikke ved regelverket,
 og formater uten `stripSize` genereres brett for brett som før.
 
+**K12 — lyd kan ikke utledes av tilstand.** Serveren sender fulle
+øyeblikksbilder (§6). Det er riktig for tilstand, men to like snapshot forteller
+ikke om noe skjedde imellom, og et gjentatt snapshot skal ikke lese opp tallet på
+nytt. Løsning: en hendelseslogg med monotont sekvensnummer ved siden av
+tilstanden. Hendelsene er fakta (`numberDrawn`), ikke instruksjoner
+(`playDrawSound`), og sendes bare til hovedskjermen — telefonene er stille.
+Det er dette skillet som gjør at lyd, språk og stemmeleverandør kan byttes uten
+å røre bingoreglene. Se LYD.md.
+
 **Å1 — barnebingo-formatet. Avklart:** 4×4-rutenett, 16 tall, område 1–40, ingen fri
 rute. Kolonnene deles i fire like områder (1–10, 11–20, 21–30, 31–40) slik at brettet
 er visuelt sortert og lett å lese for barn. Premiestadier: én rad → to rader → fullt brett.

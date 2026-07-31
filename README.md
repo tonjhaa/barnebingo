@@ -111,6 +111,10 @@ Appen er laget for barn, og lagrer så lite som mulig:
   Maks tolv tegn, bokstaver og tall — nok til et fornavn, ikke til en historie.
 - Vertsnøkkel og gjenopprettingsnøkler havner aldri i en URL, bare i
   telefonens `localStorage`.
+- Til stemmetjenesten sendes bare teksten som skal leses. Ikke romkode, ikke
+  spiller-id, ikke IP-adresse, ikke bilder. Spillernavn sendes bare hvis verten
+  uttrykkelig ber om det i lobbyen; ellers sier programlederen «én spiller til
+  er klar» i stedet. Se [LYD.md](LYD.md) §9.
 
 ## Kommandoer
 
@@ -125,30 +129,43 @@ Appen er laget for barn, og lagrer så lite som mulig:
 | `npm run typecheck` | TypeScript uten emit |
 | `npm run lint` | ESLint |
 | `npm run certs` | Lager lokalt HTTPS-sertifikat med mkcert |
-| `npm run lyd` | Genererer opplesningsklippene (krever OPENAI_API_KEY) |
+| `npm run lyd` | Genererer programlederens klipp (krever API-nøkkel) |
+| `npm run lyd -- --sjekk` | Sier hva som mangler, uten nøkkel |
+| `npm run effekter` | Syntetiserer lydeffekter og musikk |
+| `npm run assets` | Skriver ATTRIBUTION.md og THIRD_PARTY_ASSETS.md |
 
-## Opplesning
+## Programlederen
 
-Tallene leses fra ferdiginnspilte klipp i `public/lyd/`, ikke av nettleserens
-talesyntese. Da er stemmen den samme på alle skjermer i stedet for å avhenge av
-hvilke stemmer akkurat den maskinen har installert.
+En norsk gameshowvert leder spillet fra hovedskjermen. Han leser tallene slik en
+bingovert gjør — «Tjueen … to en», «B tolv … en to» — kommenterer det som skjer,
+og slipper inn en kort historie når det er rom for det.
 
 ```bash
-OPENAI_API_KEY=sk-... npm run lyd
+ELEVENLABS_API_KEY=... npm run lyd
 ```
 
-96 klipp, kjøres én gang og committes. «B tolv» settes sammen av to klipp ved
-avspilling — derfor 96 filer og ikke 165.
+248 klipp, kjøres én gang og committes. En hel setning settes sammen av flere
+klipp ved avspilling, så variasjonen blir kombinatorisk uten at filmengden blir
+det.
 
-Mangler klippene, faller appen tilbake på talesyntesen. Vinnernavn leses aldri
-opp: de skrives av spillerne selv og finnes ikke som klipp. Skjermen viser dem
-stort, og lyden sier bare at noen har bingo.
+Uten nøkkel leser nettleserens egen stemme den samme teksten. Den er tydelig
+dårligere, og finnes bare så appen aldri er stum. Uansett står det som sies også
+skrevet på skjermen.
+
+Verten styrer alt bak tannhjulet på hovedskjermen: hvor mye programlederen
+legger seg i, om historiene er med, musikk, lydeffekter, tempo og opplesning for
+de yngste. Alt kan skrus av.
+
+Detaljene, inkludert personvern og hvordan man bytter stemmeleverandør, står i
+**[LYD.md](LYD.md)**.
 
 ## Hvordan koden er delt opp
 
 ```
-src/domain/    Bingoregler. Ingen I/O, ingen klokke, ingen tilfeldighet utenfra.
-src/server/    Kommandoer, autorisasjon, tilstandsutsending.
+src/domain/    Bingoregler og lydregi. Ingen I/O, ingen klokke, ingen
+               tilfeldighet utenfra.
+src/content/   Alt programlederen kan si, som data.
+src/server/    Kommandoer, autorisasjon, tilstandsutsending, stemmesyntese.
 src/infra/     Socket.IO, lagring, rate limiting, opprydding.
 src/shared/    Zod-skjema for alt som går over ledningen.
 src/ui/        Hovedskjerm og mobil.
@@ -200,6 +217,11 @@ til` gir nye brett til de samme spillerne; premiene teller videre.
 **Assistert markering** — «Med hint» lyser opp ruta med det trukne tallet til
 den er krysset av. Den markerer ikke selv; barnet skal fortsatt trykke.
 
+**Programleder, musikk og lydeffekter** — en norsk gameshowvert leser tallene
+(«Tjueen … to en»), kommenterer spillet og slipper inn korte historier når det
+er rom for det. Musikken dempes mens han snakker. Alt kan skrus av, og appen
+fungerer uten AI-tjeneste. Se [LYD.md](LYD.md).
+
 **Strimmel i 90-formatet** — brettene lages som et ekte bingoark: seks brett som
 deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Verten velger
 1–6 brett per spiller, og med alle seks står hvert trukket tall et sted på arket.
@@ -217,6 +239,9 @@ nøkkelen byttes ut, så den gamle telefonen mister tilgangen.
   Chromium. Kamera og `localStorage` bør prøves på en faktisk telefon før
   premieren, og det krever HTTPS-sertifikatet over.
 - **Redis.** Se «I produksjon» over.
+- **Lydklippene er ikke generert.** Alt er bygget, men `public/lyd/*.mp3`
+  krever en API-nøkkel. Kjør `ELEVENLABS_API_KEY=... npm run lyd` og commit
+  mappa. Inntil da leser nettleserens egen stemme, som er tydelig dårligere.
 - **Én E2E-test for sluttbildet.** Resultatskjermen og ny runde er dekket av
   elleve integrasjonstester og verifisert manuelt i nettleser, men E2E-testen
   som spilte en hel runde gjennom grensesnittet var ustabil i full kjøring og

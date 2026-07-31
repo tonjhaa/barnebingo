@@ -213,6 +213,7 @@ function Undertekst({ tekst }: { tekst: string | null }) {
   return (
     <p
       aria-live="polite"
+      data-undertekst
       className="pointer-events-none fixed inset-x-0 bottom-6 z-20 mx-auto max-w-4xl px-6 text-center text-2xl font-semibold text-tekst-svak"
     >
       {tekst}

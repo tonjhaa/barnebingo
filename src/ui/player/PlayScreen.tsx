@@ -186,11 +186,6 @@ function Bunn({
       </p>
     )
   }
-  if (round.status === 'validatingBingo') {
-    return (
-      <p className="py-4 text-center text-xl font-black text-sol">Kontrollerer bingo…</p>
-    )
-  }
   if (round.hostAway) {
     return (
       <p className="py-4 text-center text-lg font-bold text-tekst-svak">
@@ -199,14 +194,27 @@ function Bunn({
     )
   }
 
+  /**
+   * Knappen byttes aldri ut mens en bingo kontrolleres — den bare endrer tekst.
+   *
+   * Det er hele poenget med bingovinduet (§9 K5): to barn roper omtrent
+   * samtidig, og den som er et halvsekund treg skal likevel bli med. Erstattet
+   * vi knappen med en beskjed i det øyeblikket den første ropte, ville det
+   * andre trykket landet på et element som akkurat forsvant — og barnet ville
+   * stått igjen med at «jeg trykket jo».
+   */
+  const kontrollerer = round.status === 'validatingBingo'
+
   return (
     <button
       onClick={onBingo}
-      className={`w-full rounded-3xl bg-sol py-6 text-4xl font-black tracking-wide text-natt transition-transform active:scale-[0.97] ${
-        bingoHint ? 'lyser' : ''
+      className={`w-full rounded-3xl py-6 text-4xl font-black tracking-wide transition-colors ${
+        kontrollerer
+          ? 'bg-flate-2 text-sol'
+          : `bg-sol text-natt transition-transform active:scale-[0.97] ${bingoHint ? 'lyser' : ''}`
       }`}
     >
-      BINGO!
+      {kontrollerer ? 'Kontrollerer bingo…' : 'BINGO!'}
     </button>
   )
 }

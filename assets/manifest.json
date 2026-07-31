@@ -1,0 +1,75 @@
+{
+  "versjon": 1,
+  "assets": [
+    {
+      "id": "stemme-programleder",
+      "fil": "public/lyd/*.mp3",
+      "type": "stemme",
+      "kategori": "Programlederens opplesning",
+      "kilde": "Generert med en tekst-til-tale-tjeneste, se src/server/tts/",
+      "url": null,
+      "skaper": "Barnebingo (tekstene) og valgt TTS-leverandør (syntesen)",
+      "lisens": "Se leverandørens vilkår. Tekstene er prosjektets egne.",
+      "kreverKreditering": null,
+      "hentet": "2026-07-31",
+      "kommersielt": true,
+      "begrensninger": "Stemmen er syntetisk og etterligner ingen virkelig person. Sjekk leverandørens vilkår før kommersiell bruk — de varierer."
+    },
+    {
+      "id": "effekter",
+      "fil": "public/lyd/effekt/*.wav",
+      "type": "effekt",
+      "kategori": "Knapp, trekk, markering, overgang, spenning, bingo, fanfare, applaus, konfetti, bom, nedtelling",
+      "kilde": "Syntetisert av scripts/lag-effekter.ts",
+      "url": null,
+      "skaper": "Barnebingo",
+      "lisens": "CC0-1.0",
+      "kreverKreditering": null,
+      "hentet": "2026-07-31",
+      "kommersielt": true,
+      "begrensninger": null
+    },
+    {
+      "id": "musikk-bakgrunn",
+      "fil": "public/lyd/musikk/bakgrunn.wav",
+      "type": "musikk",
+      "kategori": "Bakgrunnssløyfe under spill",
+      "kilde": "Syntetisert av scripts/lag-effekter.ts",
+      "url": null,
+      "skaper": "Barnebingo",
+      "lisens": "CC0-1.0",
+      "kreverKreditering": null,
+      "hentet": "2026-07-31",
+      "kommersielt": true,
+      "begrensninger": null
+    },
+    {
+      "id": "skrift-archivo",
+      "fil": "src/app/layout.tsx (next/font)",
+      "type": "skrift",
+      "kategori": "Tallene på hovedskjermen og brettene",
+      "kilde": "Google Fonts, lastet ned ved bygg av next/font",
+      "url": "https://fonts.google.com/specimen/Archivo",
+      "skaper": "Omnibus-Type",
+      "lisens": "SIL Open Font License 1.1",
+      "kreverKreditering": null,
+      "hentet": "2026-07-30",
+      "kommersielt": true,
+      "begrensninger": "Skriften kan ikke selges alene."
+    },
+    {
+      "id": "skrift-familjen-grotesk",
+      "fil": "src/app/layout.tsx (next/font)",
+      "type": "skrift",
+      "kategori": "Brødtekst og overskrifter",
+      "kilde": "Google Fonts, lastet ned ved bygg av next/font",
+      "url": "https://fonts.google.com/specimen/Familjen+Grotesk",
+      "skaper": "Göran Söderström",
+      "lisens": "SIL Open Font License 1.1",
+      "kreverKreditering": null,
+      "hentet": "2026-07-30",
+      "kommersielt": true,
+      "begrensninger": "Skriften kan ikke selges alene."
+    }
+  ]
+}
