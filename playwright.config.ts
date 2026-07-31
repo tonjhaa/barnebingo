@@ -22,7 +22,14 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    // Safaris motor, for det som faktisk skiller seg: lyd som krever et
+    // brukertrykk, og en telefon som ikke er Chrome. Kjøres på forespørsel —
+    // den fulle suiten i to nettlesere gjør hver kjøring dobbelt så treg for
+    // en gevinst som er størst akkurat på lyd.
+    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: /lyd\.spec\.ts/ },
+  ],
 
   webServer: {
     // HTTP holder i test — sertifikatet er der for kameraet på ekte telefoner.

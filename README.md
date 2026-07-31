@@ -125,7 +125,8 @@ Appen er laget for barn, og lagrer så lite som mulig:
 | `npm run build` | Produksjonsbygg |
 | `npm start` | Produksjonsserver |
 | `npm test` | Enhets- og integrasjonstester |
-| `npm run test:e2e` | Playwright, ende-til-ende i ekte nettlesere |
+| `npm run test:e2e` | Playwright, ende-til-ende i Chromium |
+| `npm run test:e2e -- --project=webkit` | Lydtestene i Safaris motor |
 | `npm run typecheck` | TypeScript uten emit |
 | `npm run lint` | ESLint |
 | `npm run certs` | Lager lokalt HTTPS-sertifikat med mkcert |
