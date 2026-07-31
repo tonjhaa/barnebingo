@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { KLIPP_BINGO, klippForStadium, klippForTall, Lydkø } from './lyd'
 
 /**
  * Tallopplesning på hovedskjermen (§13). Lyd er et hjelpemiddel, aldri eneste
@@ -94,16 +95,51 @@ export function useSpeech(enabled: boolean) {
 export function useRoundSpeech(
   enabled: boolean,
   round: {
+    currentNumber: number | null
     currentLabel: string | null
+    currentLetter: string | null
     drawnCount: number
     stageLabel: string | null
+    stageIndex: number
     prize: { stageLabel: string; winners: Array<{ name: string }> } | null
   } | null,
 ) {
-  const { si, låsOpp, støttes } = useSpeech(enabled)
+  const { si, låsOpp: låsOppStemme, støttes } = useSpeech(enabled)
   const sistTall = useRef(-1)
   const sistStadium = useRef<string | null>(null)
   const sistPremie = useRef<string | null>(null)
+  const køRef = useRef<Lydkø | null>(null)
+  const [harKlipp, setHarKlipp] = useState(false)
+
+  // Køen lages i en effekt, ikke under tegning: den rører Audio og fetch, og
+  // hører ikke hjemme i render.
+  useEffect(() => {
+    const kø = new Lydkø()
+    køRef.current = kø
+    void kø.harLyd().then(setHarKlipp)
+    return () => {
+      kø.stopp()
+      køRef.current = null
+    }
+  }, [])
+
+  /**
+   * Klippene først, talesyntesen som reserve. Er lyden ikke generert ennå,
+   * skal spillet fortsatt lese opp — bare med den mekaniske stemmen.
+   */
+  const les = useCallback(
+    (klipp: string[], tekst: string) => {
+      if (!enabled) return
+      if (harKlipp && køRef.current) void køRef.current.spill(klipp)
+      else si(tekst)
+    },
+    [enabled, harKlipp, si],
+  )
+
+  const låsOpp = useCallback(() => {
+    låsOppStemme()
+    void køRef.current?.låsOpp()
+  }, [låsOppStemme])
 
   useEffect(() => {
     if (!round) return
@@ -113,11 +149,9 @@ export function useRoundSpeech(
       if (sistPremie.current !== nøkkel) {
         sistPremie.current = nøkkel
         const navn = round.prize.winners.map((w) => w.name)
-        si(
-          navn.length === 0
-            ? 'Vi har en vinner'
-            : `${listeMedOg(navn)} har bingo!`,
-        )
+        // Navnene skrives av spillerne selv, så de finnes ikke som klipp.
+        // Skjermen viser dem stort; lyden sier bare at noen har vunnet.
+        les(KLIPP_BINGO, navn.length === 0 ? 'Vi har en vinner' : `${listeMedOg(navn)} har bingo!`)
       }
       return
     }
@@ -129,16 +163,22 @@ export function useRoundSpeech(
       // Ved rundestart er stadiet allerede på skjermen; da holder det å si det
       // ved skifte, ikke ved hvert eneste tall.
       if (!første) {
-        si(`Nå spiller vi om ${round.stageLabel.toLowerCase()}`)
+        les(
+          klippForStadium(String(round.stageIndex)),
+          `Nå spiller vi om ${round.stageLabel.toLowerCase()}`,
+        )
         return
       }
     }
 
-    if (round.currentLabel && sistTall.current !== round.drawnCount) {
+    if (round.currentNumber !== null && sistTall.current !== round.drawnCount) {
       sistTall.current = round.drawnCount
-      si(round.currentLabel)
+      les(
+        klippForTall(round.currentNumber, round.currentLetter),
+        round.currentLabel ?? String(round.currentNumber),
+      )
     }
-  }, [round, si])
+  }, [round, les])
 
   return { låsOpp, støttes }
 }

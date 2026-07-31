@@ -125,6 +125,24 @@ Appen er laget for barn, og lagrer så lite som mulig:
 | `npm run typecheck` | TypeScript uten emit |
 | `npm run lint` | ESLint |
 | `npm run certs` | Lager lokalt HTTPS-sertifikat med mkcert |
+| `npm run lyd` | Genererer opplesningsklippene (krever OPENAI_API_KEY) |
+
+## Opplesning
+
+Tallene leses fra ferdiginnspilte klipp i `public/lyd/`, ikke av nettleserens
+talesyntese. Da er stemmen den samme på alle skjermer i stedet for å avhenge av
+hvilke stemmer akkurat den maskinen har installert.
+
+```bash
+OPENAI_API_KEY=sk-... npm run lyd
+```
+
+96 klipp, kjøres én gang og committes. «B tolv» settes sammen av to klipp ved
+avspilling — derfor 96 filer og ikke 165.
+
+Mangler klippene, faller appen tilbake på talesyntesen. Vinnernavn leses aldri
+opp: de skrives av spillerne selv og finnes ikke som klipp. Skjermen viser dem
+stort, og lyden sier bare at noen har bingo.
 
 ## Hvordan koden er delt opp
 
