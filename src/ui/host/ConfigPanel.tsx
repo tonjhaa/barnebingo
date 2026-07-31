@@ -278,9 +278,12 @@ export function ConfigPanel({
             />
           </Field>
 
-          <Field label="Les opp tallene" hint="Hovedskjermen sier tallet høyt.">
+          {/* Programlederen slås på her, men finstilles under spill: alt om
+              stemme, historier, musikk og effekter ligger bak tannhjulet på
+              hovedskjermen, der man hører resultatet med én gang. */}
+          <Field label="Programleder" hint="Leser opp tallene og leder spillet.">
             <Toggle
-              ariaLabel="Les opp tallene"
+              ariaLabel="Programleder"
               checked={profile.speech}
               onChange={(value) => patch({ speech: value })}
             />

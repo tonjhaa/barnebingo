@@ -5,8 +5,9 @@ import type { HostView, PrizeResultView, RosterEntry, RoundView } from '@/shared
 import { Avatar } from '@/ui/shared/Avatar'
 import { BingoBall } from '@/ui/shared/BingoBall'
 import { Button } from '@/ui/shared/Button'
-import { STANDARD_TALE } from '@/domain/audio/speech'
+import type { Lydinnstillinger } from '@/domain/audio/settings'
 import { useLyd } from '@/ui/audio/useLyd'
+import { LydPanel } from './LydPanel'
 
 /**
  * Hovedskjermen under spill. Alt er skalert for en TV sett fra sofaen: det
@@ -19,6 +20,8 @@ export function GameScreen({
   onPause,
   onResume,
   onAdvancePrize,
+  lyd,
+  onLyd,
 }: {
   view: HostView
   round: RoundView
@@ -26,20 +29,32 @@ export function GameScreen({
   onPause: () => void
   onResume: () => void
   onAdvancePrize: () => void
+  lyd: Lydinnstillinger
+  onLyd: (neste: Lydinnstillinger) => void
 }) {
   const paused = round.status === 'paused'
   const finished = round.status === 'finished'
   const ready = useAutoDrawCountdown(round)
-  const [lyd, setLyd] = useState(view.config.speech)
+  const [panelÅpent, setPanelÅpent] = useState(false)
+
   // Serveren vet hvilke navn som har lydklipp. Programlederen sier bare navn
   // den faktisk kan uttale, og formulerer seg navnefritt ellers.
   const harNavn = useCallback(
     (navn: string) => !view.namesWithoutVoice.includes(navn),
     [view.namesWithoutVoice],
   )
-  const { undertekst, låsOpp } = useLyd(STANDARD_TALE, view.events, view.eventSeq, {
-    på: lyd,
+
+  /**
+   * Er noen nær bingo? Da skal programlederen holde seg til tallene. Én rad
+   * unna er nok til at spenningen har tatt over i stua.
+   */
+  const spent = view.roster.some(
+    (slot) => (slot.progress?.bestCompletedRows ?? 0) >= round.stageIndex + 1,
+  )
+
+  const { undertekst, låsOpp, testStemme } = useLyd(lyd, view.events, view.eventSeq, {
     harNavn,
+    spent,
   })
 
   /** Alle vertsknapper låser opp stemmen — nettleseren krever et brukertrykk. */
@@ -114,19 +129,43 @@ export function GameScreen({
             <p className="text-xl font-bold text-tekst-svak tabular-nums">
               {round.drawnCount} av {round.totalNumbers} trukket
             </p>
-            <button
+            <div className="flex items-center gap-1">
+              <button
                 onClick={() => {
                   låsOpp()
-                  setLyd((på) => !på)
+                  onLyd({ ...lyd, på: !lyd.på })
                 }}
-                aria-label={lyd ? 'Slå av opplesning' : 'Slå på opplesning'}
-                aria-pressed={lyd}
+                aria-label={lyd.på ? 'Slå av lyd' : 'Slå på lyd'}
+                aria-pressed={lyd.på}
                 className="rounded-xl px-3 py-2 text-2xl transition-opacity"
-                style={{ opacity: lyd ? 1 : 0.4 }}
+                style={{ opacity: lyd.på ? 1 : 0.4 }}
               >
-                {lyd ? '🔊' : '🔇'}
-            </button>
+                {lyd.på ? '🔊' : '🔇'}
+              </button>
+              <button
+                onClick={() => {
+                  låsOpp()
+                  setPanelÅpent((åpent) => !åpent)
+                }}
+                aria-label="Lydinnstillinger"
+                aria-expanded={panelÅpent}
+                className="rounded-xl px-3 py-2 text-xl text-tekst-svak"
+              >
+                ⚙︎
+              </button>
+            </div>
           </div>
+
+          {panelÅpent && (
+            <div className="rounded-2xl bg-flate-2 p-5">
+              <LydPanel
+                verdi={lyd}
+                onEndre={onLyd}
+                onTest={testStemme}
+                kanLeseNavn={view.namesWithoutVoice.length < view.roster.length}
+              />
+            </div>
+          )}
 
           {!finished && (
             <>

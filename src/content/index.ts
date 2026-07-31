@@ -1,4 +1,5 @@
 import { FRASEKLIPP } from './fraser'
+import { HISTORIEKLIPP } from './historier'
 import { NAVNEKLIPP } from './navn'
 import { TALLKLIPP } from './tall'
 import { VARIANTKLIPP } from './tallvarianter'
@@ -12,7 +13,7 @@ import type { Klipp } from './typer'
  * stående som en fil ingen spør etter, og valideringen sier fra.
  */
 export function alleKlipp(): Klipp[] {
-  return [...TALLKLIPP, ...FRASEKLIPP, ...VARIANTKLIPP, ...NAVNEKLIPP]
+  return [...TALLKLIPP, ...FRASEKLIPP, ...VARIANTKLIPP, ...HISTORIEKLIPP, ...NAVNEKLIPP]
 }
 
 /** Oppslag id → klipp, for validering og for utviklingspanelet. */

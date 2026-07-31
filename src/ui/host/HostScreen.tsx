@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { STANDARD_LYD, type Lydinnstillinger } from '@/domain/audio/settings'
 import type { ConfigInput } from '@/domain/formats/types'
 import type { ConfigSummary, HostView, RosterEntry } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
@@ -31,6 +32,16 @@ export function HostScreen({ roomId }: { roomId: string }) {
     closeRoom,
   } = useHostRoom(roomId)
   const [editing, setEditing] = useState(false)
+  /**
+   * Lydvalgene bor på hovedskjermen, ikke på serveren. De endrer ingenting for
+   * spillerne — telefonene er stille uansett — og et valg som bare gjelder
+   * denne skjermen skal ikke måtte gjennom en runde over nettet.
+   */
+  const [lyd, setLyd] = useState<Lydinnstillinger>(STANDARD_LYD)
+
+  // Vertens valg i oppsettet bestemmer om programlederen er med i det hele
+  // tatt. Alt annet finstilles under spill, der man hører resultatet.
+  const lydNå = { ...lyd, på: lyd.på && (view?.config.speech ?? true) }
   const [draft, setDraft] = useState<ConfigInput | null>(null)
 
   if (status === 'utenTilgang') return <Beskjed tittel="Dette er ikke ditt rom" lenke />
@@ -125,6 +136,8 @@ export function HostScreen({ roomId }: { roomId: string }) {
           onPause={() => void pause()}
           onResume={() => void resumeGame()}
           onAdvancePrize={() => void advancePrize()}
+          lyd={lydNå}
+          onLyd={setLyd}
         />
       ) : settingUp || editing ? (
         <div className="flex flex-1 flex-col gap-6">

@@ -146,10 +146,16 @@ export class Reservestemme implements Klippspiller {
   ) {}
 
   forhåndslast(del: Klippdel): void {
-    this.filer.forhåndslast(del)
+    if (pauseLengde(del.id) === null) this.filer.forhåndslast(del)
   }
 
   async spill(del: Klippdel): Promise<void> {
+    // En pause er en «bit» uten lyd. Å gi den et eget klipp ville betydd 
+    // en fil som bare inneholder stillhet, og en ekstra nedlasting for
+    // ingenting.
+    const pause = pauseLengde(del.id)
+    if (pause !== null) return new Promise((resolve) => setTimeout(resolve, pause))
+
     try {
       this.brukt = this.filer
       await this.filer.spill(del)
@@ -165,4 +171,10 @@ export class Reservestemme implements Klippspiller {
     this.filer.stopp()
     this.reserve?.stopp()
   }
+}
+
+/** Millisekunder for en pausebit, eller null om det ikke er en. */
+function pauseLengde(id: string): number | null {
+  const treff = /^pause-(\d+)$/.exec(id)
+  return treff ? Number(treff[1]) : null
 }
