@@ -361,6 +361,66 @@
       "bytes": 15090,
       "generertAt": "2026-08-01T14:48:54.571Z"
     },
+    "navn-ane": {
+      "id": "navn-ane",
+      "tekst": "Ane",
+      "nøkkel": "c14b5fc514001fd5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T15:24:26.695Z"
+    },
+    "navn-anne-iren": {
+      "id": "navn-anne-iren",
+      "tekst": "Anne Iren",
+      "nøkkel": "22615fe846aaec45",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T15:24:30.115Z"
+    },
+    "navn-annika": {
+      "id": "navn-annika",
+      "tekst": "Annika",
+      "nøkkel": "2fd79d2e1e0c58e5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T15:24:32.309Z"
+    },
+    "navn-bestefar": {
+      "id": "navn-bestefar",
+      "tekst": "Bestefar",
+      "nøkkel": "2a937a2be50de803",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T15:24:28.840Z"
+    },
+    "navn-bestemor": {
+      "id": "navn-bestemor",
+      "tekst": "Bestemor",
+      "nøkkel": "9472311305394ccd",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T15:24:28.076Z"
+    },
+    "navn-christer": {
+      "id": "navn-christer",
+      "tekst": "Christer",
+      "nøkkel": "91646914f054ca50",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T15:24:33.140Z"
+    },
     "navn-edvin": {
       "id": "navn-edvin",
       "tekst": "Edvin",
@@ -381,6 +441,36 @@
       "bytes": 13836,
       "generertAt": "2026-08-01T14:50:28.581Z"
     },
+    "navn-kristian": {
+      "id": "navn-kristian",
+      "tekst": "Kristian",
+      "nøkkel": "1f89e5f841d6a761",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 67335,
+      "generertAt": "2026-08-01T15:24:31.706Z"
+    },
+    "navn-marte": {
+      "id": "navn-marte",
+      "tekst": "Marte",
+      "nøkkel": "2fa8ca112446f791",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T15:24:30.786Z"
+    },
+    "navn-per": {
+      "id": "navn-per",
+      "tekst": "Per",
+      "nøkkel": "b028311ef0c2890d",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T15:24:29.485Z"
+    },
     "navn-pernilla": {
       "id": "navn-pernilla",
       "tekst": "Pernilla",
@@ -400,6 +490,26 @@
       "modell": "eleven_multilingual_v2",
       "bytes": 15926,
       "generertAt": "2026-08-01T14:50:29.882Z"
+    },
+    "navn-solveig": {
+      "id": "navn-solveig",
+      "tekst": "Solveig",
+      "nøkkel": "3dfa2fd500f432d4",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T15:24:33.757Z"
+    },
+    "navn-tonje": {
+      "id": "navn-tonje",
+      "tekst": "Tonje",
+      "nøkkel": "ff609889daa65565",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T15:24:27.407Z"
     },
     "nummer-1": {
       "id": "nummer-1",
