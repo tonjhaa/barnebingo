@@ -10,12 +10,18 @@ export interface FormatDefinition {
   numberRange: { min: number; max: number }
   /** Kan verten slå på fri midtrute for dette formatet? */
   supportsFreeCenter: boolean
+  /**
+   * Taket for `boardsPerPlayer`. For formater med `stripSize` telles dette i
+   * **ark**, ikke i enkeltbrett — tre ark er atten brett.
+   */
   maxBoardsPerPlayer: BoardCount
   /**
-   * Brettene henger sammen i en strimmel på så mange brett, der hvert tall i
-   * området står nøyaktig én gang. Slik selges 90-talls bingoark: seks brett
-   * per ark, 90 tall til sammen. Utelates for formater der hvert brett er
-   * uavhengig av de andre.
+   * Hvor mange brett det er på ett ark, der hvert tall i området står nøyaktig
+   * én gang. Slik selges 90-talls bingoark: seks brett per ark, nitti tall til
+   * sammen. Et ark deles aldri opp — halve arket ville brutt løftet om at
+   * hvert trukket tall står et sted.
+   *
+   * Utelates for formater der hvert brett står for seg.
    */
   stripSize?: number
   buildLayout(options: { freeCenter: boolean }): BoardLayout

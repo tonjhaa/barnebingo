@@ -247,12 +247,12 @@ den er krysset av. Den markerer ikke selv; barnet skal fortsatt trykke.
 er rom for det. Musikken dempes mens han snakker. Alt kan skrus av, og appen
 fungerer uten AI-tjeneste. Se [LYD.md](LYD.md).
 
-**Strimmel i 90-formatet** — brettene lages som et ekte bingoark: seks brett som
-deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Verten velger
-1–6 brett per spiller, og med alle seks står hvert trukket tall et sted på arket.
-Telefonen tegner dem som ett sammenhengende ark med riss imellom, og man scroller
-nedover i stedet for å bla mellom faner. De to andre formatene lager fortsatt
-hvert brett for seg — strimmelen er en egenskap ved formatet, ikke ved motoren.
+**Ark i 90-formatet** — brettene lages som ekte bingoark: seks brett som deler
+alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Verten velger 1–3 **ark**
+per spiller, ikke enkeltbrett, og hvert ark har alle tallene for seg. Telefonen
+tegner arket som én sammenhengende blokk med riss imellom, og man scroller
+nedover i stedet for å bla mellom faner. De to andre formatene deler ut brett
+for brett som før — arket er en egenskap ved formatet, ikke ved motoren.
 
 **Vertsgodkjent overtakelse** — en telefon som er borte for godt kommer tilbake
 ved at spilleren trykker på sitt eget navn og verten sier ja. Gjenopprettings-

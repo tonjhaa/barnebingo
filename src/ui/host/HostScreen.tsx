@@ -358,7 +358,12 @@ function ReglerListe({ config }: { config: ConfigSummary }) {
   const rader: Array<[string, string]> = [
     ['Spill', config.formatName],
     ['Nivå', config.difficultyLabel],
-    ['Brett hver', String(config.boardsPerPlayer)],
+    [
+      config.stripSize ? 'Ark hver' : 'Brett hver',
+      config.stripSize
+        ? `${config.boardsPerPlayer} (${config.boardsPerPlayer * config.stripSize} brett)`
+        : String(config.boardsPerPlayer),
+    ],
     ['Markering', config.markingLabel],
     ['Bingo', config.winLabel],
     ['Trekking', config.drawLabel],

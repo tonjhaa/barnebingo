@@ -298,6 +298,11 @@ export function boardFingerprint(board: Board): string {
  * Deler ut brett til én spiller. `taken` samler alle brett som allerede er delt
  * ut i runden, slik at ingen to spillere får identiske brett — to like brett
  * ville betydd at de to alltid vant samtidig.
+ *
+ * For formater som selges i ark teller `boardsPerPlayer` **ark**, ikke enkelte
+ * brett. Ett ark er alltid helt: seks brett som til sammen har alle nitti
+ * tallene. Det er slik bingoark faktisk selges, og et halvt ark ville brutt
+ * løftet om at hvert trukket tall står et sted.
  */
 export function generateBoards(
   profile: RuleProfile,
@@ -305,14 +310,12 @@ export function generateBoards(
   rng: Rng,
   taken: Set<string>,
 ): Board[] {
-  // Formater som selges i strimler lages under ett: brettene henger sammen,
-  // og å lage dem hver for seg ville brutt løftet om at hvert tall står ett
-  // sted. Verten kan spille med færre enn hele arket, og får da de første.
   if (getStripSize(profile) > 0) {
-    const strimmel = generateStrip(profile, playerId, rng)
-    const valgte = strimmel.slice(0, profile.boardsPerPlayer)
-    for (const board of valgte) taken.add(boardFingerprint(board))
-    return valgte
+    const ark = range(1, profile.boardsPerPlayer).flatMap(() =>
+      generateStrip(profile, playerId, rng),
+    )
+    for (const board of ark) taken.add(boardFingerprint(board))
+    return ark
   }
 
   const boards: Board[] = []

@@ -162,23 +162,53 @@ test.describe('75-tallsbingo', () => {
 })
 
 test.describe('90-tallsbingo', () => {
-  test('gir et 3 × 9-brett med femten tall og tomme ruter', async ({ browser }) => {
+  test('gir et helt ark med alle nitti tallene', async ({ browser }) => {
     const vert = await Hovedskjerm.åpne(browser)
     const kode = await vert.lagRom({
       format: '90-tallsbingo',
       nivå: 'Normal',
       markering: 'Selv',
+      brett: 1,
     })
     const ada = await Telefon.bliMed(browser, kode, 'Ada')
     await ada.meldKlar()
     await vert.startSpillet()
 
-    // Femten tall betyr femten trykkbare ruter; resten er hull i mønsteret.
-    await expect(ada.ruter()).toHaveCount(15)
-    expect(await ada.kryss()).toBe(0)
+    // Ett ark er seks brett à femten tall. Til sammen 1–90, hver nøyaktig én
+    // gang — det er nettopp det som gjør et ark til et ark.
+    await expect(ada.ruter()).toHaveCount(90)
+    const tall = await ada.brettTall()
+    expect([...tall].sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 90 }, (_, i) => i + 1),
+    )
+
+    await expect(ada.page.getByText('Brett 1 av 6')).toBeVisible()
+    await expect(ada.page.getByText('Brett 6 av 6')).toBeVisible()
 
     // Formatet har ikke kolonneoverskrifter, og heller ikke tre-rader-premien.
     await expect(vert.page.getByText('Premie 1 av 3')).toBeVisible()
+  })
+
+  test('gir to ark som hver dekker alle tallene', async ({ browser }) => {
+    const vert = await Hovedskjerm.åpne(browser)
+    const kode = await vert.lagRom({
+      format: '90-tallsbingo',
+      nivå: 'Normal',
+      markering: 'Selv',
+      brett: 2,
+    })
+    const ada = await Telefon.bliMed(browser, kode, 'Ada')
+    await ada.meldKlar()
+    await vert.startSpillet()
+
+    await expect(ada.ruter()).toHaveCount(180)
+    await expect(ada.page.getByText('Ark 1 av 2')).toBeVisible()
+    await expect(ada.page.getByText('Ark 2 av 2')).toBeVisible()
+
+    // Hvert tall står én gang per ark, altså to ganger til sammen.
+    const tall = await ada.brettTall()
+    expect(tall).toHaveLength(180)
+    expect(new Set(tall).size).toBe(90)
   })
 })
 

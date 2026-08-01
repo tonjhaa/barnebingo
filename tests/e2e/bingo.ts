@@ -37,7 +37,8 @@ export type Spillernavn = string
 export interface Innstillinger {
   format?: 'Barnebingo' | '75-tallsbingo' | '90-tallsbingo'
   nivå?: 'Nybegynner' | 'Enkel' | 'Normal' | 'Vanskelig'
-  brett?: 1 | 2 | 3 | 4 | 5 | 6
+  /** Ark i 90-formatet, enkeltbrett ellers. */
+  brett?: 1 | 2 | 3
   markering?: 'Selv' | 'Med hint' | 'Automatisk'
   bingo?: 'Selv' | 'Knappen lyser' | 'Automatisk'
   stadier?: string[]
@@ -77,8 +78,10 @@ export class Hovedskjerm {
       await page.getByRole('radio', { name: innstillinger.format, exact: true }).click()
     }
     if (innstillinger.brett) {
+      // Etiketten skifter mellom «Ark» og «Brett» etter format, så vi treffer
+      // gruppen på det som er felles i stedet for å gjette.
       await page
-        .getByRole('radiogroup', { name: 'Brett per spiller' })
+        .getByRole('radiogroup', { name: /per spiller$/ })
         .getByRole('radio', { name: String(innstillinger.brett), exact: true })
         .click()
     }

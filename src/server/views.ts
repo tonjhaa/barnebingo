@@ -56,6 +56,7 @@ export function buildConfigSummary(profile: RuleProfile): ConfigSummary {
     speech: profile.speech,
     columnLabels: [...profile.layout.columnLabels],
     stripSize: getFormat(profile.format).stripSize ?? null,
+    sheetsPerPlayer: profile.boardsPerPlayer,
   }
 }
 
@@ -63,13 +64,23 @@ function selfieUrl(room: Room, player: Player): string | null {
   return player.selfieRef ? `/api/selfie/${room.id}/${player.selfieRef}` : null
 }
 
-function buildBoardView(board: Board, index: number, drawn: ReadonlySet<number>): BoardView {
+function buildBoardView(
+  board: Board,
+  index: number,
+  drawn: ReadonlySet<number>,
+  /** Brett per ark, eller null når formatet ikke selger brett i ark. */
+  stripSize: number | null,
+): BoardView {
   const progress = computeProgress(board, drawn)
   const marked = validMarks(board, drawn)
 
   return {
     id: board.id,
     index: index + 1,
+    // Arkinndelingen utledes av plasseringen. Et brett trenger ikke bære med
+    // seg hvilket ark det kom fra når rekkefølgen allerede sier det.
+    sheet: stripSize ? Math.floor(index / stripSize) + 1 : null,
+    indexOnSheet: stripSize ? (index % stripSize) + 1 : null,
     cells: board.cells.map((row) =>
       row.map((cell) => ({
         value: cell.value,
@@ -311,7 +322,9 @@ export function buildPlayerView(
       : null,
     round,
     boards: player
-      ? player.boards.map((board, index) => buildBoardView(board, index, drawn))
+      ? player.boards.map((board, index) =>
+          buildBoardView(board, index, drawn, getFormat(room.profile.format).stripSize ?? null),
+        )
       : [],
     activeBoardId: player?.activeBoardId ?? null,
     results: buildResults(room),

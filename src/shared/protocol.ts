@@ -194,11 +194,13 @@ export interface ConfigSummary {
   /** B I N G O, eller tom liste for formater uten overskrifter. */
   columnLabels: string[]
   /**
-   * Antall brett på et helt ark, for formater som selges i strimler. Null for
-   * formater der hvert brett står for seg. Telefonen tegner strimmelen som ett
-   * sammenhengende ark når dette er satt.
+   * Antall brett på ett ark, for formater som selges slik. Null når hvert
+   * brett står for seg. Telefonen tegner arket som én sammenhengende blokk
+   * når dette er satt.
    */
   stripSize: number | null
+  /** Hvor mange ark hver spiller har. Ett ark dekker hele tallområdet. */
+  sheetsPerPlayer: number
 }
 
 export interface RoundView {
@@ -237,8 +239,14 @@ export interface BoardCellView {
 
 export interface BoardView {
   id: string
-  /** 1-basert, slik fanene heter: Brett 1, Brett 2, Brett 3. */
+  /** 1-basert, på tvers av alle spillerens brett. */
   index: number
+  /**
+   * Hvilket ark brettet hører til, 1-basert, og plassen på arket.
+   * Null i formater der brett ikke selges i ark.
+   */
+  sheet: number | null
+  indexOnSheet: number | null
   cells: BoardCellView[][]
   completedRows: number[]
   markedCount: number

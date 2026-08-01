@@ -34,9 +34,22 @@ export function PlayScreen({
 
   const flere = view.boards.length > 1
   const kanMarkere = markingMode !== 'auto' && round.status === 'active'
-  // Brett fra en strimmel hører sammen og tegnes som ett ark, med rissene
+  // Brett fra samme ark hører sammen og tegnes som én blokk, med rissene
   // imellom slik man river dem fra hverandre på papir.
-  const strimmel = Boolean(view.config.stripSize) && flere
+  const strimmel = Boolean(view.config.stripSize)
+
+  /**
+   * Brettene gruppert i ark. Uten grupperingen ville atten brett sett ut som
+   * atten løse brett, og spilleren mistet det som gjør arket til et ark:
+   * at de seks til sammen har alle tallene.
+   */
+  const ark: BoardView[][] = strimmel
+    ? view.boards.reduce<BoardView[][]>((grupper, board) => {
+        const nr = (board.sheet ?? 1) - 1
+        ;(grupper[nr] ??= []).push(board)
+        return grupper
+      }, [])
+    : [view.boards]
 
   /**
    * Assistert markering (§7): ruta med det trukne tallet lyser til den er
@@ -92,44 +105,61 @@ export function PlayScreen({
       )}
 
       {/* Alle brettene under hverandre. Å bla mellom faner betyr å lete etter
-          tallet tre ganger; her ser man dem i én bevegelse. */}
-      <div className="flex flex-1 flex-col justify-center py-2">
-        <div className={strimmel ? 'flate overflow-hidden p-0' : 'flex flex-col gap-4'}>
-          {view.boards.map((board, i) => (
-            <section
-              key={board.id}
-              className={strimmel ? 'px-3 pt-2 pb-3' : 'flate p-3'}
-              style={strimmel && i > 0 ? { borderTop: '2px dashed rgb(255 255 255 / .14)' } : undefined}
-            >
-              {flere && (
-                <header className="mb-2 flex items-baseline justify-between px-1">
-                  <span className="text-sm font-black" style={{ color: me.color }}>
-                    Brett {board.index}
-                    {strimmel && view.config.stripSize
-                      ? ` av ${view.config.stripSize}`
-                      : ''}
-                  </span>
-                  <span className="text-xs text-tekst-svak tabular-nums">
-                    {board.markedCount} av {board.numberCount} ·{' '}
-                    {board.completedRows.length} rader
-                  </span>
-                </header>
-              )}
-              <BoardGrid
-                board={board}
-                color={me.color}
-                columnLabels={view.config.columnLabels}
-                onToggle={
-                  kanMarkere
-                    ? (value, marked) => toggle(board.id, value, marked)
+          tallet flere ganger; her ser man dem i én bevegelse. */}
+      <div className="flex flex-1 flex-col justify-center gap-4 py-2">
+        {ark.map((brett, arkNr) => (
+          <div key={arkNr} className={strimmel ? 'flate overflow-hidden p-0' : 'contents'}>
+            {/* Arkets overskrift står bare når det er flere enn ett. Med ett
+                ark er «Ark 1 av 1» bare støy over brettene. */}
+            {strimmel && ark.length > 1 && (
+              <p
+                className="px-3 pt-3 pb-1 text-sm font-black tracking-widest uppercase"
+                style={{ color: me.color }}
+              >
+                Ark {arkNr + 1} av {ark.length}
+              </p>
+            )}
+
+            {brett.map((board, i) => (
+              <section
+                key={board.id}
+                className={strimmel ? 'px-3 pt-2 pb-3' : 'flate p-3'}
+                style={
+                  strimmel && i > 0
+                    ? { borderTop: '2px dashed rgb(255 255 255 / .14)' }
                     : undefined
                 }
-                rejected={rejected}
-                hint={hintFor(board)}
-              />
-            </section>
-          ))}
-        </div>
+              >
+                {flere && (
+                  <header className="mb-2 flex items-baseline justify-between px-1">
+                    <span className="text-sm font-black" style={{ color: me.color }}>
+                      Brett {board.indexOnSheet ?? board.index}
+                      {strimmel && view.config.stripSize
+                        ? ` av ${view.config.stripSize}`
+                        : ''}
+                    </span>
+                    <span className="text-xs text-tekst-svak tabular-nums">
+                      {board.markedCount} av {board.numberCount} ·{' '}
+                      {board.completedRows.length} rader
+                    </span>
+                  </header>
+                )}
+                <BoardGrid
+                  board={board}
+                  color={me.color}
+                  columnLabels={view.config.columnLabels}
+                  onToggle={
+                    kanMarkere
+                      ? (value, marked) => toggle(board.id, value, marked)
+                      : undefined
+                  }
+                  rejected={rejected}
+                  hint={hintFor(board)}
+                />
+              </section>
+            ))}
+          </div>
+        ))}
 
         {!flere && view.boards[0] && (
           <p className="mt-2 text-center text-sm text-tekst-svak tabular-nums">
@@ -138,11 +168,13 @@ export function PlayScreen({
           </p>
         )}
 
-        {/* Med hele arket står hvert tall ett sted. Det er verdt å si, for det
-            er nettopp den beskjeden som får en til å lete videre nedover. */}
-        {strimmel && view.boards.length === view.config.stripSize && (
-          <p className="mt-3 text-center text-xs text-tekst-svak">
-            Du har hele arket — hvert tall står ett sted.
+        {/* Et helt ark har hvert tall ett sted. Det er verdt å si, for det er
+            nettopp den beskjeden som får en til å lete videre nedover. */}
+        {strimmel && (
+          <p className="text-center text-xs text-tekst-svak">
+            {ark.length === 1
+              ? 'Hvert tall står ett sted på arket.'
+              : `${ark.length} ark — hvert tall står ett sted på hvert av dem.`}
           </p>
         )}
       </div>

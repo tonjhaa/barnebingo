@@ -313,14 +313,20 @@ avvises kombinasjonen med en forklaring til verten.
 `validatingBingo` og gjenopptas først etter premievisning, ellers trekkes tall mens
 en vinner kåres. Håndhevet i tilstandsmaskinen, ikke i UI-et.
 
-**K11 — 90-bingo selges i strimler.** Ekte 90-talls bingoark består av seks brett
-som deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Å lage brettene
-uavhengig av hverandre ville gitt duplikater innad hos én spiller og brutt det som
-gjør formatet gjenkjennelig. Løsning: `FormatDefinition.stripSize` sier hvor mange
-brett et helt ark har, og `generateStrip` lager alle seks under ett. Verten velger
-1–6 brett per spiller; velges alle seks, står hvert tall fra 1 til 90 ett sted.
-Motoren er uendret — strimmelen er en egenskap ved formatet, ikke ved regelverket,
-og formater uten `stripSize` genereres brett for brett som før.
+**K11 — 90-bingo selges i ark.** Ekte 90-talls bingoark består av seks brett
+som deler alle 90 tallene mellom seg, hvert tall nøyaktig én gang. Å lage
+brettene uavhengig ville gitt duplikater innad hos én spiller og brutt det som
+gjør formatet gjenkjennelig. Løsning: `FormatDefinition.stripSize` sier hvor
+mange brett ett ark har, og `generateStrip` lager dem under ett.
+
+For slike formater teller `boardsPerPlayer` **ark**, ikke enkeltbrett: ett ark
+er seks brett med alle nitti tallene, to ark er tolv brett der hvert tall står
+to ganger. Et ark deles aldri opp — et halvt ark ville brutt løftet om at hvert
+trukket tall står et sted, og det løftet er hele poenget med arket.
+
+Motoren er uendret. Bingo, markering og premier regnes fortsatt per brett;
+arket er en egenskap ved formatet og ved utdelingen, ikke ved regelverket.
+Formater uten `stripSize` deler ut brett for brett som før.
 
 **K12 — lyd kan ikke utledes av tilstand.** Serveren sender fulle
 øyeblikksbilder (§6). Det er riktig for tilstand, men to like snapshot forteller

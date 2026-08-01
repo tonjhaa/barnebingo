@@ -241,30 +241,51 @@ describe('90-talls strimmel', () => {
     expect(a).not.toEqual(b)
   })
 
-  it('gir spilleren de første brettene når verten velger færre enn seks', () => {
-    for (const antall of [1, 2, 3, 4, 5, 6] as const)
-      expect(
-        generateBoards(
-          buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: antall }),
-          'p1',
-          seededRng(5),
-          new Set(),
-        ),
-      ).toHaveLength(antall)
-  })
-
-  it('gir aldri samme tall to ganger hos én spiller', () => {
-    const p = buildProfile({
-      format: 'bingo90',
-      difficulty: 'normal',
-      boardsPerPlayer: 4,
-    })
-    const rng = seededRng(17)
-    for (let i = 0; i < 30; i++) {
-      const tall = generateBoards(p, 'p1', rng, new Set()).flatMap(boardNumbers)
-      expect(new Set(tall).size).toBe(tall.length)
+  it('gir spilleren hele ark, aldri et halvt', () => {
+    // Et halvt ark ville brutt løftet om at hvert trukket tall står et sted.
+    for (const antall of [1, 2, 3] as const) {
+      const boards = generateBoards(
+        buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: antall }),
+        'p1',
+        seededRng(5),
+        new Set(),
+      )
+      expect(boards, `${antall} ark`).toHaveLength(antall * 6)
     }
   })
+
+  it('lar hvert ark dekke 1 til 90 for seg', () => {
+    const p = buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: 3 })
+    const boards = generateBoards(p, 'p1', seededRng(8), new Set())
+
+    for (let ark = 0; ark < 3; ark++) {
+      const tall = boards.slice(ark * 6, ark * 6 + 6).flatMap(boardNumbers)
+      expect([...tall].sort((a, b) => a - b), `ark ${ark + 1}`).toEqual(
+        Array.from({ length: 90 }, (_, i) => i + 1),
+      )
+    }
+  })
+
+  it('gir ulike ark til samme spiller', () => {
+    const p = buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: 2 })
+    const boards = generateBoards(p, 'p1', seededRng(12), new Set())
+    // Alle tolv brett skal være forskjellige, selv om de to arkene har de
+    // samme nitti tallene.
+    expect(new Set(boards.map(boardFingerprint)).size).toBe(12)
+  })
+
+  it('gjentar tallene på tvers av ark, men aldri innenfor ett', () => {
+    const p = buildProfile({ format: 'bingo90', difficulty: 'normal', boardsPerPlayer: 2 })
+    const rng = seededRng(17)
+    for (let i = 0; i < 20; i++) {
+      const boards = generateBoards(p, 'p1', rng, new Set())
+      const tall = boards.flatMap(boardNumbers)
+      expect(tall).toHaveLength(180)
+      // Hvert tall står nøyaktig én gang per ark, altså to ganger til sammen.
+      expect(new Set(tall).size).toBe(90)
+    }
+  })
+
 })
 
 describe('flere brett per spiller', () => {

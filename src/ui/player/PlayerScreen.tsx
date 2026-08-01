@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import type { RosterEntry } from '@/shared/protocol'
+import type { ConfigSummary, RosterEntry } from '@/shared/protocol'
 import { Avatar } from '@/ui/shared/Avatar'
 import { Button } from '@/ui/shared/Button'
 import { PlayScreen } from './PlayScreen'
@@ -110,10 +110,7 @@ export function PlayerScreen({ code }: { code: string }) {
         </p>
         <p className="text-2xl font-black">{config.formatName}</p>
         <p className="mt-1 text-lg text-tekst-svak">
-          {config.boardsPerPlayer === 1
-            ? 'Ett brett'
-            : `${config.boardsPerPlayer} brett`}{' '}
-          · {config.markingLabel.toLowerCase()}
+          {beskrivBrett(config)} · {config.markingLabel.toLowerCase()}
         </p>
         <p className="mt-4 text-lg text-tekst-svak">
           Vi spiller om: <span className="font-bold text-tekst">{config.stageLabels.join(' → ')}</span>
@@ -298,4 +295,19 @@ function Enkel({
       </div>
     </main>
   )
+}
+
+/**
+ * Hvor mye spilleren får. I formater som selges i ark er det arket som er
+ * enheten — «Ett ark, seks brett» sier mer enn «seks brett», fordi det er
+ * arket som lover at alle tallene er med.
+ */
+function beskrivBrett(config: ConfigSummary): string {
+  if (!config.stripSize) {
+    return config.boardsPerPlayer === 1 ? 'Ett brett' : `${config.boardsPerPlayer} brett`
+  }
+  const brett = config.boardsPerPlayer * config.stripSize
+  return config.boardsPerPlayer === 1
+    ? `Ett ark, ${brett} brett`
+    : `${config.boardsPerPlayer} ark, ${brett} brett`
 }

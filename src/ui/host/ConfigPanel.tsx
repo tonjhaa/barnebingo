@@ -154,16 +154,18 @@ export function ConfigPanel({
 
         <div className="flex flex-col gap-6">
           <Group title="Brettene">
+            {/* I formater som selges i ark telles ark, ikke enkeltbrett. Ett
+                ark er alltid helt — seks brett med alle nitti tallene. */}
             <Field
-              label="Brett per spiller"
+              label={format.stripSize ? 'Ark per spiller' : 'Brett per spiller'}
               hint={
                 format.stripSize
-                  ? `Brettene henger sammen som på et ekte ark. Med alle ${format.stripSize} står hvert tall ett sted.`
+                  ? `Ett ark er ${format.stripSize} brett med alle tallene fra ${format.numberRange.min} til ${format.numberRange.max}.`
                   : 'Alle brett vurderes hver for seg.'
               }
             >
               <Segmented
-                ariaLabel="Brett per spiller"
+                ariaLabel={format.stripSize ? 'Ark per spiller' : 'Brett per spiller'}
                 value={profile.boardsPerPlayer}
                 onChange={(value) => patch({ boardsPerPlayer: value })}
                 options={BOARDS.filter((o) => o.value <= format.maxBoardsPerPlayer)}
