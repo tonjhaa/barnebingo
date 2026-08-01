@@ -10,7 +10,12 @@ import {
   VoiceAssetService,
   type Manifest,
 } from '@/server/tts/VoiceAssetService'
-import { escapeXml, lagLeverandør, NØKKELVARIABEL } from '@/server/tts/leverandorer'
+import {
+  elevenlabsSpråk,
+  escapeXml,
+  lagLeverandør,
+  NØKKELVARIABEL,
+} from '@/server/tts/leverandorer'
 import { LEVERANDØRER, type Stemmeoppsett, type TextToSpeechProvider } from '@/server/tts/provider'
 import { stemmeoppsett } from '@/server/tts/stemme'
 
@@ -236,6 +241,19 @@ describe('leverandørvalg', () => {
       })
       expect(bygd?.id, leverandør).toBe(leverandør)
     }
+  })
+
+  it('utelater språkkoden for modeller som ikke tar imot den', () => {
+    // eleven_multilingual_v2 avviser hele forespørselen hvis language_code er
+    // med. Den gjenkjenner språket fra teksten selv.
+    expect(elevenlabsSpråk('eleven_multilingual_v2', 'nb-NO')).toBeNull()
+  })
+
+  it('forkorter språkkoden til ISO 639-1 for modeller som tar imot den', () => {
+    // ElevenLabs vil ha «nb», ikke «nb-NO». De tre andre leverandørene vil ha
+    // lokaliteten, så oversettelsen hører hjemme i ElevenLabs-adapteren.
+    expect(elevenlabsSpråk('eleven_turbo_v2_5', 'nb-NO')).toBe('nb')
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'NB-no')).toBe('nb')
   })
 
   it('escaper tekst som skal inn i SSML', () => {

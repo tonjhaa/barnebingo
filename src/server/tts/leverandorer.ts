@@ -36,6 +36,8 @@ export class ElevenLabsProvider implements TextToSpeechProvider {
   constructor(private readonly nøkkel: string) {}
 
   async syntetiser({ tekst, oppsett }: Talebestilling): Promise<Buffer> {
+    const språk = elevenlabsSpråk(oppsett.modell, oppsett.språk)
+
     const svar = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(oppsett.stemme)}?output_format=mp3_44100_128`,
       {
@@ -44,7 +46,7 @@ export class ElevenLabsProvider implements TextToSpeechProvider {
         body: JSON.stringify({
           text: tekst,
           model_id: oppsett.modell,
-          language_code: oppsett.språk,
+          ...(språk ? { language_code: språk } : {}),
           voice_settings: {
             stability: 0.45,
             similarity_boost: 0.75,
@@ -151,6 +153,23 @@ export class GoogleProvider implements TextToSpeechProvider {
     }
     return Buffer.from(data.audioContent, 'base64')
   }
+}
+
+/**
+ * Språkkoden ElevenLabs vil ha, eller null når modellen ikke tar imot noen.
+ *
+ * To ting skiller seg fra resten av prosjektet, og begge er ElevenLabs' egne
+ * regler: koden skal være ISO 639-1 med to bokstaver («nb»), ikke en lokalitet
+ * («nb-NO»), og `eleven_multilingual_v2` godtar den ikke i det hele tatt — den
+ * gjenkjenner språket fra teksten selv.
+ *
+ * Vi lagrer likevel «nb-NO» internt, siden det er det de andre tre
+ * leverandørene vil ha. Oversettelsen hører hjemme her, hos den som har det
+ * avvikende kravet.
+ */
+export function elevenlabsSpråk(modell: string, språk: string): string | null {
+  if (modell.includes('multilingual')) return null
+  return språk.split('-')[0].toLowerCase()
 }
 
 export function escapeXml(tekst: string): string {
