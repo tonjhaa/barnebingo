@@ -9,6 +9,7 @@ import {
   validerAssets,
   type Asset,
 } from '@/content/assets'
+import { alleKlipp } from '@/content'
 import { EFFEKTER } from '@/ui/audio/musikk'
 
 /**
@@ -89,6 +90,24 @@ describe('hva som faktisk ligger i repoet', () => {
     for (const asset of fraTredjepart()) {
       expect(asset.fil.startsWith('public/') || asset.type === 'skrift', asset.id).toBe(true)
     }
+  })
+
+  /**
+   * Den viktigste testen i fila.
+   *
+   * Legger noen til et navn eller en replikk uten å generere lyden, blir det
+   * ikke en feil noe sted — appen faller stille tilbake på nettleserstemmen for
+   * akkurat det klippet. Den som la til merker ingenting, og de andre maskinene
+   * får teksten uten stemmen. Denne testen er det eneste stedet det oppdages.
+   */
+  it('har en lydfil for hvert klipp innholdet lover', () => {
+    const mangler = alleKlipp().filter(
+      (klipp) => !existsSync(join(ROT, 'public', 'lyd', `${klipp.id}.mp3`)),
+    )
+    expect(
+      mangler.map((k) => k.id),
+      'Kjør `npm run lyd` og commit public/lyd/',
+    ).toEqual([])
   })
 
   it('krediterer alt som krever det', () => {

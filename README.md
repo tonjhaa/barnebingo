@@ -33,6 +33,30 @@ Hjelpeserveren går bevisst på ren HTTP: telefonen kan ikke hente sertifikatet
 over en tilkobling den ikke stoler på ennå. Den deler bare ut den offentlige
 CA-filen, aldri den private nøkkelen, og kjenner verken romkoder eller spillere.
 
+### På en ny maskin
+
+```bash
+git clone git@github.com:tonjhaa/barnebingo.git
+cd barnebingo
+npm install
+npm run certs    # bare hvis du vil ha kamera lokalt
+npm run dev
+```
+
+Alt annet følger med i repoet — programlederens 259 lydklipp, lydeffektene og
+musikken ligger i `public/lyd/` og er sjekket inn. Ingen API-nøkkel trengs for å
+spille, bare for å lage nye klipp.
+
+To ting ligger bevisst **ikke** i git, fordi de hører til maskinen og ikke til
+prosjektet:
+
+- `certs/` — det lokale HTTPS-sertifikatet. Lages med `npm run certs`.
+- `.env.local` — API-nøkler. Trengs bare når du genererer ny lyd.
+
+Har du lagt til et navn eller en replikk, sier `npm run lyd -- --sjekk` hva som
+mangler lydfil. Kjør `npm run lyd` og commit `public/lyd/`, ellers får de andre
+maskinene teksten uten stemmen.
+
 ## Slik spiller dere
 
 1. **Verten** åpner forsiden og trykker *Lag nytt spillrom*.
