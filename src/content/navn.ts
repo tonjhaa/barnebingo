@@ -39,9 +39,35 @@ export function navnKlipp(navn: string): Klipp {
 }
 
 /**
- * Navn som følger med i repoet fordi de brukes i testene og i demoen (§11).
- * Alle andre navn genereres på forespørsel.
+ * Navnene som er lest inn på forhånd.
+ *
+ * De som spiller bingo hjemme er stort sett de samme fra gang til gang, og et
+ * navn som allerede finnes er både gratis og øyeblikkelig. Derfor ligger
+ * husets navn her framfor å måtte genereres hver kveld.
+ *
+ * Skal noen nye med, legg dem til her og kjør `npm run lyd` — bare de nye
+ * lages. Eller la verten trykke «Les inn navnene» i lobbyen, som gjør det
+ * samme for én kveld.
+ *
+ * Merk: navnene her havner i repoet, både som kode og som filnavn i
+ * `public/lyd/`. Er repoet offentlig, er navnene det også.
  */
-export const DEMONAVN = ['Klara', 'Edvin', 'Reodor', 'Pernilla'] as const
+export const NAVN = [
+  'Klara',
+  'Edvin',
+  'Reodor',
+  'Pernilla',
+  'Ane',
+  'Tonje',
+  'Bestemor',
+  'Bestefar',
+  'Per',
+  'Anne Iren',
+  'Marte',
+  'Kristian',
+  'Annika',
+  'Christer',
+  'Solveig',
+] as const
 
-export const NAVNEKLIPP: Klipp[] = DEMONAVN.map(navnKlipp)
+export const NAVNEKLIPP: Klipp[] = NAVN.map(navnKlipp)
