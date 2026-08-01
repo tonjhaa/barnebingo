@@ -22,7 +22,11 @@ export const STEMMEBESKRIVELSE =
   'without shouting, and never exaggerated or cartoonish.'
 
 const STANDARDSTEMME: Record<LeverandørId, { stemme: string; modell: string }> = {
-  elevenlabs: { stemme: 'hRR5sVe3FxMEgdT3FocQ', modell: 'eleven_multilingual_v2' },
+  // Flash v2.5 er den eneste ElevenLabs-modellen som kjenner norsk. Den er
+  // raskere og litt mindre uttrykksfull enn multilingual v2, men den siste
+  // kjenner ikke språket og faller tilbake på svensk og dansk — og leser
+  // «fire» som det engelske ordet. Riktig språk slår marginal uttrykkskraft.
+  elevenlabs: { stemme: 'hRR5sVe3FxMEgdT3FocQ', modell: 'eleven_flash_v2_5' },
   openai: { stemme: 'onyx', modell: 'gpt-4o-mini-tts' },
   azure: { stemme: 'nb-NO-FinnNeural', modell: 'neural' },
   google: { stemme: 'nb-NO-Wavenet-D', modell: 'wavenet' },

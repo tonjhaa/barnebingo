@@ -249,11 +249,25 @@ describe('leverandørvalg', () => {
     expect(elevenlabsSpråk('eleven_multilingual_v2', 'nb-NO')).toBeNull()
   })
 
-  it('forkorter språkkoden til ISO 639-1 for modeller som tar imot den', () => {
-    // ElevenLabs vil ha «nb», ikke «nb-NO». De tre andre leverandørene vil ha
-    // lokaliteten, så oversettelsen hører hjemme i ElevenLabs-adapteren.
-    expect(elevenlabsSpråk('eleven_turbo_v2_5', 'nb-NO')).toBe('nb')
-    expect(elevenlabsSpråk('eleven_flash_v2_5', 'NB-no')).toBe('nb')
+  it('sender norsk som «no», slik ElevenLabs vil ha det', () => {
+    // Hos dem finnes verken «nb» eller «nn» — bare «no». Uten denne
+    // oversettelsen avvises forespørselen, eller språket blir gjettet.
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'nb-NO')).toBe('no')
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'nn-NO')).toBe('no')
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'NB-no')).toBe('no')
+  })
+
+  it('lar andre språk beholde sin egen kode', () => {
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'sv-SE')).toBe('sv')
+    expect(elevenlabsSpråk('eleven_flash_v2_5', 'en-GB')).toBe('en')
+  })
+
+  it('bruker en modell som faktisk kjenner norsk', () => {
+    // eleven_multilingual_v2 har ikke norsk i språklista og gjetter seg fram
+    // til svensk eller dansk. Flash v2.5 er den som har «no».
+    const modell = stemmeoppsett({}).modell
+    expect(modell).toBe('eleven_flash_v2_5')
+    expect(elevenlabsSpråk(modell, 'nb-NO')).toBe('no')
   })
 
   it('escaper tekst som skal inn i SSML', () => {

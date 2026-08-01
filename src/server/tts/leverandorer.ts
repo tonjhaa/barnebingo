@@ -158,18 +158,22 @@ export class GoogleProvider implements TextToSpeechProvider {
 /**
  * Språkkoden ElevenLabs vil ha, eller null når modellen ikke tar imot noen.
  *
- * To ting skiller seg fra resten av prosjektet, og begge er ElevenLabs' egne
- * regler: koden skal være ISO 639-1 med to bokstaver («nb»), ikke en lokalitet
- * («nb-NO»), og `eleven_multilingual_v2` godtar den ikke i det hele tatt — den
- * gjenkjenner språket fra teksten selv.
+ * Tre ting skiller seg fra resten av prosjektet, og alle er ElevenLabs' egne
+ * regler:
  *
- * Vi lagrer likevel «nb-NO» internt, siden det er det de andre tre
- * leverandørene vil ha. Oversettelsen hører hjemme her, hos den som har det
- * avvikende kravet.
+ *   – Koden er ISO 639-1 med to bokstaver, ikke en lokalitet.
+ *   – Norsk heter «no» hos dem. Verken «nb» eller «nn» finnes, så begge
+ *     målformene sendes som «no».
+ *   – `eleven_multilingual_v2` godtar ingen språkkode, og kjenner heller ikke
+ *     norsk. Den gjetter, og gjettet blir svensk eller dansk.
+ *
+ * Vi lagrer «nb-NO» internt fordi det er det de tre andre leverandørene vil
+ * ha. Oversettelsen hører hjemme her, hos den som har det avvikende kravet.
  */
 export function elevenlabsSpråk(modell: string, språk: string): string | null {
   if (modell.includes('multilingual')) return null
-  return språk.split('-')[0].toLowerCase()
+  const kode = språk.split('-')[0].toLowerCase()
+  return kode === 'nb' || kode === 'nn' ? 'no' : kode
 }
 
 export function escapeXml(tekst: string): string {
