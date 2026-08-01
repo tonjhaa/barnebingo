@@ -1,4 +1,2485 @@
 {
   "versjon": 1,
-  "klipp": {}
+  "klipp": {
+    "bokstav-b": {
+      "id": "bokstav-b",
+      "tekst": "B",
+      "nøkkel": "7500a64eabcae41e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:48:45.576Z"
+    },
+    "bokstav-g": {
+      "id": "bokstav-g",
+      "tekst": "G",
+      "nøkkel": "c2effaf72ca59e19",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10075,
+      "generertAt": "2026-08-01T14:48:47.485Z"
+    },
+    "bokstav-i": {
+      "id": "bokstav-i",
+      "tekst": "I",
+      "nøkkel": "edc4b37f8fc4ddc6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:48:46.174Z"
+    },
+    "bokstav-n": {
+      "id": "bokstav-n",
+      "tekst": "N",
+      "nøkkel": "7dab79bca6d6607b",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 8403,
+      "generertAt": "2026-08-01T14:48:46.890Z"
+    },
+    "bokstav-o": {
+      "id": "bokstav-o",
+      "tekst": "O",
+      "nøkkel": "615fdeb3e1496f0c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 9239,
+      "generertAt": "2026-08-01T14:48:48.120Z"
+    },
+    "fakta-1": {
+      "id": "fakta-1",
+      "tekst": "I nitti-talls bingo har hvert ark seks brett, og de deler alle nitti tallene.",
+      "nøkkel": "cfb227aed91d4cad",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 81128,
+      "generertAt": "2026-08-01T14:50:26.961Z"
+    },
+    "fakta-2": {
+      "id": "fakta-2",
+      "tekst": "I syttifem-bingo har hver bokstav sitt eget tallområde. B har de laveste.",
+      "nøkkel": "5a587a46074835cb",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 88651,
+      "generertAt": "2026-08-01T14:50:27.931Z"
+    },
+    "gate-1": {
+      "id": "gate-1",
+      "tekst": "Hva blir våtere jo mer det tørker? Et håndkle. Det er også det eneste som blir flinkere av å bli vått.",
+      "nøkkel": "47d4b87ddc5b0109",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 100772,
+      "generertAt": "2026-08-01T14:50:20.236Z"
+    },
+    "gate-2": {
+      "id": "gate-2",
+      "tekst": "Hva har mange tall, men kan ikke telle? Et bingobrett. Det er derfor det har dere med seg.",
+      "nøkkel": "a662eb17dc44fd30",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 85725,
+      "generertAt": "2026-08-01T14:50:21.204Z"
+    },
+    "hist-12": {
+      "id": "hist-12",
+      "tekst": "Tolv ender stilte seg i kø. Ingen visste hvorfor, men de var svært fornøyde med rekkefølgen.",
+      "nøkkel": "d0e987a2768705bf",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 85725,
+      "generertAt": "2026-08-01T14:50:06.176Z"
+    },
+    "hist-13": {
+      "id": "hist-13",
+      "tekst": "Tretten katter mente de var uheldige. Så fant de en solplett, og ombestemte seg.",
+      "nøkkel": "a4f2a738fcb96e90",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 87815,
+      "generertAt": "2026-08-01T14:50:11.996Z"
+    },
+    "hist-21": {
+      "id": "hist-21",
+      "tekst": "Tjueen små roboter prøvde å rope bingo samtidig. Det hørtes mest ut som en ødelagt brødrister.",
+      "nøkkel": "479d27605f748c60",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 99936,
+      "generertAt": "2026-08-01T14:50:07.219Z"
+    },
+    "hist-3": {
+      "id": "hist-3",
+      "tekst": "Tre små pingviner gikk på bingo. Den første hadde brett, den andre hadde tusj, og den tredje hadde glemt begge deler.",
+      "nøkkel": "2c6223349f2168fc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 122088,
+      "generertAt": "2026-08-01T14:50:03.792Z"
+    },
+    "hist-33": {
+      "id": "hist-33",
+      "tekst": "Trettitre snegler la ut på tur. De regner med å være framme en gang til høsten.",
+      "nøkkel": "0f1d07e778cce9ef",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 83635,
+      "generertAt": "2026-08-01T14:50:12.905Z"
+    },
+    "hist-40": {
+      "id": "hist-40",
+      "tekst": "Førti ballonger fløy av gårde. Programlederen hevder fortsatt at han hadde full kontroll.",
+      "nøkkel": "71cba891bdf299f8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 86561,
+      "generertAt": "2026-08-01T14:50:08.215Z"
+    },
+    "hist-50": {
+      "id": "hist-50",
+      "tekst": "Femti er halvveis til hundre, men heldigvis ikke halvveis til neste tall.",
+      "nøkkel": "51ca4033560fe506",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 74022,
+      "generertAt": "2026-08-01T14:50:09.146Z"
+    },
+    "hist-60": {
+      "id": "hist-60",
+      "tekst": "Seksti sekunder blir ett minutt. Seksti bingobrett blir et ganske stort bord.",
+      "nøkkel": "a955e0e56d0ba7bf",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 91577,
+      "generertAt": "2026-08-01T14:50:13.906Z"
+    },
+    "hist-7": {
+      "id": "hist-7",
+      "tekst": "Sju er programlederens hemmelige lykketall. Det er ikke bevist, men han nekter å gi det fra seg.",
+      "nøkkel": "3da3536da2be3ce5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 102026,
+      "generertAt": "2026-08-01T14:50:04.834Z"
+    },
+    "hist-75": {
+      "id": "hist-75",
+      "tekst": "Syttifem er siste stopp i syttifem-bingo. Alle av på venstre side.",
+      "nøkkel": "017b526f23fedd76",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 79038,
+      "generertAt": "2026-08-01T14:50:10.076Z"
+    },
+    "hist-88": {
+      "id": "hist-88",
+      "tekst": "Åttiåtte bier holdt møte om hvem som lagde mest bråk. Møtet ble svært bråkete.",
+      "nøkkel": "d3a84ac8a23d047f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 76948,
+      "generertAt": "2026-08-01T14:50:14.855Z"
+    },
+    "hist-90": {
+      "id": "hist-90",
+      "tekst": "Nitti er det høyeste tallet i nitti-bingo. Høyere kommer vi ikke uten å bygge en ny etasje.",
+      "nøkkel": "6a98e5972f162527",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 93248,
+      "generertAt": "2026-08-01T14:50:11.068Z"
+    },
+    "intro-1": {
+      "id": "intro-1",
+      "tekst": "Neste tall er",
+      "nøkkel": "f48b57649cb41e31",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24285,
+      "generertAt": "2026-08-01T14:48:48.841Z"
+    },
+    "intro-10": {
+      "id": "intro-10",
+      "tekst": "Klar for neste?",
+      "nøkkel": "9ce628f1f5b9c6c2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:48:55.288Z"
+    },
+    "intro-11": {
+      "id": "intro-11",
+      "tekst": "Øynene på brettet",
+      "nøkkel": "d19131e95aae4578",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 23449,
+      "generertAt": "2026-08-01T14:48:55.925Z"
+    },
+    "intro-12": {
+      "id": "intro-12",
+      "tekst": "Nå må dere følge med",
+      "nøkkel": "55754750e80595f2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 22613,
+      "generertAt": "2026-08-01T14:48:56.619Z"
+    },
+    "intro-13": {
+      "id": "intro-13",
+      "tekst": "Og nummeret er",
+      "nøkkel": "2b8ae60d49ea0038",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:48:57.337Z"
+    },
+    "intro-14": {
+      "id": "intro-14",
+      "tekst": "Da går vi videre til",
+      "nøkkel": "48a5c8e1c2f62dc1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 25539,
+      "generertAt": "2026-08-01T14:48:57.988Z"
+    },
+    "intro-15": {
+      "id": "intro-15",
+      "tekst": "Neste mulighet er",
+      "nøkkel": "52b7db5b6cbea6db",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 25539,
+      "generertAt": "2026-08-01T14:48:58.662Z"
+    },
+    "intro-2": {
+      "id": "intro-2",
+      "tekst": "Da fortsetter vi med",
+      "nøkkel": "38d8d8256f8304a6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24285,
+      "generertAt": "2026-08-01T14:48:49.525Z"
+    },
+    "intro-3": {
+      "id": "intro-3",
+      "tekst": "Og nå kommer",
+      "nøkkel": "ea9c0b4c7a8ca0f1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:50.179Z"
+    },
+    "intro-4": {
+      "id": "intro-4",
+      "tekst": "Vi har trukket",
+      "nøkkel": "54cbefb2c2878ac6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:48:51.192Z"
+    },
+    "intro-5": {
+      "id": "intro-5",
+      "tekst": "Følg godt med",
+      "nøkkel": "818e78d3030fe307",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:48:51.908Z"
+    },
+    "intro-6": {
+      "id": "intro-6",
+      "tekst": "Da ser vi hva som kommer",
+      "nøkkel": "9e7bcfc731b8b1c5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:48:52.604Z"
+    },
+    "intro-7": {
+      "id": "intro-7",
+      "tekst": "Neste kule gir oss",
+      "nøkkel": "5d9278a2d91ec395",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 22613,
+      "generertAt": "2026-08-01T14:48:53.309Z"
+    },
+    "intro-8": {
+      "id": "intro-8",
+      "tekst": "Her kommer det",
+      "nøkkel": "b50d82ef35251554",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:48:53.934Z"
+    },
+    "intro-9": {
+      "id": "intro-9",
+      "tekst": "Da ble det",
+      "nøkkel": "668b77e562514634",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:48:54.571Z"
+    },
+    "navn-edvin": {
+      "id": "navn-edvin",
+      "tekst": "Edvin",
+      "nøkkel": "d39d54b0104bd7f5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:50:29.228Z"
+    },
+    "navn-klara": {
+      "id": "navn-klara",
+      "tekst": "Klara",
+      "nøkkel": "0eab6aee18c61b0a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:50:28.581Z"
+    },
+    "navn-pernilla": {
+      "id": "navn-pernilla",
+      "tekst": "Pernilla",
+      "nøkkel": "802c8690c95ff71d",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:50:30.521Z"
+    },
+    "navn-reodor": {
+      "id": "navn-reodor",
+      "tekst": "Reodor",
+      "nøkkel": "cecb83aef5e8dc52",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:50:29.882Z"
+    },
+    "nummer-1": {
+      "id": "nummer-1",
+      "tekst": "nummer en",
+      "nøkkel": "540ef0ee6d921994",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:39.506Z"
+    },
+    "nummer-2": {
+      "id": "nummer-2",
+      "tekst": "nummer to",
+      "nøkkel": "3f24ab33fd7253bb",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:40.166Z"
+    },
+    "nummer-3": {
+      "id": "nummer-3",
+      "tekst": "nummer tre",
+      "nøkkel": "78c502d84333af45",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20524,
+      "generertAt": "2026-08-01T14:48:40.849Z"
+    },
+    "nummer-4": {
+      "id": "nummer-4",
+      "tekst": "nummer fire",
+      "nøkkel": "3ce7085382e9dcc4",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:41.520Z"
+    },
+    "nummer-5": {
+      "id": "nummer-5",
+      "tekst": "nummer fem",
+      "nøkkel": "6ca5f09c6c126d33",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:48:42.275Z"
+    },
+    "nummer-6": {
+      "id": "nummer-6",
+      "tekst": "nummer seks",
+      "nøkkel": "200f4363f75de498",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:42.900Z"
+    },
+    "nummer-7": {
+      "id": "nummer-7",
+      "tekst": "nummer sju",
+      "nøkkel": "96bff7c55b02cc60",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:43.571Z"
+    },
+    "nummer-8": {
+      "id": "nummer-8",
+      "tekst": "nummer åtte",
+      "nøkkel": "7bcb162b77ace564",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 22613,
+      "generertAt": "2026-08-01T14:48:44.253Z"
+    },
+    "nummer-9": {
+      "id": "nummer-9",
+      "tekst": "nummer ni",
+      "nøkkel": "3b0bfe66d94b57b9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:44.945Z"
+    },
+    "oppg-1": {
+      "id": "oppg-1",
+      "tekst": "Kan alle klappe tre ganger?",
+      "nøkkel": "53f0b0424f282ade",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30973,
+      "generertAt": "2026-08-01T14:50:21.920Z"
+    },
+    "oppg-2": {
+      "id": "oppg-2",
+      "tekst": "Vis med fingrene hvor mange rader vi spiller om.",
+      "nøkkel": "daa82317d57e7370",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 51035,
+      "generertAt": "2026-08-01T14:50:22.717Z"
+    },
+    "oppg-3": {
+      "id": "oppg-3",
+      "tekst": "Kan alle peke på det største tallet på brettet sitt?",
+      "nøkkel": "bfa48e5752e9bf5c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 53124,
+      "generertAt": "2026-08-01T14:50:23.511Z"
+    },
+    "oppg-4": {
+      "id": "oppg-4",
+      "tekst": "Gi sidemannen en stille high five.",
+      "nøkkel": "6a5d20f53486a474",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 37660,
+      "generertAt": "2026-08-01T14:50:24.477Z"
+    },
+    "oppg-5": {
+      "id": "oppg-5",
+      "tekst": "Hvem klarer å sitte helt stille til neste tall kommer?",
+      "nøkkel": "4b5ec23173c887b1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 53124,
+      "generertAt": "2026-08-01T14:50:25.299Z"
+    },
+    "oppg-6": {
+      "id": "oppg-6",
+      "tekst": "Strekk armene over hodet, og la dem falle ned igjen.",
+      "nøkkel": "018ac5125861a30a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 51453,
+      "generertAt": "2026-08-01T14:50:26.052Z"
+    },
+    "siffer-0": {
+      "id": "siffer-0",
+      "tekst": "null",
+      "nøkkel": "db9381742f737ad1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:48:32.962Z"
+    },
+    "siffer-1": {
+      "id": "siffer-1",
+      "tekst": "en",
+      "nøkkel": "d4e29266b58401e0",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 8403,
+      "generertAt": "2026-08-01T14:48:33.681Z"
+    },
+    "siffer-2": {
+      "id": "siffer-2",
+      "tekst": "to",
+      "nøkkel": "bab8c095e18f647c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:48:34.295Z"
+    },
+    "siffer-3": {
+      "id": "siffer-3",
+      "tekst": "tre",
+      "nøkkel": "62c5b1cb0d89b0d9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T14:48:35.005Z"
+    },
+    "siffer-4": {
+      "id": "siffer-4",
+      "tekst": "fire",
+      "nøkkel": "69e3aa88638a5737",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:48:35.627Z"
+    },
+    "siffer-5": {
+      "id": "siffer-5",
+      "tekst": "fem",
+      "nøkkel": "429874a202d0a73d",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:48:36.258Z"
+    },
+    "siffer-6": {
+      "id": "siffer-6",
+      "tekst": "seks",
+      "nøkkel": "6054529f3e0cba43",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:48:36.856Z"
+    },
+    "siffer-7": {
+      "id": "siffer-7",
+      "tekst": "sju",
+      "nøkkel": "cbc748357df7f548",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T14:48:37.572Z"
+    },
+    "siffer-8": {
+      "id": "siffer-8",
+      "tekst": "åtte",
+      "nøkkel": "62611a6ca02dbb6d",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:38.212Z"
+    },
+    "siffer-9": {
+      "id": "siffer-9",
+      "tekst": "ni",
+      "nøkkel": "d924d7ad6a314c84",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 7149,
+      "generertAt": "2026-08-01T14:48:38.801Z"
+    },
+    "slutt-1": {
+      "id": "slutt-1",
+      "tekst": "Har noen det?",
+      "nøkkel": "d2d8bd7cb9f98593",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:48:59.329Z"
+    },
+    "slutt-10": {
+      "id": "slutt-10",
+      "tekst": "Kanskje noen fikk en ny markering.",
+      "nøkkel": "29fddf6c2bba4666",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 39750,
+      "generertAt": "2026-08-01T14:49:05.732Z"
+    },
+    "slutt-11": {
+      "id": "slutt-11",
+      "tekst": "Hold på spenningen.",
+      "nøkkel": "280d945446ad9e53",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 25539,
+      "generertAt": "2026-08-01T14:49:06.450Z"
+    },
+    "slutt-12": {
+      "id": "slutt-12",
+      "tekst": "Neste tall kommer snart.",
+      "nøkkel": "2773021fe33442ea",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:07.159Z"
+    },
+    "slutt-2": {
+      "id": "slutt-2",
+      "tekst": "Se nøye på brettet.",
+      "nøkkel": "ecb19c2735900ef7",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:48:59.995Z"
+    },
+    "slutt-3": {
+      "id": "slutt-3",
+      "tekst": "Kanskje det var ditt tall.",
+      "nøkkel": "7e6211625dd61857",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 27211,
+      "generertAt": "2026-08-01T14:49:00.712Z"
+    },
+    "slutt-4": {
+      "id": "slutt-4",
+      "tekst": "Da markerer vi.",
+      "nøkkel": "07d4d108a1d8cfa9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:49:01.432Z"
+    },
+    "slutt-5": {
+      "id": "slutt-5",
+      "tekst": "Følg med videre.",
+      "nøkkel": "5546e935ce5e0ab6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24285,
+      "generertAt": "2026-08-01T14:49:02.128Z"
+    },
+    "slutt-6": {
+      "id": "slutt-6",
+      "tekst": "Nærmer noen seg bingo?",
+      "nøkkel": "f1ecadd4e19ef86b",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 28465,
+      "generertAt": "2026-08-01T14:49:02.865Z"
+    },
+    "slutt-7": {
+      "id": "slutt-7",
+      "tekst": "Det kan bli viktig.",
+      "nøkkel": "2d5a8f7d967398ac",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:49:03.583Z"
+    },
+    "slutt-8": {
+      "id": "slutt-8",
+      "tekst": "Vi fortsetter.",
+      "nøkkel": "a72098db0cb68152",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:49:04.300Z"
+    },
+    "slutt-9": {
+      "id": "slutt-9",
+      "tekst": "Da er det registrert.",
+      "nøkkel": "29cd299958e084c1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:49:04.979Z"
+    },
+    "sys-alleklare": {
+      "id": "sys-alleklare",
+      "tekst": "Alle er klare!",
+      "nøkkel": "5c88647f7019c62c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:49:13.617Z"
+    },
+    "sys-applaus": {
+      "id": "sys-applaus",
+      "tekst": "Gi vinneren en stor applaus!",
+      "nøkkel": "421b1076e32e5fa7",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30137,
+      "generertAt": "2026-08-01T14:49:30.615Z"
+    },
+    "sys-avslutning-flott": {
+      "id": "sys-avslutning-flott",
+      "tekst": "For en avslutning!",
+      "nøkkel": "a6bf069e1cad21fb",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:49:29.712Z"
+    },
+    "sys-beholdmarkeringer": {
+      "id": "sys-beholdmarkeringer",
+      "tekst": "Markeringene beholdes. Vi fortsetter på samme brett.",
+      "nøkkel": "9b4caa69f481ec6e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 53124,
+      "generertAt": "2026-08-01T14:49:22.637Z"
+    },
+    "sys-bingotrykk-1": {
+      "id": "sys-bingotrykk-1",
+      "tekst": "Oi! Noen har trykket BINGO.",
+      "nøkkel": "e022fc6ff9bffc0a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 31391,
+      "generertAt": "2026-08-01T14:49:23.347Z"
+    },
+    "sys-bingotrykk-2": {
+      "id": "sys-bingotrykk-2",
+      "tekst": "Stopp trekningen. Nå kontrollerer vi brettet.",
+      "nøkkel": "4d28a9b368b2661c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 45601,
+      "generertAt": "2026-08-01T14:49:24.075Z"
+    },
+    "sys-bingotrykk-3": {
+      "id": "sys-bingotrykk-3",
+      "tekst": "har trykket BINGO. La oss se om det stemmer.",
+      "nøkkel": "c4259735c0f5a8fc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 47691,
+      "generertAt": "2026-08-01T14:49:24.868Z"
+    },
+    "sys-blemed-1": {
+      "id": "sys-blemed-1",
+      "tekst": "er med!",
+      "nøkkel": "a549be1eca995976",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:49:09.301Z"
+    },
+    "sys-blemed-2": {
+      "id": "sys-blemed-2",
+      "tekst": "har tatt plass.",
+      "nøkkel": "182f4515a9a94f1a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 27211,
+      "generertAt": "2026-08-01T14:49:10.034Z"
+    },
+    "sys-bom-1": {
+      "id": "sys-bom-1",
+      "tekst": "Ikke helt ennå, men du er kanskje veldig nær.",
+      "nøkkel": "dcd846c105583612",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 45601,
+      "generertAt": "2026-08-01T14:49:32.162Z"
+    },
+    "sys-bom-2": {
+      "id": "sys-bom-2",
+      "tekst": "Godt forsøk! Vi fortsetter.",
+      "nøkkel": "d0cb80d8686336e7",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 35152,
+      "generertAt": "2026-08-01T14:49:32.885Z"
+    },
+    "sys-bom-3": {
+      "id": "sys-bom-3",
+      "tekst": "Det mangler fortsatt litt på brettet.",
+      "nøkkel": "40b8486cb551ff79",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 38078,
+      "generertAt": "2026-08-01T14:49:33.591Z"
+    },
+    "sys-bom-4": {
+      "id": "sys-bom-4",
+      "tekst": "Ingen fare. Behold markeringene og følg med videre.",
+      "nøkkel": "7a166abc47793512",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 53124,
+      "generertAt": "2026-08-01T14:49:34.408Z"
+    },
+    "sys-bom-5": {
+      "id": "sys-bom-5",
+      "tekst": "Nesten! Neste tall kan bli viktig.",
+      "nøkkel": "858fb439c909a9ea",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 44347,
+      "generertAt": "2026-08-01T14:49:35.130Z"
+    },
+    "sys-enklartil": {
+      "id": "sys-enklartil",
+      "tekst": "Én spiller til er klar.",
+      "nøkkel": "47e8b0c00a46ce94",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:12.081Z"
+    },
+    "sys-finnfrem": {
+      "id": "sys-finnfrem",
+      "tekst": "Finn frem brettene og gjør dere klare.",
+      "nøkkel": "758aa7e97fcae4c6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 39750,
+      "generertAt": "2026-08-01T14:49:16.432Z"
+    },
+    "sys-folgmed": {
+      "id": "sys-folgmed",
+      "tekst": "Husk å følge godt med på tallene.",
+      "nøkkel": "9eda1b93ef8ddfa9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 38914,
+      "generertAt": "2026-08-01T14:49:17.202Z"
+    },
+    "sys-foretspill": {
+      "id": "sys-foretspill",
+      "tekst": "For et spill!",
+      "nøkkel": "e9a9f3db871d082a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:49:39.558Z"
+    },
+    "sys-fortsetter": {
+      "id": "sys-fortsetter",
+      "tekst": "Spillet fortsetter straks.",
+      "nøkkel": "f97d8fc792813e76",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 29301,
+      "generertAt": "2026-08-01T14:49:36.657Z"
+    },
+    "sys-godkjent-1": {
+      "id": "sys-godkjent-1",
+      "tekst": "Det stemmer!",
+      "nøkkel": "4521db6829b7cf92",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:49:26.282Z"
+    },
+    "sys-godkjent-2": {
+      "id": "sys-godkjent-2",
+      "tekst": "Riktig!",
+      "nøkkel": "8cd39b9579a5a134",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:49:26.946Z"
+    },
+    "sys-godkjent-3": {
+      "id": "sys-godkjent-3",
+      "tekst": "Fantastisk!",
+      "nøkkel": "f38a0ce76153b548",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:49:27.647Z"
+    },
+    "sys-gratulerer": {
+      "id": "sys-gratulerer",
+      "tekst": "Gratulerer!",
+      "nøkkel": "dce8873d8a5ff0f6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:49:29.080Z"
+    },
+    "sys-gratulerer-alle": {
+      "id": "sys-gratulerer-alle",
+      "tekst": "Gratulerer til alle vinnerne.",
+      "nøkkel": "8f32dde6e39d040c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 28465,
+      "generertAt": "2026-08-01T14:49:40.257Z"
+    },
+    "sys-harbingo": {
+      "id": "sys-harbingo",
+      "tekst": "har bingo!",
+      "nøkkel": "c7b8e50467fc7e39",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:49:28.363Z"
+    },
+    "sys-klar-1": {
+      "id": "sys-klar-1",
+      "tekst": "er klar!",
+      "nøkkel": "094545aa8ebe161c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:49:10.693Z"
+    },
+    "sys-klar-2": {
+      "id": "sys-klar-2",
+      "tekst": "er på plass.",
+      "nøkkel": "3641c8af967605bc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:49:11.350Z"
+    },
+    "sys-kontrollerer": {
+      "id": "sys-kontrollerer",
+      "tekst": "Hold på spenningen mens vi kontrollerer.",
+      "nøkkel": "81e47a27974792e6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 38914,
+      "generertAt": "2026-08-01T14:49:25.625Z"
+    },
+    "sys-mangler-en": {
+      "id": "sys-mangler-en",
+      "tekst": "Nå mangler vi bare én spiller.",
+      "nøkkel": "9f3bb8d06d43f781",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30137,
+      "generertAt": "2026-08-01T14:49:12.900Z"
+    },
+    "sys-noen-blemed": {
+      "id": "sys-noen-blemed",
+      "tekst": "En spiller til er med!",
+      "nøkkel": "ddccf892411cdbe5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 27211,
+      "generertAt": "2026-08-01T14:49:14.992Z"
+    },
+    "sys-nyrunde": {
+      "id": "sys-nyrunde",
+      "tekst": "Er dere klare for en ny runde?",
+      "nøkkel": "e5e3de79f2e5d990",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 33898,
+      "generertAt": "2026-08-01T14:49:40.962Z"
+    },
+    "sys-pause": {
+      "id": "sys-pause",
+      "tekst": "Vi tar en liten pause.",
+      "nøkkel": "343401e319557c2b",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:35.941Z"
+    },
+    "sys-spennende": {
+      "id": "sys-spennende",
+      "tekst": "Dette kan bli spennende.",
+      "nøkkel": "2c78b5d2aa3eccd9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:14.264Z"
+    },
+    "sys-stadium-0": {
+      "id": "sys-stadium-0",
+      "tekst": "Nå spiller vi om én full rad.",
+      "nøkkel": "0c5329e95f06a5bc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30137,
+      "generertAt": "2026-08-01T14:49:19.565Z"
+    },
+    "sys-stadium-1": {
+      "id": "sys-stadium-1",
+      "tekst": "Da går vi videre til to hele rader.",
+      "nøkkel": "75317f79c4002739",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 43511,
+      "generertAt": "2026-08-01T14:49:20.317Z"
+    },
+    "sys-stadium-2": {
+      "id": "sys-stadium-2",
+      "tekst": "Nå gjelder det tre hele rader.",
+      "nøkkel": "22013e891a70e539",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 32226,
+      "generertAt": "2026-08-01T14:49:21.094Z"
+    },
+    "sys-stadium-fullt": {
+      "id": "sys-stadium-fullt",
+      "tekst": "Nå spiller vi om fullt brett.",
+      "nøkkel": "8fdb0fa1083516aa",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 31391,
+      "generertAt": "2026-08-01T14:49:21.820Z"
+    },
+    "sys-starter": {
+      "id": "sys-starter",
+      "tekst": "Da starter vi! Lykke til!",
+      "nøkkel": "743df3a9132553c0",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30973,
+      "generertAt": "2026-08-01T14:49:18.840Z"
+    },
+    "sys-takk-1": {
+      "id": "sys-takk-1",
+      "tekst": "Takk for en flott bingorunde!",
+      "nøkkel": "4b5fa1c67daea7a2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 30137,
+      "generertAt": "2026-08-01T14:49:38.929Z"
+    },
+    "sys-takkfordag": {
+      "id": "sys-takkfordag",
+      "tekst": "Takk for i dag, og velkommen tilbake til bingo!",
+      "nøkkel": "b3e07e2a1def00c4",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 46437,
+      "generertAt": "2026-08-01T14:49:41.779Z"
+    },
+    "sys-tilbake": {
+      "id": "sys-tilbake",
+      "tekst": "Der er forbindelsen tilbake. Da fortsetter vi.",
+      "nøkkel": "1717c076ce8692e6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 45601,
+      "generertAt": "2026-08-01T14:49:38.256Z"
+    },
+    "sys-tomkule": {
+      "id": "sys-tomkule",
+      "tekst": "Der var alle tallene trukket.",
+      "nøkkel": "8f2510c964f30411",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:42.484Z"
+    },
+    "sys-trykkbingo": {
+      "id": "sys-trykkbingo",
+      "tekst": "Når du mener du har riktig resultat, trykker du BINGO.",
+      "nøkkel": "e88331e7feeed4bd",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 58976,
+      "generertAt": "2026-08-01T14:49:18.122Z"
+    },
+    "sys-velkommen-1": {
+      "id": "sys-velkommen-1",
+      "tekst": "Velkommen til bingo!",
+      "nøkkel": "e0a7465adc1ed6bf",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24703,
+      "generertAt": "2026-08-01T14:49:07.883Z"
+    },
+    "sys-velkommen-2": {
+      "id": "sys-velkommen-2",
+      "tekst": "Finn telefonene og gjør dere klare.",
+      "nøkkel": "4136dfababb63722",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 41004,
+      "generertAt": "2026-08-01T14:49:08.702Z"
+    },
+    "sys-velkommen-navn": {
+      "id": "sys-velkommen-navn",
+      "tekst": "Velkommen,",
+      "nøkkel": "0a9229ae8f1b55df",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:49:15.666Z"
+    },
+    "sys-venter": {
+      "id": "sys-venter",
+      "tekst": "Vi venter litt mens en spiller kobler seg til igjen.",
+      "nøkkel": "4e40eb42f61293d8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 49363,
+      "generertAt": "2026-08-01T14:49:37.476Z"
+    },
+    "sys-vivinner": {
+      "id": "sys-vivinner",
+      "tekst": "Vi har en vinner!",
+      "nøkkel": "6936d3137b9ba5f7",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 33062,
+      "generertAt": "2026-08-01T14:49:31.434Z"
+    },
+    "tall-1": {
+      "id": "tall-1",
+      "tekst": "Én",
+      "nøkkel": "50910d269f96a4dd",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10075,
+      "generertAt": "2026-08-01T14:47:28.460Z"
+    },
+    "tall-10": {
+      "id": "tall-10",
+      "tekst": "Ti",
+      "nøkkel": "876ddec4e85dc274",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:47:35.009Z"
+    },
+    "tall-11": {
+      "id": "tall-11",
+      "tekst": "Elleve",
+      "nøkkel": "66a908ddf2f85a81",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:47:35.724Z"
+    },
+    "tall-12": {
+      "id": "tall-12",
+      "tekst": "Tolv",
+      "nøkkel": "be7d6b12c35cfef1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:47:36.366Z"
+    },
+    "tall-13": {
+      "id": "tall-13",
+      "tekst": "Tretten",
+      "nøkkel": "9eed754736f58b10",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:37.056Z"
+    },
+    "tall-14": {
+      "id": "tall-14",
+      "tekst": "Fjorten",
+      "nøkkel": "ccfc4c99fbcc1b5c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:47:37.694Z"
+    },
+    "tall-15": {
+      "id": "tall-15",
+      "tekst": "Femten",
+      "nøkkel": "9fe56bb042f3444a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:47:38.340Z"
+    },
+    "tall-16": {
+      "id": "tall-16",
+      "tekst": "Seksten",
+      "nøkkel": "efbc53c3baf09df1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:47:39.001Z"
+    },
+    "tall-17": {
+      "id": "tall-17",
+      "tekst": "Sytten",
+      "nøkkel": "bd42824fefbd349e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:47:39.655Z"
+    },
+    "tall-18": {
+      "id": "tall-18",
+      "tekst": "Atten",
+      "nøkkel": "11ffc9b857776111",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:40.272Z"
+    },
+    "tall-19": {
+      "id": "tall-19",
+      "tekst": "Nitten",
+      "nøkkel": "d134ce50bf60ffba",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T14:47:40.946Z"
+    },
+    "tall-2": {
+      "id": "tall-2",
+      "tekst": "To",
+      "nøkkel": "b3d7834c654eda77",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:47:29.068Z"
+    },
+    "tall-20": {
+      "id": "tall-20",
+      "tekst": "Tjue",
+      "nøkkel": "756f6fe5adafb76c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:47:41.619Z"
+    },
+    "tall-21": {
+      "id": "tall-21",
+      "tekst": "Tjueen",
+      "nøkkel": "ccc53a4d3c7bde96",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:47:42.515Z"
+    },
+    "tall-22": {
+      "id": "tall-22",
+      "tekst": "Tjueto",
+      "nøkkel": "3256e72f2eed55a0",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:43.151Z"
+    },
+    "tall-23": {
+      "id": "tall-23",
+      "tekst": "Tjuetre",
+      "nøkkel": "ed41f1b68af5edcc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:47:43.810Z"
+    },
+    "tall-24": {
+      "id": "tall-24",
+      "tekst": "Tjuefire",
+      "nøkkel": "8a44c221aed6acf5",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:47:44.742Z"
+    },
+    "tall-25": {
+      "id": "tall-25",
+      "tekst": "Tjuefem",
+      "nøkkel": "d85e2e30552b61cc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:47:45.555Z"
+    },
+    "tall-26": {
+      "id": "tall-26",
+      "tekst": "Tjueseks",
+      "nøkkel": "0763b243281d5624",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:46.885Z"
+    },
+    "tall-27": {
+      "id": "tall-27",
+      "tekst": "Tjuesju",
+      "nøkkel": "c955b159df2a68c0",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:47:47.575Z"
+    },
+    "tall-28": {
+      "id": "tall-28",
+      "tekst": "Tjueåtte",
+      "nøkkel": "11fe1b0b9c3ad72c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:47:48.297Z"
+    },
+    "tall-29": {
+      "id": "tall-29",
+      "tekst": "Tjueni",
+      "nøkkel": "310dba5e30f4dbb8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:47:49.138Z"
+    },
+    "tall-3": {
+      "id": "tall-3",
+      "tekst": "Tre",
+      "nøkkel": "02a69bd57449cef4",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T14:47:29.714Z"
+    },
+    "tall-30": {
+      "id": "tall-30",
+      "tekst": "Tretti",
+      "nøkkel": "f5a9973c3d8a81a6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:49.854Z"
+    },
+    "tall-31": {
+      "id": "tall-31",
+      "tekst": "Trettien",
+      "nøkkel": "72c39999bbcc3412",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:47:50.590Z"
+    },
+    "tall-32": {
+      "id": "tall-32",
+      "tekst": "Trettito",
+      "nøkkel": "1bd51c99ea8e738e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:47:51.288Z"
+    },
+    "tall-33": {
+      "id": "tall-33",
+      "tekst": "Trettitre",
+      "nøkkel": "683f0b7c0c5fb99e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:47:51.920Z"
+    },
+    "tall-34": {
+      "id": "tall-34",
+      "tekst": "Trettifire",
+      "nøkkel": "143ddb3fd2d853ed",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:47:52.559Z"
+    },
+    "tall-35": {
+      "id": "tall-35",
+      "tekst": "Trettifem",
+      "nøkkel": "3fbb7dac60f74d54",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:47:53.441Z"
+    },
+    "tall-36": {
+      "id": "tall-36",
+      "tekst": "Trettiseks",
+      "nøkkel": "e73aca2befbee42f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:47:54.155Z"
+    },
+    "tall-37": {
+      "id": "tall-37",
+      "tekst": "Trettisju",
+      "nøkkel": "b128ca65f5688c00",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:47:54.874Z"
+    },
+    "tall-38": {
+      "id": "tall-38",
+      "tekst": "Trettiåtte",
+      "nøkkel": "727311547a02867e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:47:55.589Z"
+    },
+    "tall-39": {
+      "id": "tall-39",
+      "tekst": "Trettini",
+      "nøkkel": "d5334e6e5b778a7a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:47:56.309Z"
+    },
+    "tall-4": {
+      "id": "tall-4",
+      "tekst": "Fire",
+      "nøkkel": "748924ca2662808f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:30.400Z"
+    },
+    "tall-40": {
+      "id": "tall-40",
+      "tekst": "Førti",
+      "nøkkel": "26ed5911a6d74752",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:47:57.126Z"
+    },
+    "tall-41": {
+      "id": "tall-41",
+      "tekst": "Førtien",
+      "nøkkel": "f9f8baf4113d3827",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:47:57.944Z"
+    },
+    "tall-42": {
+      "id": "tall-42",
+      "tekst": "Førtito",
+      "nøkkel": "1d3b3f9600d126bd",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:47:58.711Z"
+    },
+    "tall-43": {
+      "id": "tall-43",
+      "tekst": "Førtitre",
+      "nøkkel": "68d761b238c122e4",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:47:59.481Z"
+    },
+    "tall-44": {
+      "id": "tall-44",
+      "tekst": "Førtifire",
+      "nøkkel": "e259156c7db32f6f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:00.197Z"
+    },
+    "tall-45": {
+      "id": "tall-45",
+      "tekst": "Førtifem",
+      "nøkkel": "69c76e264cd9019a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:00.971Z"
+    },
+    "tall-46": {
+      "id": "tall-46",
+      "tekst": "Førtiseks",
+      "nøkkel": "561338091be437af",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:01.601Z"
+    },
+    "tall-47": {
+      "id": "tall-47",
+      "tekst": "Førtisju",
+      "nøkkel": "5edf9b505e740810",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:48:02.350Z"
+    },
+    "tall-48": {
+      "id": "tall-48",
+      "tekst": "Førtiåtte",
+      "nøkkel": "b81e14db77ae4c60",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:03.062Z"
+    },
+    "tall-49": {
+      "id": "tall-49",
+      "tekst": "Førtini",
+      "nøkkel": "86e2ecb7257c17ac",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:48:03.781Z"
+    },
+    "tall-5": {
+      "id": "tall-5",
+      "tekst": "Fem",
+      "nøkkel": "186c4233035cf280",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 11328,
+      "generertAt": "2026-08-01T14:47:31.424Z"
+    },
+    "tall-50": {
+      "id": "tall-50",
+      "tekst": "Femti",
+      "nøkkel": "8720f45fd0dd3cde",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:04.370Z"
+    },
+    "tall-51": {
+      "id": "tall-51",
+      "tekst": "Femtien",
+      "nøkkel": "7845289390da7f4c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:05.209Z"
+    },
+    "tall-52": {
+      "id": "tall-52",
+      "tekst": "Femtito",
+      "nøkkel": "85e57d72423caeec",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:48:05.933Z"
+    },
+    "tall-53": {
+      "id": "tall-53",
+      "tekst": "Femtitre",
+      "nøkkel": "5c0b56af0dcbe0f2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:06.560Z"
+    },
+    "tall-54": {
+      "id": "tall-54",
+      "tekst": "Femtifire",
+      "nøkkel": "dcd188a0c205e2c3",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:07.221Z"
+    },
+    "tall-55": {
+      "id": "tall-55",
+      "tekst": "Femtifem",
+      "nøkkel": "fa5da4a581ad5af7",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:07.848Z"
+    },
+    "tall-56": {
+      "id": "tall-56",
+      "tekst": "Femtiseks",
+      "nøkkel": "43a77d9ce87343c9",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:48:08.532Z"
+    },
+    "tall-57": {
+      "id": "tall-57",
+      "tekst": "Femtisju",
+      "nøkkel": "f81e6f2f60c39ff1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 56050,
+      "generertAt": "2026-08-01T14:48:09.318Z"
+    },
+    "tall-58": {
+      "id": "tall-58",
+      "tekst": "Femtiåtte",
+      "nøkkel": "7e4909506ac88914",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20524,
+      "generertAt": "2026-08-01T14:48:10.007Z"
+    },
+    "tall-59": {
+      "id": "tall-59",
+      "tekst": "Femtini",
+      "nøkkel": "88bffc93f709597e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:10.662Z"
+    },
+    "tall-6": {
+      "id": "tall-6",
+      "tekst": "Seks",
+      "nøkkel": "4f7636a70e839d63",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:47:32.141Z"
+    },
+    "tall-60": {
+      "id": "tall-60",
+      "tekst": "Seksti",
+      "nøkkel": "bbac550a6695e5ca",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:11.358Z"
+    },
+    "tall-61": {
+      "id": "tall-61",
+      "tekst": "Sekstien",
+      "nøkkel": "08e24b277d90cf7f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:11.985Z"
+    },
+    "tall-62": {
+      "id": "tall-62",
+      "tekst": "Sekstito",
+      "nøkkel": "f6923a7063ba7be8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:12.960Z"
+    },
+    "tall-63": {
+      "id": "tall-63",
+      "tekst": "Sekstitre",
+      "nøkkel": "a71e9c0964e0fd23",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:13.961Z"
+    },
+    "tall-64": {
+      "id": "tall-64",
+      "tekst": "Sekstifire",
+      "nøkkel": "d25e70741122dc87",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:14.635Z"
+    },
+    "tall-65": {
+      "id": "tall-65",
+      "tekst": "Sekstifem",
+      "nøkkel": "aab5c6af1cef8ddc",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:15.454Z"
+    },
+    "tall-66": {
+      "id": "tall-66",
+      "tekst": "Sekstiseks",
+      "nøkkel": "8c120975f90366ab",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:16.126Z"
+    },
+    "tall-67": {
+      "id": "tall-67",
+      "tekst": "Sekstisju",
+      "nøkkel": "36aab024bd644486",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:16.786Z"
+    },
+    "tall-68": {
+      "id": "tall-68",
+      "tekst": "Sekstiåtte",
+      "nøkkel": "7dc90a0c7fb235ca",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:48:17.443Z"
+    },
+    "tall-69": {
+      "id": "tall-69",
+      "tekst": "Sekstini",
+      "nøkkel": "a9f959d91626ed63",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:18.117Z"
+    },
+    "tall-7": {
+      "id": "tall-7",
+      "tekst": "Sju",
+      "nøkkel": "0aed4cadf7d7e035",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 10911,
+      "generertAt": "2026-08-01T14:47:32.856Z"
+    },
+    "tall-70": {
+      "id": "tall-70",
+      "tekst": "Sytti",
+      "nøkkel": "fe5e239927b354aa",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13836,
+      "generertAt": "2026-08-01T14:48:18.767Z"
+    },
+    "tall-71": {
+      "id": "tall-71",
+      "tekst": "Syttien",
+      "nøkkel": "e5c6ce34b9887f4a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:19.444Z"
+    },
+    "tall-72": {
+      "id": "tall-72",
+      "tekst": "Syttito",
+      "nøkkel": "786b2a6d69b6e93b",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:48:20.130Z"
+    },
+    "tall-73": {
+      "id": "tall-73",
+      "tekst": "Syttitre",
+      "nøkkel": "268a5ea255f95ca1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15090,
+      "generertAt": "2026-08-01T14:48:20.781Z"
+    },
+    "tall-74": {
+      "id": "tall-74",
+      "tekst": "Syttifire",
+      "nøkkel": "b3ffe09530ed5e11",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:21.438Z"
+    },
+    "tall-75": {
+      "id": "tall-75",
+      "tekst": "Syttifem",
+      "nøkkel": "b1369173c9bd9839",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "generertAt": "2026-08-01T14:48:22.113Z"
+    },
+    "tall-76": {
+      "id": "tall-76",
+      "tekst": "Syttiseks",
+      "nøkkel": "bba0629376569f18",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:48:22.767Z"
+    },
+    "tall-77": {
+      "id": "tall-77",
+      "tekst": "Syttisju",
+      "nøkkel": "6aa6122f66b2f4f6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:23.441Z"
+    },
+    "tall-78": {
+      "id": "tall-78",
+      "tekst": "Syttiåtte",
+      "nøkkel": "d036f8b5bc1b45fb",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20942,
+      "generertAt": "2026-08-01T14:48:24.160Z"
+    },
+    "tall-79": {
+      "id": "tall-79",
+      "tekst": "Syttini",
+      "nøkkel": "d26a478bd588b7a1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:48:24.819Z"
+    },
+    "tall-8": {
+      "id": "tall-8",
+      "tekst": "Åtte",
+      "nøkkel": "efec8cf1dd3fd0fe",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:47:33.573Z"
+    },
+    "tall-80": {
+      "id": "tall-80",
+      "tekst": "Åtti",
+      "nøkkel": "2ef6432833bf4e49",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 12164,
+      "generertAt": "2026-08-01T14:48:25.491Z"
+    },
+    "tall-81": {
+      "id": "tall-81",
+      "tekst": "Åttien",
+      "nøkkel": "88684e7a439f9744",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:26.096Z"
+    },
+    "tall-82": {
+      "id": "tall-82",
+      "tekst": "Åttito",
+      "nøkkel": "cd0d1a49ae3d5655",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:26.739Z"
+    },
+    "tall-83": {
+      "id": "tall-83",
+      "tekst": "Åttitre",
+      "nøkkel": "363c7e11e457dade",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:48:27.375Z"
+    },
+    "tall-84": {
+      "id": "tall-84",
+      "tekst": "Åttifire",
+      "nøkkel": "38074bc133fc450e",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:48:28.045Z"
+    },
+    "tall-85": {
+      "id": "tall-85",
+      "tekst": "Åttifem",
+      "nøkkel": "06c10f9ffdac4868",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:28.655Z"
+    },
+    "tall-86": {
+      "id": "tall-86",
+      "tekst": "Åttiseks",
+      "nøkkel": "67329db26adf50a8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 17598,
+      "generertAt": "2026-08-01T14:48:29.313Z"
+    },
+    "tall-87": {
+      "id": "tall-87",
+      "tekst": "Åttisju",
+      "nøkkel": "f95e67ff7e0b8d52",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 14254,
+      "generertAt": "2026-08-01T14:48:30.304Z"
+    },
+    "tall-88": {
+      "id": "tall-88",
+      "tekst": "Åttiåtte",
+      "nøkkel": "c4d4a838fdb407ce",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 15926,
+      "generertAt": "2026-08-01T14:48:30.968Z"
+    },
+    "tall-89": {
+      "id": "tall-89",
+      "tekst": "Åttini",
+      "nøkkel": "bc3ce9927c9f1172",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:31.633Z"
+    },
+    "tall-9": {
+      "id": "tall-9",
+      "tekst": "Ni",
+      "nøkkel": "72b65a719c0f5bb1",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 9239,
+      "generertAt": "2026-08-01T14:47:34.290Z"
+    },
+    "tall-90": {
+      "id": "tall-90",
+      "tekst": "Nitti",
+      "nøkkel": "ebb31e2bc78172cb",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 13000,
+      "generertAt": "2026-08-01T14:48:32.321Z"
+    },
+    "variant-1-1": {
+      "id": "variant-1-1",
+      "tekst": "Aller først ut:",
+      "nøkkel": "f9576371a1ac6599",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24285,
+      "generertAt": "2026-08-01T14:49:43.161Z"
+    },
+    "variant-10-1": {
+      "id": "variant-10-1",
+      "tekst": "Første tall med to sifre:",
+      "nøkkel": "238342967ddf8105",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 29301,
+      "generertAt": "2026-08-01T14:49:46.080Z"
+    },
+    "variant-11-1": {
+      "id": "variant-11-1",
+      "tekst": "To like:",
+      "nøkkel": "62b930de563832ea",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 16762,
+      "generertAt": "2026-08-01T14:49:46.795Z"
+    },
+    "variant-12-1": {
+      "id": "variant-12-1",
+      "tekst": "Et helt dusin:",
+      "nøkkel": "383a763517571222",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:49:47.462Z"
+    },
+    "variant-13-1": {
+      "id": "variant-13-1",
+      "tekst": "Noen kaller det uflaks. Vi kaller det",
+      "nøkkel": "6108b49b9602cf76",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 39750,
+      "generertAt": "2026-08-01T14:49:48.234Z"
+    },
+    "variant-20-1": {
+      "id": "variant-20-1",
+      "tekst": "Rundt og fint:",
+      "nøkkel": "b58c2c35483c0ef8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:49:48.945Z"
+    },
+    "variant-21-1": {
+      "id": "variant-21-1",
+      "tekst": "To og én står sammen og blir",
+      "nøkkel": "6190437a74e84b73",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 33898,
+      "generertAt": "2026-08-01T14:49:49.626Z"
+    },
+    "variant-21-2": {
+      "id": "variant-21-2",
+      "tekst": "Da ble det",
+      "nøkkel": "668b77e562514634",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:49:50.381Z"
+    },
+    "variant-22-1": {
+      "id": "variant-22-1",
+      "tekst": "To små svaner:",
+      "nøkkel": "761217bbced5f052",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 21777,
+      "generertAt": "2026-08-01T14:49:51.095Z"
+    },
+    "variant-3-1": {
+      "id": "variant-3-1",
+      "tekst": "Gode gamle",
+      "nøkkel": "9ee02d0b00692045",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 18852,
+      "generertAt": "2026-08-01T14:49:43.827Z"
+    },
+    "variant-30-1": {
+      "id": "variant-30-1",
+      "tekst": "En tredjedel av nitti:",
+      "nøkkel": "184eab4f1630a772",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:51.813Z"
+    },
+    "variant-33-1": {
+      "id": "variant-33-1",
+      "tekst": "To like igjen:",
+      "nøkkel": "851d224f1a8065d6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 23449,
+      "generertAt": "2026-08-01T14:49:52.511Z"
+    },
+    "variant-40-1": {
+      "id": "variant-40-1",
+      "tekst": "Førti ballonger og",
+      "nøkkel": "debd263fbd812ac2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:49:53.249Z"
+    },
+    "variant-50-1": {
+      "id": "variant-50-1",
+      "tekst": "Halvveis til hundre!",
+      "nøkkel": "df77a6315331c441",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24703,
+      "generertAt": "2026-08-01T14:49:53.963Z"
+    },
+    "variant-50-2": {
+      "id": "variant-50-2",
+      "tekst": "Et stort og rundt tall:",
+      "nøkkel": "d9bd712ac662119b",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 27211,
+      "generertAt": "2026-08-01T14:49:54.619Z"
+    },
+    "variant-55-1": {
+      "id": "variant-55-1",
+      "tekst": "To like på rad:",
+      "nøkkel": "030a35527be1cb7a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 23449,
+      "generertAt": "2026-08-01T14:49:55.296Z"
+    },
+    "variant-60-1": {
+      "id": "variant-60-1",
+      "tekst": "Like mange som minutter i en time:",
+      "nøkkel": "cb31d4c2c3b014b6",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 37660,
+      "generertAt": "2026-08-01T14:49:55.994Z"
+    },
+    "variant-66-1": {
+      "id": "variant-66-1",
+      "tekst": "To like til:",
+      "nøkkel": "615d2b2cccf44d6a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:49:56.620Z"
+    },
+    "variant-7-1": {
+      "id": "variant-7-1",
+      "tekst": "Det kjente lykketallet",
+      "nøkkel": "dc769cc1655daba8",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 24703,
+      "generertAt": "2026-08-01T14:49:44.543Z"
+    },
+    "variant-7-2": {
+      "id": "variant-7-2",
+      "tekst": "Kanskje dette blir et lykketall i dag:",
+      "nøkkel": "385e298286d06989",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 41839,
+      "generertAt": "2026-08-01T14:49:45.300Z"
+    },
+    "variant-70-1": {
+      "id": "variant-70-1",
+      "tekst": "Opp i høyden med",
+      "nøkkel": "6412beb7b9b2a6e2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 20524,
+      "generertAt": "2026-08-01T14:49:57.343Z"
+    },
+    "variant-75-1": {
+      "id": "variant-75-1",
+      "tekst": "Siste stopp i syttifem-bingo:",
+      "nøkkel": "0379d6786301a0ed",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 34316,
+      "generertAt": "2026-08-01T14:49:58.057Z"
+    },
+    "variant-75-2": {
+      "id": "variant-75-2",
+      "tekst": "Helt på toppen i syttifem-bingo:",
+      "nøkkel": "3aef989e41ea932f",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 35152,
+      "generertAt": "2026-08-01T14:49:58.792Z"
+    },
+    "variant-77-1": {
+      "id": "variant-77-1",
+      "tekst": "To like, og begge er lykketall:",
+      "nøkkel": "8c79b66708dae24d",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 36824,
+      "generertAt": "2026-08-01T14:49:59.595Z"
+    },
+    "variant-80-1": {
+      "id": "variant-80-1",
+      "tekst": "Godt oppe nå:",
+      "nøkkel": "ef50e18448a0b324",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 19688,
+      "generertAt": "2026-08-01T14:50:00.311Z"
+    },
+    "variant-88-1": {
+      "id": "variant-88-1",
+      "tekst": "To like helt på tampen:",
+      "nøkkel": "1e2ffa65eac36b86",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 26375,
+      "generertAt": "2026-08-01T14:50:01.028Z"
+    },
+    "variant-90-1": {
+      "id": "variant-90-1",
+      "tekst": "Der kom det høyeste tallet:",
+      "nøkkel": "262d2c8bdef8bc2c",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 31391,
+      "generertAt": "2026-08-01T14:50:01.758Z"
+    },
+    "variant-90-2": {
+      "id": "variant-90-2",
+      "tekst": "Helt på toppen av tallrekken:",
+      "nøkkel": "b101de56ca393c11",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 31391,
+      "generertAt": "2026-08-01T14:50:02.567Z"
+    },
+    "vits-1": {
+      "id": "vits-1",
+      "tekst": "Hva kaller man en bjørn uten tenner? En bamse.",
+      "nøkkel": "22124db8f0b31c80",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 51035,
+      "generertAt": "2026-08-01T14:50:15.673Z"
+    },
+    "vits-2": {
+      "id": "vits-2",
+      "tekst": "Hvorfor tok blyanten pause? Den var helt utslitt.",
+      "nøkkel": "3b9245c0b2aa54d2",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 53124,
+      "generertAt": "2026-08-01T14:50:16.468Z"
+    },
+    "vits-3": {
+      "id": "vits-3",
+      "tekst": "Hva sa null til åtte? Fint belte!",
+      "nøkkel": "4f12a3cbdb44307a",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 36824,
+      "generertAt": "2026-08-01T14:50:17.209Z"
+    },
+    "vits-4": {
+      "id": "vits-4",
+      "tekst": "Hvorfor var seks redd for sju? Fordi sju åtte ni.",
+      "nøkkel": "3cedea700242a223",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 50199,
+      "generertAt": "2026-08-01T14:50:18.027Z"
+    },
+    "vits-5": {
+      "id": "vits-5",
+      "tekst": "Hva sier en bingokule når den er sliten? Ingenting. Den ruller bare videre.",
+      "nøkkel": "355f1d0ad3d27e74",
+      "leverandør": "elevenlabs",
+      "stemme": "hRR5sVe3FxMEgdT3FocQ",
+      "modell": "eleven_multilingual_v2",
+      "bytes": 80710,
+      "generertAt": "2026-08-01T14:50:18.958Z"
+    }
+  }
 }

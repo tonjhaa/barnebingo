@@ -241,7 +241,7 @@ halve kvelden hatt gammel stemme og halve ny.
 
 ## 12. Klippene
 
-248 klipp til sammen:
+248 klipp til sammen, generert med ElevenLabs og committet i `public/lyd/`:
 
 | Gruppe | Antall | Eksempel |
 | --- | --- | --- |

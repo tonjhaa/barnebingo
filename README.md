@@ -240,9 +240,6 @@ nøkkelen byttes ut, så den gamle telefonen mister tilgangen.
   Chromium. Kamera og `localStorage` bør prøves på en faktisk telefon før
   premieren, og det krever HTTPS-sertifikatet over.
 - **Redis.** Se «I produksjon» over.
-- **Lydklippene er ikke generert.** Alt er bygget, men `public/lyd/*.mp3`
-  krever en API-nøkkel. Kjør `ELEVENLABS_API_KEY=... npm run lyd` og commit
-  mappa. Inntil da leser nettleserens egen stemme, som er tydelig dårligere.
 - **Én E2E-test for sluttbildet.** Resultatskjermen og ny runde er dekket av
   elleve integrasjonstester og verifisert manuelt i nettleser, men E2E-testen
   som spilte en hel runde gjennom grensesnittet var ustabil i full kjøring og
